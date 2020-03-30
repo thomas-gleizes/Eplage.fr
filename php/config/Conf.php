@@ -4,8 +4,8 @@ Class Conf{
     static private $debug = True;
 
     static private $databases = array(
-        'hostname' => 'webinfo',
-        'database' => 'gleizest',
+        'hostname' => 'localhost',
+        'database' => 'eplage',
         'login' => 'gleizest',
         'password' => 'azert123'
     );
