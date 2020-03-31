@@ -1,0 +1,46 @@
+body {
+    background-color: #eeeeee;
+}
+
+.nav-wrapper {
+    position: fixed;
+}
+
+.left {
+    margin-left: 3%;
+}
+
+#search-input {
+    border-radius: 5px;
+    background-color: white;
+    text-align: center;
+    color: black;
+    width: 35%;
+    margin-left: 20%;
+    min-width: 320px;
+    font-size: 95%;
+}
+
+.row {
+    padding: 5% 3%;
+}
+
+.card {
+    min-width: 250px;
+    margin: 10px;
+}
+
+
+
+
+
+
+
+@media (max-width: 600px) {
+    #search-input {
+        margin-left: 5%;
+        width: 90%;
+        min-width: 1px;
+    }
+
+}

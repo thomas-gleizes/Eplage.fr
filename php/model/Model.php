@@ -28,6 +28,9 @@ class Model{
         $req_prep->execute($values);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
         $tab = $req_prep->fetchAll();
+
+        $res = [];
+        $n = 0;
         foreach ($tab as $item){
             $sql = "SELECT src FROM tbl_picture WHERE ID_plage = :ID_plage";
             $valSrc['ID_plage'] = $item['ID'];
@@ -35,18 +38,14 @@ class Model{
             $req_prep->execute($valSrc);
             $req_prep->setFetchMode(PDO::FETCH_ASSOC);
             $tabsrc = $req_prep->fetchAll();
-            $src = "";
+            $item['src'] = "";
             foreach ($tabsrc as $i){
-               var_dump($i);
+               $item['src'] = $item['src'] . $i['src'] . '¤';
             }
+            $res[$n] = $item;
+            $n++;
         }
-
-
-
-
-
-
-        echo "<br><br> ---- END ---- <br>";
+        return $res;
     }
 
 
