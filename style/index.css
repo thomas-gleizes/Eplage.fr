@@ -31,7 +31,7 @@ nav {
     text-align: center;
 }
 
-.search-logo {
+#search-logo {
     position: fixed;
     top: 2%;
     right: 2%;
@@ -42,6 +42,7 @@ nav {
     background-color: white;
     border: solid 0.5px silver;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 
@@ -50,4 +51,10 @@ input {
     border: solid 1px silver;
     border-radius: 3px;
     font-size: 80%;
+}
+
+pre {
+    position: fixed;
+    left: 45%;
+    top: 100px;
 }
