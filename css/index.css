@@ -30,6 +30,27 @@ body {
     margin: 10px;
 }
 
+#warning {
+    text-align: center;
+    color: darkred;
+    font-size: 30px;
+}
+
+.card-action {
+    padding:0px 2px 0px 10px !important;
+    background-color: #4b515d !important;
+    color: white;
+}
+
+.card-action > div {
+    position: absolute;
+    display: inline-block;
+    font-size: 110%;
+    margin-left: 5px;
+    margin-top: 3px;
+}
+
+
 
 
 
