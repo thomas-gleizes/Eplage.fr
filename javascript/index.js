@@ -1,10 +1,6 @@
-document.getElementById("search-input").addEventListener('keyup', function () {
-    let key = event.keyCode;
-    console.log("key  : " + key);
-    if (key !== 8 && key !== 46) {
-        document.getElementById("list").innerHTML = "";
-    }
 
+
+document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 1) {
         selectPlage(this.value);
     }
@@ -16,6 +12,7 @@ function createCard(tab) {
     if (tab.length === 0) {
         document.getElementById("warning").style.visibility = "visible";
     } else {
+        document.getElementById("list").innerHTML = "";
         document.getElementById("warning").style.visibility = "hidden";
         for (let i = 0; i < tab.length; i++) {
             let card = document.createElement("div");
