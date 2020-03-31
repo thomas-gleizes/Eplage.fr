@@ -11,8 +11,9 @@ document.getElementById("search-input").addEventListener('keyup', function(){
 function createCard (tab){
     let list = document.getElementById("list");
     if (tab.length === 0){
-
+        document.getElementById("warning").style.visibility = "visible";
     } else {
+        document.getElementById("warning").style.visibility = "hidden";
         for (let i = 0; i < tab.length; i++){
             let card = document.createElement("div");
             let src = tab[i].src.split('¤')[0];
