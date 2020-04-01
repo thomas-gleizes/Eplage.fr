@@ -2,37 +2,47 @@ body {
     background-color: #eeeeee;
 }
 
-.nav-wrapper {
-    position: fixed;
+
+.brand-logo {
+    margin-left: 20px;
 }
 
-.left {
-    margin-left: 3%;
-}
 
 #search-input {
     border-radius: 5px;
     background-color: white;
     text-align: center;
     color: black;
-    width: 35%;
-    margin-left: 20%;
     min-width: 320px;
     font-size: 95%;
 }
 
-#search-btn {
-    display: inline-flex;
-    position: absolute;
-    background-color: #ffffff;
-    border-radius: 10px;
-    margin-top: 10px;
-    margin-left: 1%;
+#search-inpt {
+    width: 35%;
+    margin-left: 20%;
 }
 
+#search-btn {
+    padding: 0px 5px !important;
+    background-color: #0d47a1;
+}
 
+#search-bt {
+    margin-left: 3%;
+}
 
+.separator {
+    border: solid 1px #d2d2d2;
+    opacity: 0.8;
+    width: 90%;
+    margin: auto;
+    margin-top: 25px;
+}
 
+#btn-proxi {
+    margin-left: 5%;
+    margin-top: 20px;
+}
 
 
 .row {
@@ -45,15 +55,17 @@ body {
 
 #warning {
     text-align: center;
-    color: darkred;
     font-size: 30px;
-    visibility: hidden;
 }
 
 .card-action {
     padding:0px 2px 0px 10px !important;
     background-color: #4b515d !important;
     color: white;
+}
+
+.card-content {
+    padding: 8% !important;
 }
 
 .card-image {
@@ -70,7 +82,9 @@ body {
 }
 
 
-
+.material-icons {
+    font-size: 100%;
+}
 
 
 
@@ -79,9 +93,9 @@ body {
 
 
 @media (max-width: 600px) {
-    #search-input {
+    #search-inpt {
         margin-left: 5%;
-        width: 90%;
+        width: 70%;
         min-width: 1px;
     }
 

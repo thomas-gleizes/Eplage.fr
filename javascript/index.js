@@ -1,26 +1,29 @@
 
 
+let charge = true;
+
 document.getElementById("search-input").addEventListener('keyup', function () {
-    if (this.value.length > 1) {
+    if (this.value.length > 1 && charge) {
+        charge = false;
         selectPlage(this.value);
     }
 });
 
 function createCard(tab) {
-
+    charge = true;
+    document.getElementById("list").innerHTML = "";
     let list = document.getElementById("list");
     if (tab.length === 0) {
-        document.getElementById("warning").style.visibility = "visible";
+        document.getElementById("warning").innerHTML = "Aucun résultat";
     } else {
-        document.getElementById("list").innerHTML = "";
-        document.getElementById("warning").style.visibility = "hidden";
+        document.getElementById("warning").innerHTML = tab.length + " résultat(s) trouvée...";
         for (let i = 0; i < tab.length; i++) {
             let card = document.createElement("div");
             let src = tab[i].src.split('¤')[0];
             card.innerHTML = "<div class='card'>\n" +
                 "                <div class='card-image'>\n" +
                 "                    <img src= \"" + src + "\"  />\n" +
-                "                    <a class='btn-floating halfway-fab waves-effect waves-light red'><i class='material-icons'>chevron_right</i></a>\n" +
+                "                    <a class='btn-floating halfway-fab waves-effect waves-light blue darken-3'><i class='material-icons'>chevron_right</i></a>\n" +
                 "                </div>\n" +
                 "                <div class='card-content'>\n" +
                 "                    <span class='card-title'> " + tab[i].NAME + "</span>\n" +
@@ -36,4 +39,3 @@ function createCard(tab) {
         }
     }
 }
-

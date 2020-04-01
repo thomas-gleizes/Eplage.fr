@@ -17,18 +17,35 @@
     <nav class="blue darken-3">
         <div class="nav-wrapper">
             <a href="index.html" class="brand-logo hide-on-small-only left"> Eplage </a>
-            <div class="input-field">
-                <input type="text" id="search-input" placeholder="Recherche ( Etabissement, ville, département, ...)">
-                <button id="search-btn" class="hide-on-small-only"><img src="img/logo/search-black.png" id="search-logo" alt="search-logo"></button>
+            <ul>
+                <li id="search-inpt"><input id="search-input" type="text" placeholder="Recherche ( Etabissement, ville, département, ...)"></li>
+                <li id="search-bt" class="hide-on-small-only"><a id="search-btn" class="waves-effect waves-light btn"><i class="material-icons">search</i></a></li>
+                <li id="filfter">
+
+                </li>
+            </ul>
+
+
             </div>
         </div>
     </nav>
 </header>
 
 <main>
-    <div id="warning"> Auncun élément trouvée...</div>
-    <div id="list" class="row">
+    <div id="selecor">
+        <div class="input-field col s12">
+            <select id="filter-list" multiple>
+                <option value="none" disabled selected><i class="material-icons">filter-list</i> filter</option>
+                <option value="1"> Accées Handicapé</option>
+            </select>
+        </div>
+        <a id="btn-proxi" class="waves-effect waves-light btn blue darken-4"><i class="material-icons left">explore</i> A proximité</a>
+        <div id="warning"></div>
+    </div>
 
+    <div class="separator"></div>
+
+    <div id="list" class="row">
         <div class="col s12 m6 l3">
             <div class="card">
                 <div class="card-image">
@@ -209,5 +226,10 @@
     </div>
 </main>
 
+    <script>
+        $(document).ready(function(){
+            $('select').formSelect();
+        });
+    </script>
 </body>
 </html>
