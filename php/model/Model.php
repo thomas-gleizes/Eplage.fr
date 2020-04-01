@@ -48,6 +48,15 @@ class Model{
         return $res;
     }
 
+    public static function selectAllService (){
+        $sql = "SELECT * FROM tbl_service";
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute();
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        $tab = $req_prep->fetchAll();
+        return $tab;
+    }
+
 
 }
 Model::Init();

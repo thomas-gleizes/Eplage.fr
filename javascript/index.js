@@ -1,6 +1,8 @@
-
-
 let charge = true;
+let filter = [];
+let filterActive = false;
+
+document.onload = getFilter();
 
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 1 && charge) {
@@ -10,7 +12,6 @@ document.getElementById("search-input").addEventListener('keyup', function () {
 });
 
 function createCard(tab) {
-    charge = true;
     document.getElementById("list").innerHTML = "";
     let list = document.getElementById("list");
     if (tab.length === 0) {
@@ -38,4 +39,54 @@ function createCard(tab) {
             list.appendChild(card);
         }
     }
+    charge = true;
 }
+
+function displayFilter(tab){
+    console.log(tab);
+    let list = document.getElementById("list-filter");
+    for (let i = 0; i < tab.length; i++){
+        let li = document.createElement("li");
+        li.id = "filter-" + tab[i].ID;
+        li.className = "filt";
+        li.innerHTML = tab[i].name;
+        li.addEventListener("mouseover", function () {
+            this.style.border = "solid 1.5px #1565c0";
+        });
+        li.addEventListener("mouseout", function () {
+            this.style.border = "solid 1px silver";
+        });
+        list.appendChild(li);
+    }
+}
+
+document.getElementById("add-filter").addEventListener('click', function () {
+    if (!filterActive){
+        filterActive = true;
+        this.innerHTML = "<i class=\"material-icons left\">list</i>Enlever filtre";
+        document.getElementById("filter").style.display = "inline";
+    } else {
+        filterActive = false;
+        this.innerHTML = "<i class=\"material-icons left\">list</i>Ajouter filtre";
+        document.getElementById("filter").style.display = "none";
+    }
+});
+
+document.getElementById("filter").addEventListener("mouseover", function () {
+    document.getElementById("list-filter").style.display = "block"
+});
+
+document.getElementById("filter").addEventListener("mouseout", function () {
+    document.getElementById("list-filter").style.display = "none"
+});
+
+function mouseOnFilter() {
+
+}
+
+                                                        
+
+
+
+
+

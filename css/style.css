@@ -4,7 +4,7 @@ body {
 
 
 .brand-logo {
-    margin-left: 20px;
+    margin-left: 5%;
 }
 
 
@@ -15,11 +15,12 @@ body {
     color: black;
     min-width: 320px;
     font-size: 95%;
+    width: 100%;
 }
 
 #search-inpt {
     width: 35%;
-    margin-left: 20%;
+    margin-left: 45%;
 }
 
 #search-btn {
@@ -28,7 +29,7 @@ body {
 }
 
 #search-bt {
-    margin-left: 3%;
+    margin-left: 5px;
 }
 
 .separator {
@@ -37,11 +38,12 @@ body {
     width: 90%;
     margin: auto;
     margin-top: 25px;
+
 }
 
-#btn-proxi {
+#selector {
     margin-left: 5%;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 
@@ -55,7 +57,7 @@ body {
 
 #warning {
     text-align: center;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .card-action {
@@ -86,6 +88,44 @@ body {
     font-size: 100%;
 }
 
+svg {
+    display: none;
+}
+
+.btn {
+    border-radius: 4px;
+}
+
+#filter {
+    margin-left: 15px;
+    background-color: #0D47A1;
+    display: none;
+}
+
+#list-filter {
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 8px;
+    left: 387px;
+    width: 198px;
+    z-index: 1;
+    cursor: pointer;
+    border: solid 1px #0D47A1;
+    max-height: 40%;
+    border-radius: 3px;
+    overflow:scroll;
+
+}
+
+.filt {
+    border-radius: 3px;
+    margin: 2px;
+    padding: 3px;
+    width: 95%;
+    border: solid 1px silver;
+}
+
 
 
 
@@ -95,8 +135,21 @@ body {
 @media (max-width: 600px) {
     #search-inpt {
         margin-left: 5%;
-        width: 70%;
+        width: 90%;
         min-width: 1px;
     }
+
+    #filter {
+        position: absolute;
+        left: 20%;
+        top:20%;
+    }
+
+    #list-filter {
+        position: absolute;
+        min-height: 200px;
+        left: 0%;
+    }
+
 
 }
