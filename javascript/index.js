@@ -1,3 +1,5 @@
+
+
 let charge = true;
 let filter = [];
 let filterActive = false;
@@ -7,7 +9,23 @@ document.onload = getFilter();
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 1 && charge) {
         charge = false;
-        selectPlage(this.value);
+        if (filterActive){
+            selectWithFilter(this.value, filter);
+        } else {
+            selectPlage(this.value);
+        }
+    }
+});
+
+document.getElementById("search-btn").addEventListener("click", function () {
+    let val = document.getElementById("search-input").value;
+    if (charge && filter.length !== 0) {
+        charge = false;
+        if (filterActive){
+            selectWithFilter(val, filter);
+        } else {
+            selectPlage(val);
+        }
     }
 });
 
@@ -43,7 +61,6 @@ function createCard(tab) {
 }
 
 function displayFilter(tab){
-    console.log(tab);
     let list = document.getElementById("list-filter");
     for (let i = 0; i < tab.length; i++){
         let li = document.createElement("li");
@@ -51,14 +68,28 @@ function displayFilter(tab){
         li.className = "filt";
         li.innerHTML = tab[i].name;
         li.addEventListener("mouseover", function () {
-            this.style.border = "solid 1.5px #1565c0";
+            this.style.border = "solid 2px #1565c0";
         });
         li.addEventListener("mouseout", function () {
-            this.style.border = "solid 1px silver";
+            if (filter.indexOf(this.id.split('-')[1]) === -1) this.style.border = "solid 1px silver";
+            else this.style.border = "solid 1.5px #1565c0";
+        });
+        li.addEventListener("click", function () {
+            let id = this.id.split('-')[1];
+            if(filter.indexOf(id) === -1){
+                filter.push(id);
+                this.style.border = "solid 1.5px #1565c0";
+            } else {
+                filter.splice(filter.indexOf(id), 1);
+                this.style.border = "solid 1px silver";
+            }
+
         });
         list.appendChild(li);
     }
 }
+
+
 
 document.getElementById("add-filter").addEventListener('click', function () {
     if (!filterActive){
@@ -80,9 +111,7 @@ document.getElementById("filter").addEventListener("mouseout", function () {
     document.getElementById("list-filter").style.display = "none"
 });
 
-function mouseOnFilter() {
 
-}
 
                                                         
 

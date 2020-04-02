@@ -107,9 +107,9 @@ svg {
     position: absolute;
     background-color: white;
     padding: 8px;
-    left: 387px;
+    left: 410px;
     width: 198px;
-    z-index: 1;
+    z-index: 10000;
     cursor: pointer;
     border: solid 1px #0D47A1;
     max-height: 40%;

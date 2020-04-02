@@ -10,6 +10,17 @@ function selectPlage(val) {
     request.send(null);
 }
 
+function selectWithFilter(val, filter) {
+    let url = "./php/controller/router.php?search=" + val + "&filter=" + filter;
+    console.log(url)
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        charge = true;
+    });
+    request.send(null);
+}
+
 function getFilter() {
     let url = "./php/controller/router.php?filter=true";
     let request = new XMLHttpRequest();
@@ -19,3 +30,4 @@ function getFilter() {
     });
     request.send(null);
 }
+

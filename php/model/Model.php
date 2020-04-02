@@ -22,7 +22,7 @@ class Model{
     }
 
     public static function selectPlage ($val){
-        $sql = "SELECT ID, NAME, CITY, ADRESS, ZIPCODE FROM tbl_business WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val LIMIT 10";
+        $sql = "SELECT ID, NAME, CITY, ADRESS, ZIPCODE FROM tbl_business WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val LIMIT 8";
         $values['val'] = $val . '%';
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($values);
@@ -46,6 +46,16 @@ class Model{
             $n++;
         }
         return $res;
+    }
+
+    public static function selectPlageWithFilter ($val, $filter){
+        $sql = "SELECT ID, NAME, CITY, ADRESS, ZIPCODE FROM tbl_business b
+                JOIN tbl_service_plage sp ON sp.id_Plage = b.ID JOIN tbl_service s ON s.ID = sp.id_Plage
+                WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val";
+
+
+
+        echo $sql;
     }
 
     public static function selectAllService (){
