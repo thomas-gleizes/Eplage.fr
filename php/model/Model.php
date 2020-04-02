@@ -49,13 +49,10 @@ class Model{
     }
 
     public static function selectPlageWithFilter ($val, $filter){
-        $sql = "SELECT ID, NAME, CITY, ADRESS, ZIPCODE FROM tbl_business b
-                JOIN tbl_service_plage sp ON sp.id_Plage = b.ID JOIN tbl_service s ON s.ID = sp.id_Plage
-                WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val";
+        $filter = explode(',', $filter);
 
 
 
-        echo $sql;
     }
 
     public static function selectAllService (){

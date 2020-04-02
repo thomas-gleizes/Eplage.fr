@@ -2,6 +2,14 @@ body {
     background-color: #eeeeee;
 }
 
+.bluet {
+    background-color: #2ecbfe;
+}
+
+.yellowt {
+    background-color: #ffd59b;
+}
+
 
 .brand-logo {
     margin-left: 5%;
@@ -25,7 +33,6 @@ body {
 
 #search-btn {
     padding: 0px 5px !important;
-    background-color: #0d47a1;
 }
 
 #search-bt {
@@ -38,7 +45,7 @@ body {
     width: 90%;
     margin: auto;
     margin-top: 25px;
-
+    height: 1px;
 }
 
 #selector {
@@ -111,7 +118,7 @@ svg {
     width: 198px;
     z-index: 10000;
     cursor: pointer;
-    border: solid 1px #0D47A1;
+    border: solid 1px #ffd59b;
     max-height: 40%;
     border-radius: 3px;
     overflow:scroll;

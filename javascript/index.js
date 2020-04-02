@@ -42,7 +42,7 @@ function createCard(tab) {
             card.innerHTML = "<div class='card'>\n" +
                 "                <div class='card-image'>\n" +
                 "                    <img src= \"" + src + "\"  />\n" +
-                "                    <a class='btn-floating halfway-fab waves-effect waves-light blue darken-3'><i class='material-icons'>chevron_right</i></a>\n" +
+                "                    <a class='btn-floating halfway-fab waves-effect waves-light bluet'><i class='material-icons'>chevron_right</i></a>\n" +
                 "                </div>\n" +
                 "                <div class='card-content'>\n" +
                 "                    <span class='card-title'> " + tab[i].NAME + "</span>\n" +
@@ -68,17 +68,17 @@ function displayFilter(tab){
         li.className = "filt";
         li.innerHTML = tab[i].name;
         li.addEventListener("mouseover", function () {
-            this.style.border = "solid 2px #1565c0";
+            this.style.border = "solid 2px #ffd774";
         });
         li.addEventListener("mouseout", function () {
             if (filter.indexOf(this.id.split('-')[1]) === -1) this.style.border = "solid 1px silver";
-            else this.style.border = "solid 1.5px #1565c0";
+            else this.style.border = "solid 1.5px #ffd59b";
         });
         li.addEventListener("click", function () {
             let id = this.id.split('-')[1];
             if(filter.indexOf(id) === -1){
                 filter.push(id);
-                this.style.border = "solid 1.5px #1565c0";
+                this.style.border = "solid 1.5px #ffd59b";
             } else {
                 filter.splice(filter.indexOf(id), 1);
                 this.style.border = "solid 1px silver";
