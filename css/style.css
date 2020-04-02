@@ -114,7 +114,7 @@ svg {
     position: absolute;
     background-color: white;
     padding: 8px;
-    left: 410px;
+    left: 400px;
     width: 198px;
     z-index: 10000;
     cursor: pointer;
@@ -155,6 +155,7 @@ svg {
     #list-filter {
         position: absolute;
         min-height: 200px;
+        top: 20px;
         left: 0%;
     }
 

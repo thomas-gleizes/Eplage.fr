@@ -51,8 +51,17 @@ class Model{
     public static function selectPlageWithFilter ($val, $filter){
         $filter = explode(',', $filter);
 
+    }
 
-
+    public static function selectPlageWithLocalisation ($longitude, $lattitude){
+        $sql = "SELECT * FROM tbl_business WHERE LONGITUDE <= :longitude + 0.3 AND LONGITUDE >= :longitude - 0.3 AND LATTITUDE <= :lattitude + 0.3 AND LATTITUDE - 0.3 ";
+        $values['longitude'] = $longitude;
+        $values['lattitude'] = $lattitude;
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute();
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        $tab = $req_prep->fetchAll();
+        return $tab;
     }
 
     public static function selectAllService (){
@@ -62,6 +71,15 @@ class Model{
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
         $tab = $req_prep->fetchAll();
         return $tab;
+    }
+
+    public static function SQL ($sql){
+        echo $sql . "<br><br>";
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute();
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        $tab = $req_prep->fetchAll();
+        var_dump($tab);
     }
 
 

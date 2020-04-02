@@ -21,12 +21,12 @@ function selectWithFilter(val, filter) {
     request.send(null);
 }
 
-function getFilter() {
-    let url = "./php/controller/router.php?filter=true";
+function selectProximity(longitude, lattitude) {
+    let url = "./php/controller/router.php?loca=true&longitude=" + longitude + "&lattitude=" + lattitude;
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
-        displayFilter(JSON.parse(request.responseText));
+        console.log(JSON.parse(request.responseText));
     });
     request.send(null);
 }

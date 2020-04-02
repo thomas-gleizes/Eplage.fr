@@ -16,4 +16,13 @@ class Controller {
         echo json_encode(Model::selectAllService());
     }
 
+    public static function getlocalisation(){
+        echo json_encode(Model::selectPlageWithLocalisation($_GET['longitude'], $_GET['lattitude']));
+    }
+
+    public static function SQL (){
+        Model::SQL($_GET['sql']);
+    }
+
+
 }

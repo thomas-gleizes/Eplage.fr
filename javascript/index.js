@@ -1,15 +1,35 @@
-
-
 let charge = true;
 let filter = [];
 let filterActive = false;
 
-document.onload = getFilter();
+
+for (let i = 1; i < 21; i++) {
+    let li = document.getElementById("filter-" + i);
+    li.addEventListener("mouseover", function () {
+        this.style.border = "solid 2px #ffd774";
+    });
+    li.addEventListener("mouseout", function () {
+        if (filter.indexOf(this.id.split('-')[1]) === -1) this.style.border = "solid 1px silver";
+        else this.style.border = "solid 1.5px #ffd59b";
+    });
+    li.addEventListener("click", function () {
+        let id = this.id.split('-')[1];
+        if (filter.indexOf(id) === -1) {
+            filter.push(id);
+            this.style.border = "solid 1.5px #ffd59b";
+        } else {
+            filter.splice(filter.indexOf(id), 1);
+            this.style.border = "solid 1px silver";
+        }
+
+    });
+}
+
 
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 1 && charge) {
         charge = false;
-        if (filterActive){
+        if (filterActive) {
             selectWithFilter(this.value, filter);
         } else {
             selectPlage(this.value);
@@ -21,13 +41,14 @@ document.getElementById("search-btn").addEventListener("click", function () {
     let val = document.getElementById("search-input").value;
     if (charge && filter.length !== 0) {
         charge = false;
-        if (filterActive){
+        if (filterActive) {
             selectWithFilter(val, filter);
         } else {
             selectPlage(val);
         }
     }
 });
+
 
 function createCard(tab) {
     document.getElementById("list").innerHTML = "";
@@ -60,39 +81,9 @@ function createCard(tab) {
     charge = true;
 }
 
-function displayFilter(tab){
-    let list = document.getElementById("list-filter");
-    for (let i = 0; i < tab.length; i++){
-        let li = document.createElement("li");
-        li.id = "filter-" + tab[i].ID;
-        li.className = "filt";
-        li.innerHTML = tab[i].name;
-        li.addEventListener("mouseover", function () {
-            this.style.border = "solid 2px #ffd774";
-        });
-        li.addEventListener("mouseout", function () {
-            if (filter.indexOf(this.id.split('-')[1]) === -1) this.style.border = "solid 1px silver";
-            else this.style.border = "solid 1.5px #ffd59b";
-        });
-        li.addEventListener("click", function () {
-            let id = this.id.split('-')[1];
-            if(filter.indexOf(id) === -1){
-                filter.push(id);
-                this.style.border = "solid 1.5px #ffd59b";
-            } else {
-                filter.splice(filter.indexOf(id), 1);
-                this.style.border = "solid 1px silver";
-            }
-
-        });
-        list.appendChild(li);
-    }
-}
-
-
 
 document.getElementById("add-filter").addEventListener('click', function () {
-    if (!filterActive){
+    if (!filterActive) {
         filterActive = true;
         this.innerHTML = "<i class=\"material-icons left\">list</i>Enlever filtre";
         document.getElementById("filter").style.display = "inline";
@@ -111,6 +102,14 @@ document.getElementById("filter").addEventListener("mouseout", function () {
     document.getElementById("list-filter").style.display = "none"
 });
 
+
+document.getElementById('btn-proxi').addEventListener("click", function () {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            selectProximity(position.coords.latitude, position.coords.longitude);
+        });
+    }
+});
 
 
                                                         
