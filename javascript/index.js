@@ -106,10 +106,10 @@ document.getElementById("filter").addEventListener("mouseout", function () {
 document.getElementById('btn-proxi').addEventListener("click", function () {
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            let lattitude =  (position.coords.latitude).toString().substring(0,7);
-            let longitude =  (position.coords.longitude).toString().substring(0,7);
-            selectProximity(longitude, lattitude);
+            selectProximity(position.coords.longitude, position.coords.latitude);
         });
+    } else {
+        alert("echec de localisation")
     }
 });
 
