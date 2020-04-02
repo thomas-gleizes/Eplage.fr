@@ -26,7 +26,7 @@ function selectProximity(longitude, lattitude) {
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
-        console.log(JSON.parse(request.responseText));
+        createCard(JSON.parse(request.responseText));
     });
     request.send(null);
 }
