@@ -1,18 +1,15 @@
-
-
 let sea = "#2ecbfe";
 let sand = "#ffd59b";
 let geo = false;
 let charge = true;
 let filter = false;
 let listFilter = [];
-let pair = 0;
 
 
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 1 && charge) {
         charge = false;
-        if (filterActive) {
+        if (filter) {
             selectWithFilter(this.value, filter);
         } else {
             selectPlage(this.value);
@@ -24,7 +21,7 @@ document.getElementById("search-btn").addEventListener("click", function () {
     let val = document.getElementById("search-input").value;
     if (charge && filter.length !== 0) {
         charge = false;
-        if (filterActive) {
+        if (filter) {
             selectWithFilter(val, filter);
         } else {
             selectPlage(val);
@@ -74,13 +71,16 @@ function createCard(tab) {
 }
 
 document.getElementById("filter-btn").addEventListener("click", function () {
-    if (filter){
+    if (filter) {
         document.getElementById("list-filter").className = "row hidden";
         document.body.style.paddingTop = "150px";
         filter = false;
     } else {
         document.getElementById("list-filter").className = "row filter";
-        document.body.style.paddingTop = "300px";
+        if (window.innerWidth <= 700) {
+            document.body.style.paddingTop = "370px";
+        } else document.body.style.paddingTop = "300px";
+
         filter = true;
     }
 });
@@ -92,7 +92,6 @@ document.getElementById("search-btn").addEventListener("mouseover", function () 
 document.getElementById("search-btn").addEventListener("mouseout", function () {
     this.style.backgroundColor = sand
 });
-
 
 
 document.getElementById("geo-btn").addEventListener("click", function () {
@@ -108,28 +107,23 @@ document.getElementById("geo-btn").addEventListener("click", function () {
 
 function generatefilter() {
     let div = document.getElementById("list-filter");
-    for (let i = 1; i < 21; i++){
+    for (let i = 1; i < 21; i++) {
         let input = document.createElement("p");
         input.innerHTML = "<label>\n" +
-            "                    <input type='checkbox' class='filled-in'/>\n" +
+            "                    <input id='check-" + i + "' type='checkbox' class='filled-in'/>\n" +
             "                    <span> Service " + i + " </span>\n" +
-            "                </label>"
-        input.className = "check col l2 m2 s4";
-        input.onclick = function(){
-           if (pair === 0){
-               pair++;
-               let index = listFilter.indexOf(i);
-               if (index === -1){
-                   listFilter.push(i);
-               } else {
-                   listFilter.splice(index, 1)
-               }
-           } else {
-               pair = 0;
-           }
-           console.log(listFilter);
-        };
+            "                </label>";
+        input.className = "check col l2 m3 s4";
         div.appendChild(input);
+        document.getElementById("check-" + i).addEventListener('click', function () {
+            let index = listFilter.indexOf(i);
+            if (index === -1) {
+                listFilter.push(i);
+            } else {
+                listFilter.splice(index, 1)
+            }
+            console.log(listFilter);
+        });
     }
 }
 

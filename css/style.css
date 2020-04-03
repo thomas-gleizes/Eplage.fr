@@ -79,15 +79,17 @@ nav {
 
 
 
+
+
 .filter {
-    padding: 20px 5%;
+    padding: 20px 10%;
     margin: auto;
     z-index: 10;
     background-color: #eeeeee;
 }
 
 .check {
-    display: inline;
+    display: inline-block;
     width: 10%;
     height: 20px;
     padding: 5px;
@@ -174,8 +176,31 @@ nav {
 
 
 
-@media (max-width: 650px) {
+@media (max-width: 600px) {
+
+    #search {
+        left: 3%;
+        width: 90%;
+    }
+
+    #filter-btn {
+        left: -20px;
+    }
 
 
+    #search-advance {
+        left: 65%;
+        width: 90%;
+    }
 
+    .filter {
+        padding: 20px 10px;
+    }
+
+}
+
+@media (max-width: 900px) {
+    .filter {
+        padding: 20px 10px;
+    }
 }

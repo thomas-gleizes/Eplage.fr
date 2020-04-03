@@ -95,7 +95,10 @@ class Model{
         $req_prep->execute();
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
         $tab = $req_prep->fetchAll();
-        var_dump($tab);
+        foreach ($tab as $item) {
+            echo "<br><br>";
+            var_dump($item);
+        }
     }
 
 }
