@@ -1,7 +1,7 @@
 body {
     background-color: #eeeeee;
     font-family: 'Roboto';
-    padding-top: 200px;
+    padding-top: 150px;
 }
 
 
@@ -28,7 +28,7 @@ nav {
     position: fixed;
     z-index: 10;
     background-color: #eeeeee;
-    height: 200px;
+    height: 100px;
     width: 100%;
     margin-top: 40px;
 }
@@ -74,6 +74,32 @@ nav {
 #search-advance > .btn  {
     height: 40px;
     width: 40px;
+}
+
+
+
+
+.filter {
+    padding: 20px 5%;
+    margin: auto;
+    z-index: 10;
+    background-color: #eeeeee;
+}
+
+.check {
+    display: inline;
+    width: 10%;
+    height: 20px;
+    padding: 5px;
+    margin-bottom: 5px !important;
+    margin-top: 5px; !important;
+    font-size: 120% !important;
+}
+
+.hidden {
+    display: none !important;
+    height: 0px !important;
+    width: 0px !important;
 }
 
 
@@ -137,7 +163,7 @@ nav {
     border-bottom: solid 1.5px #d2d2d2;
     width: 95%;
     margin: auto;
-    margin-bottom: 2%;
+    margin-bottom: 5px;
     margin-top: 10px;
 }
 

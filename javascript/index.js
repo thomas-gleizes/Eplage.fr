@@ -1,7 +1,12 @@
+
+
 let sea = "#2ecbfe";
 let sand = "#ffd59b";
-let geo = "false";
+let geo = false;
 let charge = true;
+let filter = false;
+let listFilter = [];
+let pair = 0;
 
 
 document.getElementById("search-input").addEventListener('keyup', function () {
@@ -68,6 +73,17 @@ function createCard(tab) {
     charge = true;
 }
 
+document.getElementById("filter-btn").addEventListener("click", function () {
+    if (filter){
+        document.getElementById("list-filter").className = "row hidden";
+        document.body.style.paddingTop = "150px";
+        filter = false;
+    } else {
+        document.getElementById("list-filter").className = "row filter";
+        document.body.style.paddingTop = "300px";
+        filter = true;
+    }
+});
 
 document.getElementById("search-btn").addEventListener("mouseover", function () {
     this.style.backgroundColor = sea
@@ -78,11 +94,6 @@ document.getElementById("search-btn").addEventListener("mouseout", function () {
 });
 
 
-document.getElementById("get-btn").addEventListener("mouseout", function () {
-    if (!geo) {
-
-    }
-});
 
 document.getElementById("geo-btn").addEventListener("click", function () {
     if (!geo) {
@@ -95,9 +106,34 @@ document.getElementById("geo-btn").addEventListener("click", function () {
 });
 
 
+function generatefilter() {
+    let div = document.getElementById("list-filter");
+    for (let i = 1; i < 21; i++){
+        let input = document.createElement("p");
+        input.innerHTML = "<label>\n" +
+            "                    <input type='checkbox' class='filled-in'/>\n" +
+            "                    <span> Service " + i + " </span>\n" +
+            "                </label>"
+        input.className = "check col l2 m2 s4";
+        input.onclick = function(){
+           if (pair === 0){
+               pair++;
+               let index = listFilter.indexOf(i);
+               if (index === -1){
+                   listFilter.push(i);
+               } else {
+                   listFilter.splice(index, 1)
+               }
+           } else {
+               pair = 0;
+           }
+           console.log(listFilter);
+        };
+        div.appendChild(input);
+    }
+}
 
-
-
+generatefilter();
 
 
 
