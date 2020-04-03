@@ -1,70 +1,97 @@
 body {
     background-color: #eeeeee;
+    font-family: 'Roboto';
+    padding-top: 200px;
 }
 
-.bluet {
+
+
+.sea {
     background-color: #2ecbfe;
 }
 
-.yellowt {
+.sand {
     background-color: #ffd59b;
 }
 
+nav {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 64px !important;
+    line-height: 64px !important;
+}
+
+.header {
+    left: 0px;
+    top: 0px;
+    position: fixed;
+    z-index: 10;
+    background-color: #eeeeee;
+    height: 200px;
+    width: 100%;
+    margin-top: 40px;
+}
 
 .brand-logo {
-    margin-left: 5%;
+    margin-left: 3%;
 }
 
 
-#search-input {
-    border-radius: 5px;
+
+
+
+#search {
+    left: 22%;
+    position: fixed;
+    width: 70%;
+    min-width: 370px;
+}
+
+#search-input{
+    border-radius: 4px;
     background-color: white;
-    text-align: center;
-    color: black;
-    min-width: 320px;
-    font-size: 95%;
-    width: 100%;
-}
+    padding: 0px 13% 0px 3%;
+    width: 50%;
+    margin: auto;
 
-#search-inpt {
-    width: 35%;
-    margin-left: 22%;
 }
 
 #search-btn {
-    padding: 0px 5px !important;
-}
-
-#search-bt {
-    margin-left: 5px;
-}
-
-.separator {
-    border: solid 1px #d2d2d2;
-    opacity: 0.8;
-    width: 90%;
-    margin: auto;
-    margin-top: 25px;
-    height: 1px;
-}
-
-#selector {
-    margin-left: 5%;
-    margin-top: 30px;
+    height: 34px;
+    width: 34px;
+    margin: 0px;
+    right: 45px;
+    top: -4px;
 }
 
 
-.row {
-    padding: 5% 3%;
+#search-advance {
+    position: fixed;
+    left: 70%;
 }
+
+#search-advance > .btn  {
+    height: 40px;
+    width: 40px;
+}
+
+
+
+
+
+
+
+.btn {
+    border-radius: 4px;
+    padding: 0px 0px !important;
+    font-size: 100% !important;
+}
+
+
 
 .card {
     margin: 10px;
-}
-
-#warning {
-    text-align: center;
-    font-size: 25px;
 }
 
 .card-action {
@@ -90,74 +117,39 @@ body {
     margin-top: 3px;
 }
 
+.count {
+    right: 5px;
+    font-size: 25px;
+}
+
+.count-icons {
+    right: 5px !important;
+    margin: 0px !important ;
+}
+
+
+#warning {
+    text-align: center;
+    font-size: large;
+}
+
+.separator {
+    border-bottom: solid 1.5px #d2d2d2;
+    width: 95%;
+    margin: auto;
+    margin-bottom: 2%;
+    margin-top: 10px;
+}
+
 
 .material-icons {
-    font-size: 100%;
-}
-
-svg {
-    display: none;
-}
-
-.btn {
-    border-radius: 4px;
-}
-
-#filter {
-    margin-left: 15px;
-    background-color: #0D47A1;
-    display: none;
-}
-
-#list-filter {
-    display: none;
-    position: absolute;
-    background-color: white;
-    padding: 8px;
-    left: 400px;
-    width: 198px;
-    z-index: 10000;
-    cursor: pointer;
-    border: solid 1px #ffd59b;
-    max-height: 40%;
-    border-radius: 3px;
-    overflow:scroll;
-
-}
-
-.filt {
-    border-radius: 3px;
-    margin: 2px;
-    padding: 3px;
-    width: 95%;
-    border: solid 1px silver;
+    height: 120%;
 }
 
 
 
+@media (max-width: 650px) {
 
-
-
-
-@media (max-width: 600px) {
-    #search-inpt {
-        margin-left: 5%;
-        width: 90%;
-        min-width: 1px;
-    }
-
-    #filter {
-        position: absolute;
-        left: 20%;
-        top:20%;
-    }
-
-    #list-filter {
-        position: absolute;
-        min-height: 200px;
-        top: 20px;
-        left: 0%;
-    }
 
 
 }
