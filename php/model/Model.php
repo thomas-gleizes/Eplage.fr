@@ -22,30 +22,13 @@ class Model{
     }
 
     public static function selectPlage ($val){
-        $sql = "SELECT ID, NAME, CITY, ADRESS, ZIPCODE FROM tbl_business WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val LIMIT 8";
+        $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, src FROM tbl_business b JOIN tbl_picture p ON b.ID = p.ID_plage WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (b.ID) LIMIT 8";
         $values['val'] = $val . '%';
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($values);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
         $tab = $req_prep->fetchAll();
-
-        $res = [];
-        $n = 0;
-        foreach ($tab as $item){
-            $sql = "SELECT src FROM tbl_picture WHERE ID_plage = :ID_plage";
-            $valSrc['ID_plage'] = $item['ID'];
-            $req_prep = self::$pdo->prepare($sql);
-            $req_prep->execute($valSrc);
-            $req_prep->setFetchMode(PDO::FETCH_ASSOC);
-            $tabsrc = $req_prep->fetchAll();
-            $item['src'] = "";
-            foreach ($tabsrc as $i){
-               $item['src'] = $item['src'] . $i['src'] . '¤';
-            }
-            $res[$n] = $item;
-            $n++;
-        }
-        return $res;
+        return $tab;
     }
 
     public static function selectPlageWithFilter ($val, $filter){
@@ -53,32 +36,6 @@ class Model{
 
     }
 
-    public static function selectPlageWithLocalisation ($longitude, $lattitude){
-        $sql = "SELECT * FROM tbl_business WHERE LONGITUDE <= :longitude + 0.3 AND LONGITUDE >= :longitude - 0.3 AND LATTITUDE <= :lattitude + 0.3 AND LATTITUDE >= :lattitude - 0.3 ";
-        $values['longitude'] = $longitude;
-        $values['lattitude'] = $lattitude;
-        $req_prep = self::$pdo->prepare($sql);
-        $req_prep->execute($values);
-        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
-        $tab = $req_prep->fetchAll();
-        $res = [];
-        $n = 0;
-        foreach ($tab as $item){
-            $sql = "SELECT src FROM tbl_picture WHERE ID_plage = :ID_plage";
-            $valSrc['ID_plage'] = $item['ID'];
-            $req_prep = self::$pdo->prepare($sql);
-            $req_prep->execute($valSrc);
-            $req_prep->setFetchMode(PDO::FETCH_ASSOC);
-            $tabsrc = $req_prep->fetchAll();
-            $item['src'] = "";
-            foreach ($tabsrc as $i){
-                $item['src'] = $item['src'] . $i['src'] . '¤';
-            }
-            $res[$n] = $item;
-            $n++;
-        }
-        return $res;
-    }
 
     public static function selectAllService (){
         $sql = "SELECT * FROM tbl_service";

@@ -7,13 +7,8 @@ let listFilter = [];
 
 
 document.getElementById("search-input").addEventListener('keyup', function () {
-    if (this.value.length > 1 && charge) {
-        charge = false;
-        if (filter) {
-            selectWithFilter(this.value, filter);
-        } else {
-            selectPlage(this.value);
-        }
+    if (this.value.length > 2){
+
     }
 });
 
@@ -36,13 +31,12 @@ function createCard(tab) {
     if (tab.length === 0) {
         document.getElementById("warning").innerHTML = "Aucun résultat";
     } else {
-        document.getElementById("warning").innerHTML = tab.length + " résultat(s) trouvée...";
+        document.getElementById("warning").innerHTML = tab.length + " résultat(s) trouvées - 0 filtre utilisée";
         for (let i = 0; i < tab.length; i++) {
             let card = document.createElement("div");
-            let src = tab[i].src.split('¤')[0];
             let HTML = "<div class='card'>\n" +
                 "                <div class='card-image'>\n" +
-                "                    <img src= \"" + src + "\"  />\n" +
+                "                    <img src= \"" + tab[i].src + "\"  />\n" +
                 "                    <a class='btn-floating halfway-fab waves-effect waves-light sea'><i class='material-icons'>chevron_right</i></a>\n" +
                 "                </div>\n" +
                 "                <div class='card-content'>\n" +
