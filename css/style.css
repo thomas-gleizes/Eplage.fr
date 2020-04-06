@@ -77,10 +77,6 @@ nav {
 }
 
 
-
-
-
-
 .filter {
     padding: 20px 10%;
     margin: auto;
@@ -103,10 +99,6 @@ nav {
     height: 0px !important;
     width: 0px !important;
 }
-
-
-
-
 
 
 
@@ -186,7 +178,6 @@ nav {
     #filter-btn {
         left: -20px;
     }
-
 
     #search-advance {
         left: 65%;

@@ -22,7 +22,7 @@ class Model{
     }
 
     public static function selectPlage ($val){
-        $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, src FROM tbl_business b JOIN tbl_picture p ON b.ID = p.ID_plage WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (b.ID) LIMIT 8";
+        $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (b.ID) LIMIT 8";
         $values['val'] = $val . '%';
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($values);
@@ -31,21 +31,35 @@ class Model{
         return $tab;
     }
 
-    public static function selectPlageWithFilter ($val, $filter){
-        $filter = explode(',', $filter);
+    public static function selectPlageWithFilter ($val, $listFilter){
+        $listFilter = explode(',', $listFilter);
+        $tab = [];
+
+        foreach ($listFilter as $filter){
+            $sql = "SELECT BID FROM tbl_service_buisnesse WHERE SID = :filter";
+            $value['filter'] = $filter;
+            $req_prep = self::$pdo->prepare($sql);
+            $req_prep->execute($value);
+            $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+            $tab[$filter] = $req_prep->fetchAll();
+        }
+
+
+
+        $res = [];
+        $first = true;
+        foreach ($tab as $item) {
+            if ($first) {
+                $first = false;
+                $res = $item;
+            }
+        }
+        
+
 
     }
-    
 
 
-    public static function selectRandomPlage (){
-        $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, src FROM tbl_business b JOIN tbl_picture p ON b.ID = p.ID_plage GROUP BY (b.ID) ORDER BY RAND() LIMIT 8;";
-        $req_prep = self::$pdo->prepare($sql);
-        $req_prep->execute();
-        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
-        $tab = $req_prep->fetchAll();
-        return $tab;
-    }
 
     public static function SQL ($sql){
         echo $sql . "<br><br>";

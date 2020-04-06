@@ -8,15 +8,22 @@ let listFilter = [];
 
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 2){
+        if (charge) {
+            charge = true
+            if (listFilter.length > 0){
 
+            } else {
+                selectPlage(this.value);
+            }
+        }
     }
 });
 
 document.getElementById("search-btn").addEventListener("click", function () {
     let val = document.getElementById("search-input").value;
-    if (charge && filter.length !== 0) {
+    if (charge) {
         charge = false;
-        if (listFilter > 0) {
+        if (listFilter.length > 0) {
             selectWithFilter(val, filter);
         } else {
             selectPlage(val);
@@ -36,7 +43,7 @@ function createCard(tab) {
             let card = document.createElement("div");
             let HTML = "<div class='card'>\n" +
                 "                <div class='card-image'>\n" +
-                "                    <img src= \"" + tab[i].src + "\"  />\n" +
+                "                    <img src='./img/plage/" + tab[i].src + "'/>\n" +
                 "                    <a class='btn-floating halfway-fab waves-effect waves-light sea'><i class='material-icons'>chevron_right</i></a>\n" +
                 "                </div>\n" +
                 "                <div class='card-content'>\n" +
