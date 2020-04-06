@@ -16,7 +16,7 @@ document.getElementById("search-btn").addEventListener("click", function () {
     let val = document.getElementById("search-input").value;
     if (charge && filter.length !== 0) {
         charge = false;
-        if (filter) {
+        if (listFilter > 0) {
             selectWithFilter(val, filter);
         } else {
             selectPlage(val);

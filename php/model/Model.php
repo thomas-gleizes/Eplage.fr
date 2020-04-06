@@ -35,10 +35,11 @@ class Model{
         $filter = explode(',', $filter);
 
     }
+    
 
 
-    public static function selectAllService (){
-        $sql = "SELECT * FROM tbl_service";
+    public static function selectRandomPlage (){
+        $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, src FROM tbl_business b JOIN tbl_picture p ON b.ID = p.ID_plage GROUP BY (b.ID) ORDER BY RAND() LIMIT 8;";
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute();
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);

@@ -12,9 +12,6 @@ class Controller {
         } else echo json_encode("error");
     }
 
-    public static function getFilter(){
-        echo json_encode(Model::selectAllService());
-    }
 
 
     public static function SQL (){
