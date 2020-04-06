@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 30 mars 2020 à 15:54
+-- Généré le : lun. 06 avr. 2020 à 14:35
 -- Version du serveur :  10.4.11-MariaDB
--- Version de PHP :  7.2.26
+-- Version de PHP : 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,37 +19,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `eplage`
+-- Base de données : `eplage`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `tbl_picture`
+-- Structure de la table `tbl_businesses`
 --
 
-CREATE TABLE `tbl_picture` (
-  `ID` int(11) NOT NULL,
-  `ID_Plage` int(11) NOT NULL,
-  `src` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Déchargement des données de la table `tbl_picture`
---
-
-INSERT INTO `tbl_picture` (`ID`, `ID_Plage`, `src`) VALUES
-(1, 2, './img/plage/palge1.jpg'),
-(2, 1, './img/plage/plage2.jpg'),
-(3, 1, './img/plage/plage3.jpg\r\n');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `tbl_plage`
---
-
-CREATE TABLE `tbl_plage` (
+CREATE TABLE `tbl_businesses` (
   `ID` int(11) NOT NULL,
   `NAME` varchar(50) NOT NULL,
   `COUNTRY` varchar(50) NOT NULL,
@@ -60,122 +39,161 @@ CREATE TABLE `tbl_plage` (
   `PHONE` varchar(20) NOT NULL,
   `MAIL` varchar(100) NOT NULL,
   `FLEACHID` int(11) NOT NULL,
-  `LONGITUDE` float NOT NULL,
-  `LATTITUDE` float NOT NULL
+  `LONG` float NOT NULL,
+  `LAT` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `tbl_plage`
+-- Déchargement des données de la table `tbl_businesses`
 --
 
-INSERT INTO `tbl_plage` (`ID`, `NAME`, `COUNTRY`, `COUNTY`, `CITY`, `ADRESS`, `ZIPCODE`, `PHONE`, `MAIL`, `FLEACHID`, `LONGITUDE`, `LATTITUDE`) VALUES
-(1, 'Plage 1', 'France', 'Herault', 'Carnon', '12 avenue de l\'étang', 34280, '04 XX XX XX XX', 'plage2@email.com', 1, 43.5441, 3.98158),
-(2, 'Plage 2', 'France', 'Herault', 'Palavas', '30 rue de la mer', 34250, '04 XX XX XX XX', 'plage1@email.fr', 0, 43.5289, 3.93667);
+INSERT INTO `tbl_businesses` (`ID`, `NAME`, `COUNTRY`, `COUNTY`, `CITY`, `ADRESS`, `ZIPCODE`, `PHONE`, `MAIL`, `FLEACHID`, `LONG`, `LAT`) VALUES
+(1, 'La Grand Plage', 'France', 'Herault', 'Carnon', '12 avenue de l\'étang', 34280, '04 XX XX XX XX', 'plage2@email.com', 1, 43.5441, 3.98158),
+(2, 'Azur plage', 'France', 'Herault', 'Palavas', '30 rue de la mer', 34250, '04 XX XX XX XX', 'plage1@email.fr', 2, 43.5289, 3.93667),
+(3, 'La Petite Plage', 'France', 'Var', 'Toulon', '425 rue des galés', 83000, '04 XX XX XX XX ', 'LAPP@email.com', 3, 43.0626, 5.56585);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `tbl_service`
+-- Structure de la table `tbl_pictures`
 --
 
-CREATE TABLE `tbl_service` (
+CREATE TABLE `tbl_pictures` (
+  `BID` int(11) NOT NULL,
+  `src` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `tbl_pictures`
+--
+
+INSERT INTO `tbl_pictures` (`BID`, `src`) VALUES
+(1, 'plage1.jpg\r\n'),
+(1, 'plage4.jpg\r\n'),
+(2, 'plage2.jpg'),
+(3, 'plage3.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `tbl_services`
+--
+
+CREATE TABLE `tbl_services` (
   `ID` int(11) NOT NULL,
   `name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `tbl_service`
+-- Déchargement des données de la table `tbl_services`
 --
 
-INSERT INTO `tbl_service` (`ID`, `name`) VALUES
-(1, 'Accés Handicapé');
+INSERT INTO `tbl_services` (`ID`, `name`) VALUES
+(1, 'Accés Handicapé'),
+(2, 'SERV2'),
+(3, 'SERV3'),
+(4, 'SERV4'),
+(5, 'SERV5'),
+(6, 'SERV6'),
+(7, 'SERV7'),
+(8, 'SERV8'),
+(9, 'SERV9'),
+(10, 'SERV10'),
+(11, 'SERV11'),
+(12, 'SERV12'),
+(13, 'SERV13'),
+(14, 'SERV14'),
+(15, 'SERV15'),
+(16, 'SERV16'),
+(17, 'SERV17'),
+(18, 'SERV18'),
+(19, 'SERV19'),
+(20, 'SERV20');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `tbl_service_plage`
+-- Structure de la table `tbl_service_buisnesse`
 --
 
-CREATE TABLE `tbl_service_plage` (
-  `id_Service` int(11) NOT NULL,
-  `id_Plage` int(11) NOT NULL
+CREATE TABLE `tbl_service_buisnesse` (
+  `BID` int(11) NOT NULL,
+  `SID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `tbl_service_plage`
+-- Déchargement des données de la table `tbl_service_buisnesse`
 --
 
-INSERT INTO `tbl_service_plage` (`id_Service`, `id_Plage`) VALUES
-(1, 2);
+INSERT INTO `tbl_service_buisnesse` (`BID`, `SID`) VALUES
+(1, 1),
+(2, 1),
+(2, 2),
+(3, 3);
 
 --
 -- Index pour les tables déchargées
 --
 
 --
--- Index pour la table `tbl_picture`
+-- Index pour la table `tbl_businesses`
 --
-ALTER TABLE `tbl_picture`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `PalgePicture` (`ID_Plage`);
-
---
--- Index pour la table `tbl_plage`
---
-ALTER TABLE `tbl_plage`
+ALTER TABLE `tbl_businesses`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Index pour la table `tbl_service`
+-- Index pour la table `tbl_pictures`
 --
-ALTER TABLE `tbl_service`
+ALTER TABLE `tbl_pictures`
+  ADD PRIMARY KEY (`BID`,`src`),
+  ADD KEY `PalgePicture` (`BID`);
+
+--
+-- Index pour la table `tbl_services`
+--
+ALTER TABLE `tbl_services`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Index pour la table `tbl_service_plage`
+-- Index pour la table `tbl_service_buisnesse`
 --
-ALTER TABLE `tbl_service_plage`
-  ADD KEY `idPlage` (`id_Plage`),
-  ADD KEY `idService` (`id_Service`);
+ALTER TABLE `tbl_service_buisnesse`
+  ADD PRIMARY KEY (`BID`,`SID`),
+  ADD KEY `idPlage` (`BID`),
+  ADD KEY `idService` (`SID`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT pour la table `tbl_picture`
+-- AUTO_INCREMENT pour la table `tbl_businesses`
 --
-ALTER TABLE `tbl_picture`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `tbl_businesses`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT pour la table `tbl_plage`
+-- AUTO_INCREMENT pour la table `tbl_services`
 --
-ALTER TABLE `tbl_plage`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT pour la table `tbl_service`
---
-ALTER TABLE `tbl_service`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `tbl_services`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Contraintes pour les tables déchargées
 --
 
 --
--- Contraintes pour la table `tbl_picture`
+-- Contraintes pour la table `tbl_pictures`
 --
-ALTER TABLE `tbl_picture`
-  ADD CONSTRAINT `PalgePicture` FOREIGN KEY (`ID_Plage`) REFERENCES `tbl_plage` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `tbl_pictures`
+  ADD CONSTRAINT `PalgePicture` FOREIGN KEY (`BID`) REFERENCES `tbl_businesses` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `tbl_service_plage`
+-- Contraintes pour la table `tbl_service_buisnesse`
 --
-ALTER TABLE `tbl_service_plage`
-  ADD CONSTRAINT `idPlage` FOREIGN KEY (`id_Plage`) REFERENCES `tbl_plage` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `idService` FOREIGN KEY (`id_Service`) REFERENCES `tbl_service` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `tbl_service_buisnesse`
+  ADD CONSTRAINT `idPlage` FOREIGN KEY (`BID`) REFERENCES `tbl_businesses` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `idService` FOREIGN KEY (`SID`) REFERENCES `tbl_services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
