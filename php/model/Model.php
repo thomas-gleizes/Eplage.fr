@@ -67,13 +67,7 @@ class Model{
         echo "<br><br>";
 
 
-        for ($i = 1; $i < sizeof($tab); $i++){
-            foreach ($tab[$listFilter[$i]] as $item){
-                var_dump($item);
-                echo "<br>";
-            }
-            echo "<br>";
-        }
+
 
 
         echo "<br><br>";

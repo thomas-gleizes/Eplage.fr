@@ -9,7 +9,7 @@ let listFilter = [];
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 2){
         if (charge) {
-            charge = true
+            charge = true;
             if (listFilter.length > 0){
 
             } else {
@@ -109,7 +109,7 @@ document.getElementById("geo-btn").addEventListener("click", function () {
 function generatefilter() {
     let div = document.getElementById("list-filter");
     for (let i = 1; i < 21; i++) {
-        let input = document.createElement("p");
+        let input = document.createElement("div");
         input.innerHTML = "<label>\n" +
             "                    <input id='check-" + i + "' type='checkbox' class='filled-in'/>\n" +
             "                    <span> Service " + i + " </span>\n" +
