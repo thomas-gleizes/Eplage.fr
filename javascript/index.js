@@ -8,14 +8,7 @@ let listFilter = [];
 
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 2){
-        if (charge) {
-            charge = true;
-            if (listFilter.length > 0){
-
-            } else {
-                selectPlage(this.value);
-            }
-        }
+        // TODO autocomplete bar
     }
 });
 
@@ -33,6 +26,7 @@ document.getElementById("search-btn").addEventListener("click", function () {
 
 
 function createCard(tab) {
+    console.log(tab);
     document.getElementById("list").innerHTML = "";
     let list = document.getElementById("list");
     if (tab.length === 0) {
@@ -52,9 +46,11 @@ function createCard(tab) {
                 "                </div>\n" +
                 "                <div class='card-action'>\n" +
                 "                    <i class='material-icons small'>map</i> <div>" + tab[i].CITY + " (" + tab[i].ZIPCODE.substring(0, 2) + ") </div>\n";
-            if (tab[i].FLEACHID !== 0) {
+            console.log(typeof  tab[i].FLEACHID)
+            if (tab[i].FLEACHID != '0') {
+
                 //TODO nombre de transate disponnible
-                //HTML += "<div class='count'><i class='count-icons material-icons small left'>beach_access</i> ID </div>\n ";
+                getTransat(tab[i].FLEACHID)
             } else {
                 //TODO afficher message
                 //HTML += "";
@@ -106,20 +102,22 @@ document.getElementById("geo-btn").addEventListener("click", function () {
 });
 
 
-function generatefilter() {
+function generatefilter(tab) {
+    console.log(tab)
     let div = document.getElementById("list-filter");
-    for (let i = 1; i < 21; i++) {
+    for (let i = 0; i < tab.length; i++) {
+
         let input = document.createElement("div");
         input.innerHTML = "<label>\n" +
-            "                    <input id='check-" + i + "' type='checkbox' class='filled-in'/>\n" +
-            "                    <span> Service " + i + " </span>\n" +
+            "                    <input id='check-" + tab[i].ID + "' type='checkbox' class='filled-in'/>\n" +
+            "                    <span>" + tab[i].name + "</span>\n" +
             "                </label>";
         input.className = "check col l2 m3 s4";
         div.appendChild(input);
-        document.getElementById("check-" + i).addEventListener('click', function () {
-            let index = listFilter.indexOf(i);
+        document.getElementById("check-" + tab[i].ID).addEventListener('click', function () {
+            let index = listFilter.indexOf(tab[i].ID);
             if (index === -1) {
-                listFilter.push(i);
+                listFilter.push(tab[i].ID);
             } else {
                 listFilter.splice(index, 1)
             }
@@ -128,7 +126,7 @@ function generatefilter() {
     }
 }
 
-generatefilter();
+getFilter();
 
 
 

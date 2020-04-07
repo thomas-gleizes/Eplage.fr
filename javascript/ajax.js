@@ -32,3 +32,25 @@ function selectProximity(longitude, lattitude) {
     request.send(null);
 }
 
+function getFilter() {
+    let url = "./php/controller/router.php?filter=true";
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        generatefilter(JSON.parse(request.responseText));
+    });
+    request.send(null);
+}
+
+function getTransat(fleachID) {
+    let url = "https://www.fleach.com/api/json.php?id=" + fleachID;
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        console.log((request.responseText));
+    });
+    request.send(null);
+}
+
+
+

@@ -12,6 +12,10 @@ class Controller {
         } else echo json_encode("error");
     }
 
+    public static function getFilter(){
+        echo json_encode(Model::selectAllFilter());
+    }
+
 
 
     public static function SQL (){

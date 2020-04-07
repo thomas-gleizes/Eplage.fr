@@ -23,7 +23,7 @@ class Model{
     }
 
     public static function selectPlage ($val){
-        $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (b.ID) LIMIT 8";
+        $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, FLEACHID, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (b.ID) LIMIT 8";
         $values['val'] = $val . '%';
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($values);
@@ -52,9 +52,8 @@ class Model{
         foreach ($tab as $item){
            $res =  utils::reduce($res, utils::parse($item));
         }
-        
         if (!empty($res)){
-            $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE";
+            $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, FLEACHID, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE";
             $values = [];
             for ($i = 0; $i < sizeof($res); $i++){
                 $values['BID' . $i] = $res[$i];
@@ -63,8 +62,8 @@ class Model{
                     $sql = $sql . " OR ";
                 }
             }
-            $sql = $sql . " AND NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val";
-            $values['val'] = $val . "%";
+            //$sql = $sql . " AND NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val";
+            //$values['val'] = $val . "%";
             $sql = $sql . " GROUP BY (b.id)";
             $req_prep = self::$pdo->prepare($sql);
             $req_prep->execute($values);
@@ -77,6 +76,14 @@ class Model{
         return $tab;
     }
 
+    public static function selectAllFilter(){
+        $sql = "SELECT * FROM tbl_services";
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute();
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        $tab = $req_prep->fetchAll();
+        return $tab;
+    }
 
 
     public static function SQL ($sql){
