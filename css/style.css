@@ -195,3 +195,8 @@ nav {
         padding: 20px 10px;
     }
 }
+
+[type="checkbox"].filled-in:checked+span:not(.lever):after {
+    background-color: #2ecbfe !important;
+    border-color: #2ecbfe !important;
+}

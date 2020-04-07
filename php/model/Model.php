@@ -1,6 +1,7 @@
 <?php
 
 require_once ('../config/Conf.php');
+require_once ('../lib/utils.php');
 
 class Model{
     public static $pdo;
@@ -34,6 +35,12 @@ class Model{
     public static function selectPlageWithFilter ($val, $listFilter){
         $listFilter = explode(',', $listFilter);
         $tab = [];
+        foreach ($listFilter as $item) {
+            echo "filter : " . $item . "<br>";
+        }
+        echo "<br> tab : ";
+
+
 
         foreach ($listFilter as $filter){
             $sql = "SELECT BID FROM tbl_service_buisnesse WHERE SID = :filter";
@@ -43,20 +50,34 @@ class Model{
             $req_prep->setFetchMode(PDO::FETCH_ASSOC);
             $tab[$filter] = $req_prep->fetchAll();
         }
+        var_dump($tab);
+        echo "<br><br>";
 
-
+        foreach ($tab as $item){
+            var_dump($item);
+            echo "<br>";
+        }
 
         $res = [];
-        $first = true;
-        foreach ($tab as $item) {
-            if ($first) {
-                $first = false;
-                $res = $item;
-            }
+
+        for ($i = 0; $i < sizeof($tab[$listFilter[0]]); $i++){
+            $res[$i] = $tab[$listFilter[0]][$i]['BID'];
+            echo $i . " : " . $res[$i] . "<br>";
         }
-        
+        echo "<br><br>";
 
 
+        for ($i = 1; $i < sizeof($tab); $i++){
+            foreach ($tab[$listFilter[$i]] as $item){
+                var_dump($item);
+                echo "<br>";
+            }
+            echo "<br>";
+        }
+
+
+        echo "<br><br>";
+        var_dump($res);
     }
 
 

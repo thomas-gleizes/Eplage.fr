@@ -3,10 +3,13 @@
 class utils {
 
 
-    public static function isExist ($tab, $n){
-        $n = 0;
-        foreach ($tab as $item) {
+    public static function indexOf ($tab, $n){
+        $i = 0;
 
+        foreach ($tab as $item) {
+            if ($item == $n) return $i;
+            $i++;
         }
+        return -1;
     }
 }
