@@ -35,12 +35,6 @@ class Model{
     public static function selectPlageWithFilter ($val, $listFilter){
         $listFilter = explode(',', $listFilter);
         $tab = [];
-        foreach ($listFilter as $item) {
-            echo "filter : " . $item . "<br>";
-        }
-        echo "<br> tab : ";
-
-
 
         foreach ($listFilter as $filter){
             $sql = "SELECT BID FROM tbl_service_buisnesse WHERE SID = :filter";
@@ -50,28 +44,20 @@ class Model{
             $req_prep->setFetchMode(PDO::FETCH_ASSOC);
             $tab[$filter] = $req_prep->fetchAll();
         }
-        var_dump($tab);
-        echo "<br><br>";
-
-        foreach ($tab as $item){
-            var_dump($item);
-            echo "<br>";
-        }
 
         $res = [];
-
         for ($i = 0; $i < sizeof($tab[$listFilter[0]]); $i++){
             $res[$i] = $tab[$listFilter[0]][$i]['BID'];
-            echo $i . " : " . $res[$i] . "<br>";
         }
-        echo "<br><br>";
+        foreach ($tab as $item){
+           $res =  utils::reduce($res, utils::parse($item));
+        }
 
+        $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE"
+        for ($i = 0; $i < sizeof($res); $i++){
 
+        }
 
-
-
-        echo "<br><br>";
-        var_dump($res);
     }
 
 
