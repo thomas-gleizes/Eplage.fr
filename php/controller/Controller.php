@@ -7,7 +7,7 @@ class Controller {
     public static function getPlage (){
         if (isset($_GET['search'])){
             if (isset($_GET['filter'])){
-                Model::selectPlageWithFilter($_GET['search'], $_GET['filter']);
+                echo json_encode(Model::selectPlageWithFilter($_GET['search'], $_GET['filter']));
             } else echo json_encode(Model::selectPlage($_GET['search']));
         } else echo json_encode("error");
     }

@@ -24,7 +24,7 @@ document.getElementById("search-btn").addEventListener("click", function () {
     if (charge) {
         charge = false;
         if (listFilter.length > 0) {
-            selectWithFilter(val, filter);
+            selectWithFilter(val, listFilter);
         } else {
             selectPlage(val);
         }

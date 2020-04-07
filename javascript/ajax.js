@@ -16,6 +16,7 @@ function selectWithFilter(val, filter) {
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
+        createCard(JSON.parse(request.responseText));
         charge = true;
     });
     request.send(null);

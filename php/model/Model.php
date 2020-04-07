@@ -53,8 +53,7 @@ class Model{
            $res =  utils::reduce($res, utils::parse($item));
         }
 
-        echo "<br><br>";
-        $sql = "SELECT b.ID FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE";
+        $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE";
         $values = [];
         for ($i = 0; $i < sizeof($res); $i++){
             $values['BID' . $i] = $res[$i];
@@ -63,14 +62,12 @@ class Model{
                 $sql = $sql . " OR ";
             }
         }
-        $sql = $sql . " NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (b.ID)";
-        echo $sql;
+        $sql = $sql . " AND NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (b.ID)";
         $values['val'] = $val . "%";
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($values);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
         $tab = $req_prep->fetchAll();
-        var_dump($tab);
         return $tab;
     }
 
