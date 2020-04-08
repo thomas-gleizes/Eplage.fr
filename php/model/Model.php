@@ -36,7 +36,6 @@ class Model{
         $listFilter = explode(',', $listFilter);
         $tab = [];
 
-
         foreach ($listFilter as $filter){
             $sql = "SELECT BID FROM tbl_service_buisnesse WHERE SID = :filter";
             $value['filter'] = $filter;
@@ -56,35 +55,42 @@ class Model{
             if ($first) {
                 $first = false;
             } else {
-                $res =  utils::reduce($res, utils::parse($item));
+                $res = utils::reduce($res, utils::parse($item, 'BID'));
             }
         }
 
-        echo "<br> res 2: ";
-        var_dump($res);
-        echo "<br>";
         if (!empty($res)){
-            $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, FLEACHID, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE";
-            $values = [];
-            for ($i = 0; $i < sizeof($res); $i++){
-                $values['BID' . $i] = $res[$i];
-                $sql = $sql . " ID = :BID" . $i;
-                if ($i + 1 != sizeof($res)){
-                    $sql = $sql . " OR ";
-                }
-            }
-            //$sql = $sql . " AND NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val";
-            //$values['val'] = $val . "%";
-            $sql = $sql . " GROUP BY (b.id)";
+            $sql = "SELECT ID FROM tbl_businesses WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (ID)";
+            $values['val'] = $val . '%';
             $req_prep = self::$pdo->prepare($sql);
             $req_prep->execute($values);
             $req_prep->setFetchMode(PDO::FETCH_ASSOC);
-            $tab = $req_prep->fetchAll();
-
+            $tabID = $req_prep->fetchAll();
+            if (!empty($tabID)){
+                $res = utils::reduce($res, utils::parse($tabID, 'ID'));
+                if (!empty($res)){
+                    $values = [];
+                    $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, FLEACHID, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE ";
+                    for ($i = 0; $i < sizeof($res); $i++) {
+                        $values['BID' . $i] = $res[$i];
+                        $sql = $sql . " ID = :BID" . $i;
+                        if ($i + 1 != sizeof($res)){
+                            $sql = $sql . " OR ";
+                        }
+                    }
+                    $sql = $sql . " GROUP BY (b.ID);";
+                    $req_prep = self::$pdo->prepare($sql);
+                    $req_prep->execute($values);
+                    $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+                    $tab = $req_prep->fetchAll();
+                }
+            } else {
+                $tab = [];
+            }
         } else {
             $tab = [];
         }
-        echo "<br> --------- END ------------";
+        //echo "<br><br> --------- END ------------";
         return $tab;
     }
 
