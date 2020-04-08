@@ -46,17 +46,14 @@ function createCard(tab) {
                 "                </div>\n" +
                 "                <div class='card-action'>\n" +
                 "                    <i class='material-icons small'>map</i> <div>" + tab[i].CITY + " (" + tab[i].ZIPCODE.substring(0, 2) + ") </div>\n";
-            console.log(typeof  tab[i].FLEACHID)
-            if (tab[i].FLEACHID != '0') {
-
+            if (tab[i].FLEACHID !== '0') {
                 //TODO nombre de transate disponnible
+                HTML += "<div class='count'><i class='count-icons material-icons small left'>beach_access</i> <div id='TranDispo'>ID</div></div>\n ";
                 getTransat(tab[i].FLEACHID)
             } else {
                 //TODO afficher message
-                //HTML += "";
             }
-            HTML += "          <div class='count'><i class='count-icons material-icons small left'>beach_access</i> ID </div>\n " +
-                "                </div>\n" +
+            HTML += "            </div>\n" +
                 "            </div>";
             card.innerHTML = HTML;
             card.id = "Plage-" + tab[i].ID;
@@ -101,12 +98,9 @@ document.getElementById("geo-btn").addEventListener("click", function () {
     }
 });
 
-
 function generatefilter(tab) {
-    console.log(tab)
     let div = document.getElementById("list-filter");
     for (let i = 0; i < tab.length; i++) {
-
         let input = document.createElement("div");
         input.innerHTML = "<label>\n" +
             "                    <input id='check-" + tab[i].ID + "' type='checkbox' class='filled-in'/>\n" +
@@ -124,6 +118,11 @@ function generatefilter(tab) {
             console.log(listFilter);
         });
     }
+}
+
+
+function displayTransatDispo(tab){
+
 }
 
 getFilter();

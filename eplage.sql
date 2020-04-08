@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 06 avr. 2020 à 14:35
+-- Généré le : mer. 08 avr. 2020 à 17:10
 -- Version du serveur :  10.4.11-MariaDB
 -- Version de PHP : 7.4.3
 
@@ -29,18 +29,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tbl_businesses` (
-  `ID` int(11) NOT NULL,
-  `NAME` varchar(50) NOT NULL,
-  `COUNTRY` varchar(50) NOT NULL,
-  `COUNTY` varchar(40) NOT NULL,
-  `CITY` varchar(50) NOT NULL,
-  `ADRESS` varchar(100) NOT NULL,
-  `ZIPCODE` int(10) NOT NULL,
-  `PHONE` varchar(20) NOT NULL,
-  `MAIL` varchar(100) NOT NULL,
-  `FLEACHID` int(11) NOT NULL,
-  `LONG` float NOT NULL,
-  `LAT` float NOT NULL
+                                `ID` int(11) NOT NULL,
+                                `NAME` varchar(50) NOT NULL,
+                                `COUNTRY` varchar(50) NOT NULL,
+                                `COUNTY` varchar(40) NOT NULL,
+                                `CITY` varchar(50) NOT NULL,
+                                `ADRESS` varchar(100) NOT NULL,
+                                `ZIPCODE` int(10) NOT NULL,
+                                `PHONE` varchar(20) NOT NULL,
+                                `MAIL` varchar(100) NOT NULL,
+                                `FLEACHID` int(11) NOT NULL,
+                                `LONG` float NOT NULL,
+                                `LAT` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -50,7 +50,7 @@ CREATE TABLE `tbl_businesses` (
 INSERT INTO `tbl_businesses` (`ID`, `NAME`, `COUNTRY`, `COUNTY`, `CITY`, `ADRESS`, `ZIPCODE`, `PHONE`, `MAIL`, `FLEACHID`, `LONG`, `LAT`) VALUES
 (1, 'La Grand Plage', 'France', 'Herault', 'Carnon', '12 avenue de l\'étang', 34280, '04 XX XX XX XX', 'plage2@email.com', 1, 43.5441, 3.98158),
 (2, 'Azur plage', 'France', 'Herault', 'Palavas', '30 rue de la mer', 34250, '04 XX XX XX XX', 'plage1@email.fr', 2, 43.5289, 3.93667),
-(3, 'La Petite Plage', 'France', 'Var', 'Toulon', '425 rue des galés', 83000, '04 XX XX XX XX ', 'LAPP@email.com', 3, 43.0626, 5.56585);
+(3, 'La Petite Plage', 'France', 'Var', 'Toulon', '425 rue des galés', 83000, '04 XX XX XX XX ', 'LAPP@email.com', 0, 43.0626, 5.56585);
 
 -- --------------------------------------------------------
 
@@ -59,8 +59,8 @@ INSERT INTO `tbl_businesses` (`ID`, `NAME`, `COUNTRY`, `COUNTY`, `CITY`, `ADRESS
 --
 
 CREATE TABLE `tbl_pictures` (
-  `BID` int(11) NOT NULL,
-  `src` varchar(50) NOT NULL
+                              `BID` int(11) NOT NULL,
+                              `src` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -68,8 +68,8 @@ CREATE TABLE `tbl_pictures` (
 --
 
 INSERT INTO `tbl_pictures` (`BID`, `src`) VALUES
-(1, 'plage1.jpg\r\n'),
-(1, 'plage4.jpg\r\n'),
+(1, 'plage1.jpg'),
+(1, 'plage4.jpg'),
 (2, 'plage2.jpg'),
 (3, 'plage3.jpg');
 
@@ -80,8 +80,8 @@ INSERT INTO `tbl_pictures` (`BID`, `src`) VALUES
 --
 
 CREATE TABLE `tbl_services` (
-  `ID` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL
+                              `ID` int(11) NOT NULL,
+                              `name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -117,8 +117,8 @@ INSERT INTO `tbl_services` (`ID`, `name`) VALUES
 --
 
 CREATE TABLE `tbl_service_buisnesse` (
-  `BID` int(11) NOT NULL,
-  `SID` int(11) NOT NULL
+                                       `BID` int(11) NOT NULL,
+                                       `SID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -127,9 +127,15 @@ CREATE TABLE `tbl_service_buisnesse` (
 
 INSERT INTO `tbl_service_buisnesse` (`BID`, `SID`) VALUES
 (1, 1),
+(1, 2),
+(1, 6),
+(1, 8),
 (2, 1),
 (2, 2),
-(3, 3);
+(2, 8),
+(3, 1),
+(3, 3),
+(3, 5);
 
 --
 -- Index pour les tables déchargées
