@@ -36,6 +36,7 @@ class Model{
         $listFilter = explode(',', $listFilter);
         $tab = [];
 
+
         foreach ($listFilter as $filter){
             $sql = "SELECT BID FROM tbl_service_buisnesse WHERE SID = :filter";
             $value['filter'] = $filter;
@@ -49,9 +50,19 @@ class Model{
         for ($i = 0; $i < sizeof($tab[$listFilter[0]]); $i++){
             $res[$i] = $tab[$listFilter[0]][$i]['BID'];
         }
+
+        $first = true;
         foreach ($tab as $item){
-           $res =  utils::reduce($res, utils::parse($item));
+            if ($first) {
+                $first = false;
+            } else {
+                $res =  utils::reduce($res, utils::parse($item));
+            }
         }
+
+        echo "<br> res 2: ";
+        var_dump($res);
+        echo "<br>";
         if (!empty($res)){
             $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, FLEACHID, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE";
             $values = [];
@@ -73,6 +84,7 @@ class Model{
         } else {
             $tab = [];
         }
+        echo "<br> --------- END ------------";
         return $tab;
     }
 
