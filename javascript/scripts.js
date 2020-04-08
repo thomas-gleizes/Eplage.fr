@@ -79,14 +79,6 @@ document.getElementById("filter-btn").addEventListener("click", function () {
     }
 });
 
-document.getElementById("search-btn").addEventListener("mouseover", function () {
-    this.style.backgroundColor = sea
-});
-
-document.getElementById("search-btn").addEventListener("mouseout", function () {
-    this.style.backgroundColor = sand
-});
-
 
 document.getElementById("geo-btn").addEventListener("click", function () {
     if (!geo) {
@@ -122,7 +114,7 @@ function generatefilter(tab) {
 
 
 function displayTransatDispo(tab){
-
+    console.log(tab);
 }
 
 getFilter();

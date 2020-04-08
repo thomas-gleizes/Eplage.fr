@@ -7,7 +7,7 @@ body {
 
 
 .sea {
-    background-color: #2ecbfe;
+    background-color: #3ccebf;
 }
 
 .sand {
@@ -197,6 +197,6 @@ nav {
 }
 
 [type="checkbox"].filled-in:checked+span:not(.lever):after {
-    background-color: #2ecbfe !important;
-    border-color: #2ecbfe !important;
+    background-color: #3ccebf !important;
+    border-color: #3ccebf !important;
 }

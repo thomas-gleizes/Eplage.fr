@@ -78,7 +78,7 @@ class Model{
                             $sql = $sql . " OR ";
                         }
                     }
-                    $sql = $sql . " GROUP BY (b.ID) LIMIT 16;";
+                    $sql = $sql . " GROUP BY (b.ID) LIMIT 8;";
                     $req_prep = self::$pdo->prepare($sql);
                     $req_prep->execute($values);
                     $req_prep->setFetchMode(PDO::FETCH_ASSOC);

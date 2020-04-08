@@ -43,7 +43,7 @@ function getFilter() {
 }
 
 function getTransat(fleachID) {
-    let url = "http://www.fleach.com/api/json.php?id=" + fleachID;
+    let url = "https://www.fleach.com/api/eplage.php?id=" + fleachID;
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
