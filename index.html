@@ -10,12 +10,13 @@
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <script defer src="javascript/ajax.js" type="text/javascript"></script>
     <script defer src="javascript/scripts.js" type="text/javascript"></script>
+    <script defer src="javascript/materialize.min.js" type="text/javascript"></script>
 </head>
 <body>
 <header>
     <div class="header">
         <nav class="sea">
-            <a href="./" class="left hide-on-small-and-down"><img src="./img/logo/Logo_blanc.png" alt="logo eplage"></a>
+            <a href="./" class="logo left hide-on-small-and-down"><img class="logo-img" src="./img/logo/Logo_blanc.png" alt="logo eplage"></a>
             <ul>
                 <li id="search">
                     <input id="search-input" placeholder="Recherche ( Etabissement, ville, département, ...)"
@@ -30,10 +31,37 @@
             </ul>
         </nav>
 
-        <h1 id="warning"> 9 résultat - 0 filtre utilisée</h1>
+        <h1 id="warning"> 9 résultat - <span id="nb-filter"> 0 filtre utilisée</span></h1>
         <div class="separator"></div>
         <div class="row hidden" id="list-filter">
 
+        </div>
+    </div>
+    <div id="autocomplet-div">
+        <div id="auto-list">
+            <div id="zone-geo">
+                <p class="name-auto">Zone Géographiques <span class="count-auto" id="res-geo"> 2 resultat(s)</span></p>
+                <div class="liste-search" id="liste-zone-geo">
+                    <p class="li-eta">Plagess privée, 80 - Var <span class="count-eta"> 10 etablisemment(s)</span></p>
+                    <p class="li-eta"> Plagess privée, 34 - Hérault <span class="count-eta"> 20 etablisemment(s)</span></p>
+                </div>
+            </div>
+
+            <div id="local">
+                <p class="name-auto">Localité <span class="count-auto" id="res-local"> 2 resultat(s)</span></p>
+                <div class="liste-search" id="liste-zone-local">
+                    <p class="li-eta">Plagess privée, 80 - Var <span class="count-eta"> 10 etablisemment(s)</span></p>
+                    <p class="li-eta"> Plagess privée, 34 - Hérault <span class="count-eta"> 20 etablisemment(s)</span></p>
+                </div>
+            </div>
+
+            <div id="etabli">
+                <p class="name-auto">Localité <span class="count-auto" id="res-etabli"> 2 résultat(s)</span></p>
+                <div class="liste-search" id="liste-zone-etabli">
+                    <p class="li-eta">Plagess privée, 80 - Var <span class="count-eta"> 10 etablisemment(s)</span></p>
+                    <p class="li-eta"> Plagess privée, 34 - Hérault <span class="count-eta"> 20 etablisemment(s)</span></p>
+                </div>
+            </div>
         </div>
     </div>
 </header>
@@ -198,6 +226,6 @@
 
     </div>
 </main>
-<script src="javascript/materialize.min.js" type="text/javascript"></script>
+
 </body>
 </html>

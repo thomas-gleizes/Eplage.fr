@@ -7,8 +7,12 @@ let listFilter = [];
 
 
 document.getElementById("search-input").addEventListener('keyup', function () {
-    if (this.value.length > 2){
-        // TODO autocomplete bar
+    if (this.value.length > 2 && charge){
+        if (listFilter.length > 0){
+
+        } else {
+            getInf(this.value);
+        }
     }
 });
 
@@ -30,9 +34,9 @@ function createCard(tab) {
     document.getElementById("list").innerHTML = "";
     let list = document.getElementById("list");
     if (tab.length === 0) {
-        document.getElementById("warning").innerHTML = "Aucun résultat";
+        document.getElementById("warning").innerHTML = "Aucun résultat <span id='nb-filter'></span>";
     } else {
-        document.getElementById("warning").innerHTML = tab.length + " résultat(s) trouvées - 0 filtre utilisée";
+        document.getElementById("warning").innerHTML = tab.length + " résultat(s) trouvées - " + listFilter.length + " filtre utilisée(s)";
         for (let i = 0; i < tab.length; i++) {
             let card = document.createElement("div");
             let HTML = "<div class='card'>\n" +
@@ -48,7 +52,7 @@ function createCard(tab) {
                 "                    <i class='material-icons small'>map</i> <div>" + tab[i].CITY + " (" + tab[i].ZIPCODE.substring(0, 2) + ") </div>\n";
             if (tab[i].FLEACHID !== '0') {
                 //TODO nombre de transate disponnible
-                HTML += "<div class='count'><i class='count-icons material-icons small left'>beach_access</i> <div id='TranDispo'>ID</div></div>\n ";
+                HTML += "<div id='TranDispo-" + tab[i].FLEACHID + "' class='count'><i class='count-icons material-icons small left'>beach_access</i><span></span></div>\n ";
                 getTransat(tab[i].FLEACHID)
             } else {
                 //TODO afficher message
@@ -107,7 +111,6 @@ function generatefilter(tab) {
             } else {
                 listFilter.splice(index, 1)
             }
-            console.log(listFilter);
         });
     }
 }
@@ -115,6 +118,9 @@ function generatefilter(tab) {
 
 function displayTransatDispo(tab){
     console.log(tab);
+    let div = document.getElementById("TranDispo-" + tab['id']);
+    div.style.color = tab['color'];
+    div.lastChild.innerHTML = tab['nbr'];
 }
 
 getFilter();

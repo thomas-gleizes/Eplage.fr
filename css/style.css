@@ -5,7 +5,6 @@ body {
 }
 
 
-
 .sea {
     background-color: #3ccebf;
 }
@@ -13,6 +12,7 @@ body {
 .sand {
     background-color: #ffd59b;
 }
+
 
 nav {
     position: fixed;
@@ -26,7 +26,7 @@ nav {
     left: 0px;
     top: 0px;
     position: fixed;
-    z-index: 10;
+    z-index: 1000;
     background-color: #eeeeee;
     height: 100px;
     width: 100%;
@@ -36,6 +36,79 @@ nav {
 .brand-logo {
     margin-left: 3%;
 }
+
+.logo-img {
+    margin-top: 2px;
+    height: 60px;
+    z-index: 10;
+
+}
+
+.logo {
+    margin-left: 5%;
+    height: 64px;
+}
+
+#autocomplet-div {
+    display: none;
+    position: fixed;
+    width: 70%;
+    left: 22%;
+    min-width: 370px;
+    top: 55px;
+    z-index: 100000;
+    color: black;
+}
+
+#auto-list {
+    border-radius: 5px;
+    border: solid 1.5px silver;
+    width: 66%;
+}
+
+#zone-geo  {
+    background-color: #fcfcfc;
+    border-bottom:solid 1px silver;
+}
+
+#local {
+    background-color: #fcfcfc;
+    border-bottom:solid 1px silver;
+    padding: 10px 5px;
+}
+
+#etabli {
+    background-color: #fcfcfc;
+    padding: 10px 5px;
+}
+
+
+.name-auto {
+    display: inline;
+    font-size: 150%;
+    margin: 5px;
+
+}
+
+.count-auto {
+    font-size: 70%;
+    color:#686565;
+}
+
+.count-eta {
+    color: #919191;
+    font-size: 75%;
+}
+
+.li-eta {
+    margin: 5px;
+}
+
+.liste-search {
+    padding: 10px;
+}
+
+
 
 
 
@@ -80,7 +153,7 @@ nav {
 .filter {
     padding: 20px 10%;
     margin: auto;
-    z-index: 10;
+    z-index: 2;
     background-color: #eeeeee;
 }
 
@@ -107,6 +180,13 @@ nav {
     padding: 0px 0px !important;
     font-size: 100% !important;
 }
+
+
+
+
+
+
+
 
 
 
@@ -138,7 +218,7 @@ nav {
 }
 
 .count {
-    right: 5px;
+    right: 10px;
     font-size: 25px;
 }
 
@@ -167,7 +247,6 @@ nav {
 }
 
 
-
 @media (max-width: 600px) {
 
     #search {
@@ -188,11 +267,20 @@ nav {
         padding: 20px 10px;
     }
 
+    #autocomplet-div {
+        left: 3%;
+        width: 90%;
+    }
+
 }
 
 @media (max-width: 900px) {
     .filter {
         padding: 20px 10px;
+    }
+
+    .logo {
+        margin-left: 2%;
     }
 }
 

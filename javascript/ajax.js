@@ -52,5 +52,15 @@ function getTransat(fleachID) {
     request.send(null);
 }
 
+function getInf(val) {
+    let url = "./php/controller/router.php?autosearch=" + val;
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        console.log(JSON.parse(request.responseText));
+    });
+    request.send(null);
+}
+
 
 
