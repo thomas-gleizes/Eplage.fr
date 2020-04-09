@@ -16,6 +16,10 @@ class Controller {
         echo json_encode(Model::selectAllFilter());
     }
 
+    public static function getAutoSearch(){
+        echo json_encode(Model::selectGeographie($_GET['autosearch']));
+    }
+
 
 
     public static function SQL (){

@@ -104,6 +104,11 @@ class Model{
     }
 
 
+    public static function selectGeographie ($val){
+        return 1;
+    }
+
+
     public static function SQL ($sql){
         echo $sql . "<br><br>";
         $req_prep = self::$pdo->prepare($sql);
