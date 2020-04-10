@@ -25,7 +25,7 @@ class Controller {
     }
 
     public static function getAutoEtabli (){
-        echo null;
+        echo json_encode(Model::selectPlage($_GET['searchEtabli']));
     }
 
 

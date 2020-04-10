@@ -17,7 +17,7 @@ function selectWithFilter(val, filter) {
     request.open("GET", url, true);
     request.addEventListener("load", function () {
         createCard(JSON.parse(request.responseText));
-        charge = true;
+        setCharge();
     });
     request.send(null);
 }
@@ -58,6 +58,7 @@ function getGeo(val) {
     request.open("GET", url, true);
     request.addEventListener("load", function () {
         displayGeoAutocopleted(JSON.parse(request.responseText));
+        setCharge();
     });
     request.send(null);
 }
@@ -68,6 +69,18 @@ function getLocal(val) {
     request.open("GET", url, true);
     request.addEventListener("load", function () {
         displayLocalAutocopleted(JSON.parse(request.responseText));
+        setCharge();
+    });
+    request.send(null);
+}
+
+function getEtabli(val) {
+    let url = "./php/controller/router.php?searchEtabli=" + val;
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        displayEtabliAutocopleted(JSON.parse(request.responseText));
+        setCharge();
     });
     request.send(null);
 }

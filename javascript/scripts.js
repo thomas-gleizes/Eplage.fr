@@ -5,14 +5,20 @@ let charge = true;
 let filter = false;
 let listFilter = [];
 
+let autoGeo = false;
+let autolocal = false;
+let autoEtabli = false;
+
 
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 2 && charge){
+        charge = false;
         if (listFilter.length > 0){
 
         } else {
             getGeo(this.value);
             getLocal(this.value);
+            getEtabli(this.value);
         }
     }
 });
@@ -128,10 +134,11 @@ getFilter();
 
 
 function displayGeoAutocopleted(tab) {
-    console.log(tab);
+    console.log("GEO", tab)
     let list = document.getElementById("liste-zone-geo");
     list.innerHTML = "";
     if (tab.length > 0){
+        autoGeo = true;
         tab = tab[0];
         document.getElementById("res-geo").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
@@ -143,12 +150,17 @@ function displayGeoAutocopleted(tab) {
             p.innerHTML = "Plages privée, " + tab[i].depa + " <span class='count-eta'>" + tab[i].NBID + " etablisemment(s)</span>";
             list.appendChild(p);
         }
-    } else document.getElementById("zone-geo").style.display = "none";
+    } else {
+        document.getElementById("zone-geo").style.display = "none";
+        autoGeo = false;
+    }
+    displayAutocomplete();
 }
 
 function displayLocalAutocopleted(tab) {
-    console.log(tab);
+        console.log("Local", tab)
     if (tab.length > 0){
+        autolocal = true;
         tab = tab[0];
         document.getElementById("res-local").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
@@ -162,14 +174,47 @@ function displayLocalAutocopleted(tab) {
             p.innerHTML = "Plages privée, " + tab[i].ZIPCODE.substring(0,2) + " - " + tab[i].CITY + " <span class='count-eta'>" + tab[i].NBID + " etablisemment(s)</span>";
             list.appendChild(p);
         }
-    } else document.getElementById("local").style.display = "none";
-
-
-
+    } else {
+        document.getElementById("local").style.display = "none";
+        autolocal = false;
+    }
+    displayAutocomplete();
 }
 
 
+function  displayEtabliAutocopleted(tab) {
+    console.log("Etabli", tab);
+    if (tab.length > 0){
+        autoEtabli = true;
+        document.getElementById("res-etabli").innerHTML = tab.length + " resultat(s)";
+        document.getElementById("autocomplet-div").style.display = "inline";
+        document.getElementById("local").style.display = "block";
+        let list = document.getElementById("liste-zone-etabli");
+        list.innerHTML = "";
+        for (let i = 0; i < tab.length; i++){
+            let p = document.createElement('p');
+            p.className = "li-auto";
+            p.id = "etabli-" + tab[i].ID;
+            p.innerHTML = tab[i].NAME + "<span class='count-eta'> " + tab[i].VILLE + "</span>";
+            list.appendChild(p);
+        }
+    } else {
+        document.getElementById("etabli").style.display = "none";
+        autoEtabli = false;
+    }
+    displayAutocomplete();
+}
 
+
+function displayAutocomplete(){
+    //if (autoGeo || autolocal || autoEtabli) document.getElementById("autocomplet-div").style.display = "inline";
+    //else document.getElementById("autocomplet-div").style.display = "none";
+}
+
+
+function setCharge() {
+    charge = true;
+}
 
 
 

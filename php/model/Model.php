@@ -23,7 +23,7 @@ class Model{
     }
 
     public static function selectPlage ($val){
-        $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, FLEACHID, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (b.ID) LIMIT 8";
+        $sql = "SELECT b.ID, NAME, CITY, ZIPCODE, CITY, FLEACHID, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (b.ID) LIMIT 8";
         $values['val'] = $val . '%';
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($values);
