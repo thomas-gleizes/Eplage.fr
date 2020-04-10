@@ -12,7 +12,7 @@ document.getElementById("search-input").addEventListener('keyup', function () {
 
         } else {
             getGeo(this.value);
-            getLocalite(this.value);
+            getLocal(this.value);
         }
     }
 });
@@ -128,27 +128,44 @@ getFilter();
 
 
 function displayGeoAutocopleted(tab) {
-    tab = tab[0];
     console.log(tab);
+    let list = document.getElementById("liste-zone-geo");
+    list.innerHTML = "";
     if (tab.length > 0){
+        tab = tab[0];
         document.getElementById("res-geo").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
         document.getElementById("zone-geo").style.display = "block";
-        let list = document.getElementById("liste-zone-geo");
-        list.innerHTML = "";
         for (let i = 0; i < tab.length; i++){
             let p = document.createElement('p');
-            p.className = "li-eta";
+            p.className = "li-auto";
             p.id = "zone-geo-" + tab[i].IDdepa;
-            p.innerHTML = "Plages privée, " + tab[i]['depa'] + " <span class='count-eta'>" + tab[i].NBID + " etablisemment(s)</span>"
+            p.innerHTML = "Plages privée, " + tab[i].depa + " <span class='count-eta'>" + tab[i].NBID + " etablisemment(s)</span>";
             list.appendChild(p);
         }
-    }
+    } else document.getElementById("zone-geo").style.display = "none";
 }
 
 function displayLocalAutocopleted(tab) {
-    tab = tab[0];
     console.log(tab);
+    if (tab.length > 0){
+        tab = tab[0];
+        document.getElementById("res-local").innerHTML = tab.length + " resultat(s)";
+        document.getElementById("autocomplet-div").style.display = "inline";
+        document.getElementById("local").style.display = "block";
+        let list = document.getElementById("liste-zone-local");
+        list.innerHTML = "";
+        for (let i = 0; i < tab.length; i++){
+            let p = document.createElement('p');
+            p.className = "li-auto";
+            p.id = "zone-local-" + tab[i].ZIPCODE;
+            p.innerHTML = "Plages privée, " + tab[i].ZIPCODE.substring(0,2) + " - " + tab[i].CITY + " <span class='count-eta'>" + tab[i].NBID + " etablisemment(s)</span>";
+            list.appendChild(p);
+        }
+    } else document.getElementById("local").style.display = "none";
+
+
+
 }
 
 

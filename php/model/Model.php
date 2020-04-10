@@ -141,7 +141,7 @@ class Model{
 
         $i = 0;
         foreach ($tab as $item){
-            $sql = "SELECT COUNT(b.ID), CITY FROM tbl_businesses b WHERE ZIPCODE = :CP GROUP BY (ZIPCODE);";
+            $sql = "SELECT COUNT(b.ID) AS NBID, CITY, ZIPCODE FROM tbl_businesses b WHERE ZIPCODE = :CP GROUP BY (ZIPCODE);";
             $values['CP'] = $item['CP'];
             $req_prep = self::$pdo->prepare($sql);
             $req_prep->execute($values);
