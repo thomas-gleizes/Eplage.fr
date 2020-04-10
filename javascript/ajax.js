@@ -62,5 +62,15 @@ function getGeo(val) {
     request.send(null);
 }
 
+function getLocalite(val) {
+    let url = "./php/controller/router.php?searchLocal=" + val;
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        displayLocalAutocopleted(JSON.parse(request.responseText));
+    });
+    request.send(null);
+}
+
 
 

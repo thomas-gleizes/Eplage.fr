@@ -16,8 +16,16 @@ class Controller {
         echo json_encode(Model::selectAllFilter());
     }
 
-    public static function getAutoSearch(){
+    public static function getAutoGeo(){
         echo json_encode(Model::selectGeographie($_GET['searchGeo']));
+    }
+
+    public static function getAutoLocal (){
+        echo json_encode(Model::selectLocal($_GET['searchLocal']));
+    }
+
+    public static function getAutoEtabli (){
+        echo null;
     }
 
 

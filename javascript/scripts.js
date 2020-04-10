@@ -12,6 +12,7 @@ document.getElementById("search-input").addEventListener('keyup', function () {
 
         } else {
             getGeo(this.value);
+            getLocalite(this.value);
         }
     }
 });
@@ -127,8 +128,8 @@ getFilter();
 
 
 function displayGeoAutocopleted(tab) {
-
     tab = tab[0];
+    console.log(tab);
     if (tab.length > 0){
         document.getElementById("res-geo").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
@@ -142,9 +143,12 @@ function displayGeoAutocopleted(tab) {
             p.innerHTML = "Plages privée, " + tab[i]['depa'] + " <span class='count-eta'>" + tab[i].NBID + " etablisemment(s)</span>"
             list.appendChild(p);
         }
-
     }
+}
 
+function displayLocalAutocopleted(tab) {
+    tab = tab[0];
+    console.log(tab);
 }
 
 
