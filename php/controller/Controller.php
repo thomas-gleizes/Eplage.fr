@@ -17,7 +17,7 @@ class Controller {
     }
 
     public static function getAutoSearch(){
-        echo json_encode(Model::selectGeographie($_GET['autosearch']));
+        echo json_encode(Model::selectGeographie($_GET['searchGeo']));
     }
 
 

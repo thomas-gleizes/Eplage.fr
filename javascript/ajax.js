@@ -52,12 +52,12 @@ function getTransat(fleachID) {
     request.send(null);
 }
 
-function getInf(val) {
-    let url = "./php/controller/router.php?autosearch=" + val;
+function getGeo(val) {
+    let url = "./php/controller/router.php?searchGeo=" + val;
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
-        console.log(JSON.parse(request.responseText));
+        displayGeoAutocopleted(JSON.parse(request.responseText));
     });
     request.send(null);
 }

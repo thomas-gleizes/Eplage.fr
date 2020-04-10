@@ -2,6 +2,7 @@ body {
     background-color: #eeeeee;
     font-family: 'Roboto';
     padding-top: 150px;
+    padding-bottom: 30px;
 }
 
 
@@ -69,17 +70,20 @@ nav {
 #zone-geo  {
     background-color: #fcfcfc;
     border-bottom:solid 1px silver;
+    display: none;
 }
 
 #local {
     background-color: #fcfcfc;
     border-bottom:solid 1px silver;
     padding: 10px 5px;
+    display: none;
 }
 
 #etabli {
     background-color: #fcfcfc;
     padding: 10px 5px;
+    display: none;
 }
 
 

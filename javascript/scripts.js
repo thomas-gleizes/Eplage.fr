@@ -11,7 +11,7 @@ document.getElementById("search-input").addEventListener('keyup', function () {
         if (listFilter.length > 0){
 
         } else {
-            getInf(this.value);
+            getGeo(this.value);
         }
     }
 });
@@ -126,6 +126,26 @@ function displayTransatDispo(tab){
 getFilter();
 
 
+function displayGeoAutocopleted(tab) {
+
+    tab = tab[0];
+    if (tab.length > 0){
+        document.getElementById("res-geo").innerHTML = tab.length + " resultat(s)";
+        document.getElementById("autocomplet-div").style.display = "inline";
+        document.getElementById("zone-geo").style.display = "block";
+        let list = document.getElementById("liste-zone-geo");
+        list.innerHTML = "";
+        for (let i = 0; i < tab.length; i++){
+            let p = document.createElement('p');
+            p.className = "li-eta";
+            p.id = "zone-geo-" + tab[i].IDdepa;
+            p.innerHTML = "Plages privée, " + tab[i]['depa'] + " <span class='count-eta'>" + tab[i].NBID + " etablisemment(s)</span>"
+            list.appendChild(p);
+        }
+
+    }
+
+}
 
 
 

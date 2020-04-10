@@ -105,7 +105,27 @@ class Model{
 
 
     public static function selectGeographie ($val){
-        return 1;
+        $sql = "SELECT d.ID FROM tbl_businesses b JOIN departement d ON SUBSTR(ZIPCODE, 1, 2) = d.id_departement WHERE departement LIKE :val GROUP BY (d.ID);";
+        $value['val'] = "%" . $val . "%";
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute($value);
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        $tab = $req_prep->fetchAll();
+
+        if (empty($tab)){
+            return [];
+        }
+        $i = 0;
+        foreach ($tab as $item){
+            $sql = "SELECT count(d.ID) as NBID, departement as depa, d.id_departement as IDdepa FROM tbl_businesses b JOIN departement d ON SUBSTR(ZIPCODE, 1, 2) = d.id_departement WHERE d.ID = :ID";
+            $values['ID'] = $item['ID'];
+            $req_prep = self::$pdo->prepare($sql);
+            $req_prep->execute($values);
+            $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+            $res[$i] = $req_prep->fetchAll();
+            $i++;
+        }
+        return $res;
     }
 
 
