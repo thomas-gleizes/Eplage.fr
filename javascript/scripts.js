@@ -188,14 +188,14 @@ function  displayEtabliAutocopleted(tab) {
         autoEtabli = true;
         document.getElementById("res-etabli").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
-        document.getElementById("local").style.display = "block";
+        document.getElementById("etabli").style.display = "block";
         let list = document.getElementById("liste-zone-etabli");
         list.innerHTML = "";
         for (let i = 0; i < tab.length; i++){
             let p = document.createElement('p');
             p.className = "li-auto";
             p.id = "etabli-" + tab[i].ID;
-            p.innerHTML = tab[i].NAME + "<span class='count-eta'> " + tab[i].VILLE + "</span>";
+            p.innerHTML = tab[i].NAME + "<span class='count-eta'> " + tab[i].CITY + "</span>";
             list.appendChild(p);
         }
     } else {
