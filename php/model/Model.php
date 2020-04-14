@@ -129,16 +129,13 @@ class Model{
     }
 
     public static function selectLocal($val){
-
-        $sql = "SELECT (CP) FROM tbl_businesses b JOIN cp_autocomplete a ON a.CP = ZIPCODE WHERE a.VILLE LIKE :val OR a.CP LIKE :val GROUP BY (CP)";
+        $sql = "SELECT CP FROM tbl_businesses b JOIN cp_autocomplete a ON a.CP = ZIPCODE WHERE VILLE LIKE :val OR CP LIkE :val GROUP BY (ZIPCODE)";
         $value['val'] = "%" . $val . "%";
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($value);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
         $tab = $req_prep->fetchAll();
-
         if(empty($tab)) return [];
-
         $i = 0;
         foreach ($tab as $item){
             $sql = "SELECT COUNT(b.ID) AS NBID, CITY, ZIPCODE FROM tbl_businesses b WHERE ZIPCODE = :CP GROUP BY (ZIPCODE);";
@@ -150,6 +147,16 @@ class Model{
             $i++;
         }
         return $res;
+    }
+
+    public static function selectEtablissements ($val){
+        $sql = "SELECT ID, NAME, CITY FROM tbl_businesses WHERE NAME LIKE :val;";
+        $values['val'] = $val . "%";
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute($values);
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        $tab = $req_prep->fetchAll();
+        return $tab;
     }
 
 

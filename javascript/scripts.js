@@ -11,15 +11,10 @@ let autoEtabli = false;
 
 
 document.getElementById("search-input").addEventListener('keyup', function () {
-    if (this.value.length > 2 && charge){
-        charge = false;
-        if (listFilter.length > 0){
-
-        } else {
-            getGeo(this.value);
-            getLocal(this.value);
-            getEtabli(this.value);
-        }
+    if (this.value.length > 0 && charge) {
+        getGeo(this.value);
+        getLocal(this.value);
+        getEtabli(this.value);
     }
 });
 
@@ -41,14 +36,14 @@ function createCard(tab) {
     document.getElementById("list").innerHTML = "";
     let list = document.getElementById("list");
     if (tab.length === 0) {
-        document.getElementById("warning").innerHTML = "Aucun résultat <span id='nb-filter'></span>";
+        document.getElementById("warning").innerHTML = "Aucun résultat - <span id='nb-filter'>" + listFilter.length + " fitre utilisée(s) </span>";
     } else {
-        document.getElementById("warning").innerHTML = tab.length + " résultat(s) trouvées - " + listFilter.length + " filtre utilisée(s)";
+        document.getElementById("warning").innerHTML = tab.length + " résultat(s) trouvées - <span id='nb-filter'>" + listFilter.length + " filtre utilisée(s) </span>";
         for (let i = 0; i < tab.length; i++) {
             let card = document.createElement("div");
             let HTML = "<div class='card'>\n" +
                 "                <div class='card-image'>\n" +
-                "                    <img src='./img/plage/" + tab[i].src + "'/>\n" +
+                "                    <img src='./img/plage/" + tab[i].src + "' alt='" + tab[i].NAME + "'/>\n" +
                 "                    <a class='btn-floating halfway-fab waves-effect waves-light sea'><i class='material-icons'>chevron_right</i></a>\n" +
                 "                </div>\n" +
                 "                <div class='card-content'>\n" +
@@ -85,7 +80,6 @@ document.getElementById("filter-btn").addEventListener("click", function () {
         if (window.innerWidth <= 700) {
             document.body.style.paddingTop = "370px";
         } else document.body.style.paddingTop = "300px";
-
         filter = true;
     }
 });
@@ -123,7 +117,7 @@ function generatefilter(tab) {
 }
 
 
-function displayTransatDispo(tab){
+function displayTransatDispo(tab) {
     console.log(tab);
     let div = document.getElementById("TranDispo-" + tab['id']);
     div.style.color = tab['color'];
@@ -134,20 +128,30 @@ getFilter();
 
 
 function displayGeoAutocopleted(tab) {
-    console.log("GEO", tab)
+
     let list = document.getElementById("liste-zone-geo");
     list.innerHTML = "";
-    if (tab.length > 0){
+    if (tab.length > 0) {
+        console.log("GEO", tab);
         autoGeo = true;
-        tab = tab[0];
         document.getElementById("res-geo").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
         document.getElementById("zone-geo").style.display = "block";
-        for (let i = 0; i < tab.length; i++){
+        for (let i = 0; i < tab.length; i++) {
             let p = document.createElement('p');
             p.className = "li-auto";
-            p.id = "zone-geo-" + tab[i].IDdepa;
-            p.innerHTML = "Plages privée, " + tab[i].depa + " <span class='count-eta'>" + tab[i].NBID + " etablisemment(s)</span>";
+            p.id = "zone-geo-" + tab[i][0].IDdepa;
+            p.innerHTML = "Plages privée, " + tab[i][0].depa + " <span class='count-eta'>" + tab[i][0].NBID + " etablisemment(s)</span>";
+            p.addEventListener("click", function () {
+                if (charge) {
+                    charge = false;
+                    if (listFilter.length > 0) {
+                        selectWithFilter(tab[i][0].depa.split('-')[1].substring(1), listFilter);
+                    } else {
+                        selectPlage(tab[i][0].depa.split('-')[1].substring(1));
+                    }
+                }
+            });
             list.appendChild(p);
         }
     } else {
@@ -158,20 +162,30 @@ function displayGeoAutocopleted(tab) {
 }
 
 function displayLocalAutocopleted(tab) {
-        console.log("Local", tab)
-    if (tab.length > 0){
+    if (tab.length > 0) {
+        console.log("Local", tab);
         autolocal = true;
-        tab = tab[0];
         document.getElementById("res-local").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
         document.getElementById("local").style.display = "block";
         let list = document.getElementById("liste-zone-local");
         list.innerHTML = "";
-        for (let i = 0; i < tab.length; i++){
+        for (let i = 0; i < tab.length; i++) {
             let p = document.createElement('p');
             p.className = "li-auto";
-            p.id = "zone-local-" + tab[i].ZIPCODE;
-            p.innerHTML = "Plages privée, " + tab[i].ZIPCODE.substring(0,2) + " - " + tab[i].CITY + " <span class='count-eta'>" + tab[i].NBID + " etablisemment(s)</span>";
+            p.id = "zone-local-" + tab[i][0].ZIPCODE;
+            p.innerHTML = "Plages privée, " + tab[i][0].ZIPCODE.substring(0, 2) + " - " + tab[i][0].CITY + " <span class='count-eta'>" + tab[i][0].NBID + " etablisemment(s)</span>";
+            p.addEventListener("click", function () {
+                if (charge) {
+                    charge = false;
+                    if (listFilter.length > 0) {
+                        selectWithFilter(tab[i][0].CITY, listFilter)
+                    } else {
+                        selectPlage(tab[i][0].CITY)
+                    }
+                    document.getElementById("autocomplet-div").style.display = "none";
+                }
+            });
             list.appendChild(p);
         }
     } else {
@@ -182,20 +196,23 @@ function displayLocalAutocopleted(tab) {
 }
 
 
-function  displayEtabliAutocopleted(tab) {
-    console.log("Etabli", tab);
-    if (tab.length > 0){
+function displayEtabliAutocopleted(tab) {
+    if (tab.length > 0) {
+        console.log("Etabli", tab);
         autoEtabli = true;
         document.getElementById("res-etabli").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
         document.getElementById("etabli").style.display = "block";
         let list = document.getElementById("liste-zone-etabli");
         list.innerHTML = "";
-        for (let i = 0; i < tab.length; i++){
+        for (let i = 0; i < tab.length; i++) {
             let p = document.createElement('p');
             p.className = "li-auto";
             p.id = "etabli-" + tab[i].ID;
             p.innerHTML = tab[i].NAME + "<span class='count-eta'> " + tab[i].CITY + "</span>";
+            p.addEventListener("click", function () {
+                console.log(this);
+            });
             list.appendChild(p);
         }
     } else {
@@ -206,7 +223,7 @@ function  displayEtabliAutocopleted(tab) {
 }
 
 
-function displayAutocomplete(){
+function displayAutocomplete() {
     //if (autoGeo || autolocal || autoEtabli) document.getElementById("autocomplet-div").style.display = "inline";
     //else document.getElementById("autocomplet-div").style.display = "none";
 }
@@ -215,6 +232,10 @@ function displayAutocomplete(){
 function setCharge() {
     charge = true;
 }
+
+document.body.addEventListener("click", function () {
+    document.getElementById("autocomplet-div").style.display = "none";
+});
 
 
 

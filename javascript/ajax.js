@@ -85,5 +85,3 @@ function getEtabli(val) {
     request.send(null);
 }
 
-
-

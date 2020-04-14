@@ -106,6 +106,7 @@ nav {
 
 .li-auto {
     margin: 5px;
+    cursor: pointer;
 }
 
 .liste-search {
@@ -123,6 +124,7 @@ nav {
     position: fixed;
     width: 70%;
     min-width: 370px;
+    line-height: 70px;
 }
 
 #search-input{
@@ -249,6 +251,10 @@ nav {
 
 .material-icons {
     height: 120%;
+}
+
+.uti-btn {
+    line-height: 40px;
 }
 
 

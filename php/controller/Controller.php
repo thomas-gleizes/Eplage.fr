@@ -25,9 +25,8 @@ class Controller {
     }
 
     public static function getAutoEtabli (){
-        echo json_encode(Model::selectPlage($_GET['searchEtabli']));
+        echo json_encode(Model::selectEtablissements($_GET['searchEtabli']));
     }
-
 
 
     public static function SQL (){
