@@ -1,14 +1,10 @@
+
 let sea = "#2ecbfe";
 let sand = "#ffd59b";
 let geo = false;
 let charge = true;
 let filter = false;
 let listFilter = [];
-
-let autoGeo = false;
-let autolocal = false;
-let autoEtabli = false;
-
 
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 0 && charge) {
@@ -134,17 +130,14 @@ function displayTransatDispo(tab) {
     div.style.color = tab['color'];
     div.lastChild.innerHTML = tab['nbr'];
 }
-
 getFilter();
 
 
 function displayGeoAutocopleted(tab) {
-
     let list = document.getElementById("liste-zone-geo");
     list.innerHTML = "";
     if (tab.length > 0) {
         console.log("GEO", tab);
-        autoGeo = true;
         document.getElementById("res-geo").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
         document.getElementById("zone-geo").style.display = "block";
@@ -167,15 +160,12 @@ function displayGeoAutocopleted(tab) {
         }
     } else {
         document.getElementById("zone-geo").style.display = "none";
-        autoGeo = false;
     }
-    displayAutocomplete();
 }
 
 function displayLocalAutocopleted(tab) {
     if (tab.length > 0) {
         console.log("Local", tab);
-        autolocal = true;
         document.getElementById("res-local").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
         document.getElementById("local").style.display = "block";
@@ -201,16 +191,13 @@ function displayLocalAutocopleted(tab) {
         }
     } else {
         document.getElementById("local").style.display = "none";
-        autolocal = false;
     }
-    displayAutocomplete();
 }
 
 
 function displayEtabliAutocopleted(tab) {
     if (tab.length > 0) {
         console.log("Etabli", tab);
-        autoEtabli = true;
         document.getElementById("res-etabli").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
         document.getElementById("etabli").style.display = "block";
@@ -228,15 +215,7 @@ function displayEtabliAutocopleted(tab) {
         }
     } else {
         document.getElementById("etabli").style.display = "none";
-        autoEtabli = false;
     }
-    displayAutocomplete();
-}
-
-
-function displayAutocomplete() {
-    //if (autoGeo || autolocal || autoEtabli) document.getElementById("autocomplet-div").style.display = "inline";
-    //else document.getElementById("autocomplet-div").style.display = "none";
 }
 
 
