@@ -10,8 +10,7 @@ document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 0 && charge) {
         if (event.keyCode === 13) {
             document.getElementById("autocomplet-div").style.display = "inline";
-        }
-        else {
+        } else {
             getGeo(this.value);
             getLocal(this.value);
             getEtabli(this.value);
@@ -60,7 +59,6 @@ function createCard(tab) {
                 "                <div class='card-action'>\n" +
                 "                    <i class='material-icons small'>map</i> <div>" + tab[i].CITY + " (" + tab[i].ZIPCODE.substring(0, 2) + ") </div>\n";
             if (tab[i].FLEACHID !== '0') {
-                //TODO nombre de transate disponnible
                 HTML += "<div id='TranDispo-" + tab[i].FLEACHID + "' class='count'><i class='count-icons material-icons small left'>beach_access</i><span></span></div>\n ";
                 getTransat(tab[i].FLEACHID)
             } else {
@@ -228,11 +226,33 @@ document.body.addEventListener("click", function () {
 });
 
 
+function getPosition() {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            console.log(position.coords.latitude, position.coords.longitude);
+        });
+    }
+}
 
+/*
+function deg2rad(x){
+    return Math.PI*x/180;
+}
 
-
-                                                        
-
+function get_distance_m($lat1, $lng1, $lat2, $lng2) {
+    $earth_radius = 6378137;   // Terre = sphère de 6378km de rayon
+    $rlo1 = deg2rad($lng1);    // CONVERSION
+    $rla1 = deg2rad($lat1);
+    $rlo2 = deg2rad($lng2);
+    $rla2 = deg2rad($lat2);
+    $dlo = ($rlo2 - $rlo1) / 2;
+    $dla = ($rla2 - $rla1) / 2;
+    $a = (Math.sin($dla) * Math.sin($dla)) + Math.cos($rla1) * Math.cos($rla2) * (Math.sin($dlo) * Math.sin($dlo
+    ));
+    $d = 2 * Math.atan2(Math.sqrt($a), Math.sqrt(1 - $a));
+    return ($earth_radius * $d);
+}
+*/
 
 
 
