@@ -12,13 +12,23 @@ let autoEtabli = false;
 
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 0 && charge) {
-        getGeo(this.value);
-        getLocal(this.value);
-        getEtabli(this.value);
+        if (event.keyCode === 13) {
+            document.getElementById("autocomplet-div").style.display = "inline";
+        }
+        else {
+            getGeo(this.value);
+            getLocal(this.value);
+            getEtabli(this.value);
+        }
     }
 });
 
-document.getElementById("search-btn").addEventListener("click", function () {
+document.getElementById("search-input").addEventListener('click', function () {
+    document.getElementById("autocomplet-div").style.display = "inline";
+});
+
+function startSearch () {
+    document.getElementById("autocomplet-div").style.display = "none";
     let val = document.getElementById("search-input").value;
     if (charge) {
         charge = false;
@@ -28,8 +38,9 @@ document.getElementById("search-btn").addEventListener("click", function () {
             selectPlage(val);
         }
     }
-});
+}
 
+document.getElementById("search-btn").addEventListener("click", startSearch);
 
 function createCard(tab) {
     console.log(tab);
@@ -233,7 +244,7 @@ function setCharge() {
     charge = true;
 }
 
-document.body.addEventListener("click", function () {
+document.getElementById('main').addEventListener("click", function () {
     document.getElementById("autocomplet-div").style.display = "none";
 });
 
