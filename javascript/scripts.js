@@ -1,5 +1,5 @@
 
-let sea = "#2ecbfe";
+let sea = "#3ccebf";
 let sand = "#ffd59b";
 let geo = false;
 let charge = true;
@@ -223,7 +223,7 @@ function setCharge() {
     charge = true;
 }
 
-document.getElementById('main').addEventListener("click", function () {
+document.body.addEventListener("click", function () {
     document.getElementById("autocomplet-div").style.display = "none";
 });
 
