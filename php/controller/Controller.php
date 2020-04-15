@@ -32,6 +32,8 @@ class Controller {
         echo json_encode(Model::selectWithLocalisation($_GET['searchProxi'], $_GET['long'], $_GET['lat'], $_GET['filter']));
     }
 
+    //wtf
+
 
 
     public static function SQL (){
