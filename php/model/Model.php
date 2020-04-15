@@ -159,6 +159,10 @@ class Model{
         return $tab;
     }
 
+    public static function selectPlageProxi($lONG, $LAT){
+
+    }
+
 
     public static function SQL ($sql){
         echo $sql . "<br><br>";

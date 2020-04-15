@@ -28,6 +28,10 @@ class Controller {
         echo json_encode(Model::selectEtablissements($_GET['searchEtabli']));
     }
 
+    public static function getProxi (){
+
+    }
+
 
     public static function SQL (){
         Model::SQL($_GET['sql']);

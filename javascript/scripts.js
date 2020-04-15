@@ -226,13 +226,15 @@ document.body.addEventListener("click", function () {
 });
 
 
-function getPosition() {
+document.getElementById('geo-btn').addEventListener("click", function () {
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function(position) {
             console.log(position.coords.latitude, position.coords.longitude);
         });
+    } else {
+        console.log("Pas de GEO");
     }
-}
+});
 
 /*
 function deg2rad(x){
