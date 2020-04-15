@@ -160,6 +160,10 @@ class Model{
         return $tab;
     }
 
+    public static function selectPlageProxi($lONG, $LAT){
+
+    }
+
 
     public static function selectWithLocalisation ($val, $long, $lat, $listfilter){
         $sql = "SELECT ID FROM tbl_businesses WHERE LONGI BETWEEN :long - :precilong AND :long + :precilong AND LAT BETWEEN :lat - :precilat AND :lat + :precilat";
