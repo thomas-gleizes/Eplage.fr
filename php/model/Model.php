@@ -45,6 +45,8 @@ class Model{
             $tab[$filter] = $req_prep->fetchAll();
         }
 
+        if (empty($tab)) return [];
+
         $res = [];
         for ($i = 0; $i < sizeof($tab[$listFilter[0]]); $i++){
             $res[$i] = $tab[$listFilter[0]][$i]['BID'];
@@ -85,10 +87,10 @@ class Model{
                     $tab = $req_prep->fetchAll();
                 }
             } else {
-                $tab = [];
+                return [];
             }
         } else {
-            $tab = [];
+            return [];
         }
         //echo "<br><br> --------- END ------------";
         return $tab;
@@ -105,7 +107,6 @@ class Model{
 
 
     public static function selectGeographie ($val){
-
         $sql = "SELECT d.ID FROM tbl_businesses b JOIN departement d ON SUBSTR(ZIPCODE, 1, 2) = d.id_departement WHERE departement LIKE :val GROUP BY (d.ID);";
         $value['val'] = "%" . $val . "%";
         $req_prep = self::$pdo->prepare($sql);
@@ -160,7 +161,74 @@ class Model{
     }
 
 
-    public static function SQL ($sql){
+    public static function selectWithLocalisation ($val, $long, $lat, $listfilter){
+        $sql = "SELECT ID FROM tbl_businesses WHERE LONGI BETWEEN :long - :precilong AND :long + :precilong AND LAT BETWEEN :lat - :precilat AND :lat + :precilat";
+        $values['long'] = $long;
+        $values['lat'] = $lat;
+        $values['precilong'] = 0.9; // environ 100 km
+        $values['precilat'] = 0.45; // environ 100 km
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute($values);
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        $tabProxi = $req_prep->fetchAll();
+        if (empty($tabProxi)) return [];
+
+        $res = utils::parse($tabProxi, 'ID');
+
+        if (!empty($listfilter)){
+            $value = [];
+            $listfilter = explode(',', $listfilter);
+            foreach ($listfilter as $filter){
+                $sql = "SELECT BID FROM tbl_service_buisnesse WHERE SID = :filter";
+                $value['filter'] = $filter;
+                $req_prep = self::$pdo->prepare($sql);
+                $req_prep->execute($value);
+                $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+                $tabfilter[$filter] = $req_prep->fetchAll();
+            }
+
+            foreach ($tabfilter as $item){
+                $res = utils::reduce($res, utils::parse($item, 'BID'));
+            }
+        }
+
+        if (!empty($val)){
+            $value = [];
+            $sql = "SELECT ID FROM tbl_businesses WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (ID)";
+            $value['val'] = "%" . $val . "%";
+            $req_prep = self::$pdo->prepare($sql);
+            $req_prep->execute($value);
+            $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+            $tabSearch = $req_prep->fetchAll();
+            $tabSearch = utils::parse($tabSearch, 'ID');
+            $res = utils::reduce($tabSearch, $res);
+        }
+
+        if (empty($res)) return [];
+
+        $value = [];
+        $sql = "SELECT b.ID, NAME, CITY, ZIPCODE, CITY, FLEACHID, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE";
+        for ($i = 0; $i < sizeof($res); $i++){
+            $sql = $sql . " b.ID = :ID" . $i;
+            $value['ID' . $i] = $res[$i];
+            if ($i + 1 < sizeof($res)) $sql = $sql . " OR";
+            else $sql = $sql . " GROUP BY (b.ID)";
+        }
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute($value);
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        return $req_prep->fetchAll();
+    }
+
+
+
+
+
+
+
+
+
+    public static function SQL ($sql) {
         echo $sql . "<br><br>";
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute();

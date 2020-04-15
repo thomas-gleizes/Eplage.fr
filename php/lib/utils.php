@@ -13,7 +13,7 @@ class utils {
     }
 
 
-    public static function reduce ($tab , $rab){
+    public static function reduce ($tab, $rab){
         $n = 0;
         while ($n < sizeof($tab)){
             if (self::indexOf($rab, $tab[$n]) == -1){
@@ -41,7 +41,7 @@ class utils {
         for ($i = 0; $i < sizeof($tab); $i++){
             if ($i >= $index) {
                 if ($i + 1 < sizeof($tab)) $rab[$i] = $tab[$i + 1];
-                else break ;
+                else break;
             } else $rab[$i] = $tab[$i];
 
         }

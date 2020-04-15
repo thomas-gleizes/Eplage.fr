@@ -119,6 +119,7 @@ nav {
 
 
 
+
 #search {
     left: 22%;
     position: fixed;
@@ -197,7 +198,7 @@ nav {
 
 
 .card {
-    margin: 10px;
+    margin:10px;
 }
 
 .card-action {
@@ -214,6 +215,7 @@ nav {
     height: 100%;
     width: 100%;
 }
+
 
 
 .card-action > div {

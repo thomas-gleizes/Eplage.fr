@@ -9,7 +9,8 @@ let listFilter = [];
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 0 && charge) {
         if (event.keyCode === 13) {
-            document.getElementById("autocomplet-div").style.display = "inline";
+            document.getElementById("autocomplet-div").style.display = "none";
+            startSearch()
         } else {
             getGeo(this.value);
             getLocal(this.value);
@@ -82,9 +83,9 @@ document.getElementById("filter-btn").addEventListener("click", function () {
         filter = false;
     } else {
         document.getElementById("list-filter").className = "row filter";
-        if (window.innerWidth <= 700) {
-            document.body.style.paddingTop = "370px";
-        } else document.body.style.paddingTop = "300px";
+        if (window.innerWidth > 890) document.body.style.paddingTop = "320px";
+        else if (window.innerWidth > 540) document.body.style.paddingTop = "350px";
+        else document.body.style.paddingTop = "370px";
         filter = true;
     }
 });

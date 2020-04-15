@@ -7,5 +7,6 @@ if (!$_GET == null){
     else if (isset($_GET['searchGeo'])) Controller::getAutoGeo();
     else if (isset($_GET['searchLocal'])) Controller::getAutoLocal();
     else if (isset($_GET['searchEtabli'])) Controller::getAutoEtabli();
+    else if (isset($_GET['searchProxi'])) Controller::getProxi();
     else if (isset($_GET['filter'])) Controller::getfilter();
 }
