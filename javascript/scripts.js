@@ -96,16 +96,6 @@ document.getElementById("filter-btn").addEventListener("click", function () {
 });
 
 
-document.getElementById("geo-btn").addEventListener("click", function () {
-    if (!geo) {
-        geo = true;
-        this.style.backgroundColor = "#FF5F6D"
-    } else {
-        geo = false;
-        this.style.backgroundColor = sand;
-    }
-});
-
 function generatefilter(tab) {
     let div = document.getElementById("list-filter");
     for (let i = 0; i < tab.length; i++) {
@@ -233,14 +223,19 @@ document.body.addEventListener("click", function () {
 
 
 document.getElementById('geo-btn').addEventListener("click", function () {
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            console.log(position.coords.latitude, position.coords.longitude);
-            longitude = position.coords.longitude;
-            latitude = position.coords.latitude;
-        });
+    if (!geo) {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                console.log(position.coords.latitude, position.coords.longitude);
+                longitude = position.coords.longitude;
+                latitude = position.coords.latitude;
+                geo = true;
+                document.getElementById('geo-btn').style.backgroundColor = "#FF5F6D"
+            });
+        }
     } else {
-        console.log("Pas de GEO");
+        geo = false;
+        this.style.backgroundColor = sand;
     }
 });
 
