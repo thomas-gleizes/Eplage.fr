@@ -85,3 +85,14 @@ function getEtabli(val) {
     request.send(null);
 }
 
+function getPlageProxi (val, longitude, latitude, filter){
+    let url = "./php/controller/router.php?searchProxi=" + val + "&long=" + longitude + "&lat=" + latitude + "&filter=" + filter;
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        createCard(JSON.parse(request.responseText));
+        setCharge();
+    });
+    request.send(null);
+}
+

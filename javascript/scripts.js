@@ -6,6 +6,9 @@ let charge = true;
 let filter = false;
 let listFilter = [];
 
+let latitude = 0;
+let longitude = 0;
+
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 0 && charge) {
         if (event.keyCode === 13) {
@@ -29,9 +32,11 @@ function startSearch () {
     if (charge) {
         charge = false;
         if (listFilter.length > 0) {
-            selectWithFilter(val, listFilter);
+            if (geo) getPlageProxi(val, longitude, latitude, listFilter);
+            else selectWithFilter(val, listFilter);
         } else {
-            selectPlage(val);
+            if (geo) getPlageProxi(val, longitude, latitude, '');
+            else selectPlage(val);
         }
     }
 }
@@ -231,6 +236,8 @@ document.getElementById('geo-btn').addEventListener("click", function () {
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function(position) {
             console.log(position.coords.latitude, position.coords.longitude);
+            longitude = position.coords.longitude;
+            latitude = position.coords.latitude;
         });
     } else {
         console.log("Pas de GEO");
