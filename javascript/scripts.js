@@ -60,8 +60,8 @@ function createCard(tab) {
                 "                <div class='card-action'>\n" +
                 "                    <i class='material-icons small'>map</i> <div>" + tab[i].CITY + " (" + tab[i].ZIPCODE.substring(0, 2) + ") </div>\n";
             if (tab[i].FLEACHID !== '0') {
-                HTML += "<div id='TranDispo-" + tab[i].FLEACHID + "' class='count'><i class='count-icons material-icons small left'>beach_access</i><span></span></div>\n ";
-                getTransat(tab[i].FLEACHID)
+                HTML += "<div id='TranDispo-" + tab[i].FLEACHID + "' class='count'><img class='load-gif' src='./img/logo/loading.gif'></div>\n ";
+                getTransat(tab[i].FLEACHID, displayTransatDispo)
             } else {
                 HTML += "<div class='count'><i class='count-icons material-icons small left'>error_outline</i></div>\n ";
             }
@@ -76,6 +76,13 @@ function createCard(tab) {
             });
         }
     }
+}
+
+function displayTransatDispo(tab) {
+    console.log(tab);
+    let div = document.getElementById("TranDispo-" + tab['id']);
+    div.style.color = tab['color'];
+    div.innerHTML = "<i class='count-icons material-icons small left'>beach_access</i><span> " + tab['nbr'] + "</span>";
 }
 
 document.getElementById("filter-btn").addEventListener("click", function () {
@@ -114,16 +121,7 @@ function generatefilter(tab) {
     }
 }
 
-
-function displayTransatDispo(tab) {
-    console.log(tab);
-    let div = document.getElementById("TranDispo-" + tab['id']);
-    div.style.color = tab['color'];
-    div.lastChild.innerHTML = tab['nbr'];
-}
-
 getFilter();
-
 
 function displayGeoAutocopleted(tab) {
     let list = document.getElementById("liste-zone-geo");

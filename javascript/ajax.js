@@ -41,12 +41,12 @@ function getFilter() {
     request.send(null);
 }
 
-function getTransat(fleachID) {
+function getTransat(fleachID, callback) {
     let url = "https://www.fleach.com/api/eplage.php?id=" + fleachID;
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
-        displayTransatDispo(JSON.parse(request.responseText));
+        callback(JSON.parse(request.responseText));
     });
     request.send(null);
 }
@@ -106,5 +106,9 @@ function getInfoBeach(BID) {
         displayImg(JSON.parse(requestImg.responseText));
     });
     requestImg.send(null);
+}
+
+function f() {
+    
 }
 
