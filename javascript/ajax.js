@@ -17,7 +17,6 @@ function selectWithFilter(val, filter) {
     request.open("GET", url, true);
     request.addEventListener("load", function () {
         createCard(JSON.parse(request.responseText));
-        setCharge();
     });
     request.send(null);
 }
@@ -58,7 +57,6 @@ function getGeo(val) {
     request.open("GET", url, true);
     request.addEventListener("load", function () {
         displayGeoAutocopleted(JSON.parse(request.responseText));
-        setCharge();
     });
     request.send(null);
 }
@@ -69,7 +67,6 @@ function getLocal(val) {
     request.open("GET", url, true);
     request.addEventListener("load", function () {
         displayLocalAutocopleted(JSON.parse(request.responseText));
-        setCharge();
     });
     request.send(null);
 }
@@ -80,7 +77,6 @@ function getEtabli(val) {
     request.open("GET", url, true);
     request.addEventListener("load", function () {
         displayEtabliAutocopleted(JSON.parse(request.responseText));
-        setCharge();
     });
     request.send(null);
 }
@@ -91,8 +87,24 @@ function getPlageProxi (val, longitude, latitude, filter){
     request.open("GET", url, true);
     request.addEventListener("load", function () {
         createCard(JSON.parse(request.responseText));
-        setCharge();
     });
     request.send(null);
+}
+
+function getInfoBeach(BID) {
+    let url = "./php/controller/router.php?displayBeach=" + BID;
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        displayInfo(JSON.parse(request.responseText));
+    });
+    request.send(null);
+    url = "./php/controller/router.php?displayImg=" + BID;
+    let requestImg = new XMLHttpRequest();
+    requestImg.open("GET", url, true);
+    requestImg.addEventListener("load", function () {
+        displayImg(JSON.parse(requestImg.responseText));
+    });
+    requestImg.send(null);
 }
 

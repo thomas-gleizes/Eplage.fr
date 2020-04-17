@@ -8,7 +8,7 @@ class Controller {
         if (isset($_GET['search'])){
             if (isset($_GET['filter'])){
                 echo json_encode(Model::selectPlageWithFilter($_GET['search'], $_GET['filter']));
-            } else echo json_encode(Model::selectPlage($_GET['search']));
+            } else echo json_encode(Model::selectPlages($_GET['search']));
         } else echo json_encode("error");
     }
 
@@ -32,6 +32,14 @@ class Controller {
         echo json_encode(Model::selectWithLocalisation($_GET['searchProxi'], $_GET['long'], $_GET['lat'], $_GET['filter']));
     }
 
+
+    public static function displayBeach (){
+        echo json_encode(Model::selectBeach($_GET['displayBeach']));
+    }
+
+    public static function displayImg (){
+        echo json_encode(Model::selectAllPicture($_GET['displayImg']));
+    }
 
 
 

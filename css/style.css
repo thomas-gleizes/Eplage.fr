@@ -84,13 +84,16 @@ nav {
     background-color: #fcfcfc;
     padding: 10px 5px;
     display: none;
+
 }
 
 
 .name-auto {
     display: inline;
     font-size: 150%;
-    margin: 5px;
+    padding: 5px;
+    width: 100%;
+    border-bottom: solid 0.5px silver;
 
 }
 
@@ -111,6 +114,8 @@ nav {
 
 .liste-search {
     padding: 10px;
+    max-height: 200px;
+    overflow: auto;
 }
 
 
@@ -158,7 +163,7 @@ nav {
 
 
 .filter {
-    padding: 20px 10%;
+    padding: 20px 4%;
     margin: auto;
     z-index: 2;
     background-color: #eeeeee;
@@ -193,38 +198,6 @@ nav {
 
 
 
-
-
-
-
-.card {
-    margin:10px;
-}
-
-.card-action {
-    padding:0px 2px 0px 10px !important;
-    background-color: #4b515d !important;
-    color: white;
-}
-
-.card-content {
-    padding: 8% !important;
-}
-
-.card-image {
-    height: 100%;
-    width: 100%;
-}
-
-
-
-.card-action > div {
-    position: absolute;
-    display: inline-block;
-    font-size: 110%;
-    margin-left: 5px;
-    margin-top: 3px;
-}
 
 .count {
     right: 10px;

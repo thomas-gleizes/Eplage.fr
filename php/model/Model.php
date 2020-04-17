@@ -22,14 +22,28 @@ class Model{
         }
     }
 
-    public static function selectPlage ($val){
-        $sql = "SELECT b.ID, NAME, CITY, ZIPCODE, CITY, FLEACHID, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (b.ID) LIMIT 8";
-        $values['val'] = $val . '%';
+    public static function selectPlages ($val){
+        $sql = "SELECT ID, NAME, CITY, ZIPCODE, CITY, FLEACHID FROM tbl_businesses WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val";
+        $values['val'] = '%' . $val . '%';
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($values);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
         $tab = $req_prep->fetchAll();
-        return $tab;
+
+        $i = 0;
+        foreach ($tab as $item) {
+            $sql = "SELECT src FROM tbl_pictures WHERE BID = :ID LIMIT 1";
+            $value['ID'] = $item['ID'];
+            $req_prep = self::$pdo->prepare($sql);
+            $req_prep->execute($value);
+            $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+            $src = $req_prep->fetchAll();
+            if (empty($src)) $item['src'] = "plage0.jpg";
+            else $item['src'] = $src[0]['src'];
+            $res[$i] = $item;
+            $i++;
+        }
+        return $res;
     }
 
     public static function selectPlageWithFilter ($val, $listFilter){
@@ -63,7 +77,7 @@ class Model{
 
         if (!empty($res)){
             $sql = "SELECT ID FROM tbl_businesses WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (ID)";
-            $values['val'] = $val . '%';
+            $values['val'] = '%' . $val . '%';
             $req_prep = self::$pdo->prepare($sql);
             $req_prep->execute($values);
             $req_prep->setFetchMode(PDO::FETCH_ASSOC);
@@ -152,7 +166,7 @@ class Model{
 
     public static function selectEtablissements ($val){
         $sql = "SELECT ID, NAME, CITY FROM tbl_businesses WHERE NAME LIKE :val;";
-        $values['val'] = $val . "%";
+        $values['val'] = '%' . $val . "%";
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($values);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
@@ -218,6 +232,24 @@ class Model{
             if ($i + 1 < sizeof($res)) $sql = $sql . " OR";
             else $sql = $sql . " GROUP BY (b.ID)";
         }
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute($value);
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        return $req_prep->fetchAll();
+    }
+
+    public static function selectBeach ($ID){
+        $sql = "SELECT * FROM tbl_businesses WHERE ID = :ID;";
+        $value['ID'] = $ID;
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute($value);
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        return $req_prep->fetchAll();
+    }
+
+    public static function selectAllPicture ($BID) {
+        $sql = "SELECT src FROM tbl_pictures WHERE BID = :BID;";
+        $value['BID'] = $BID;
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($value);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);

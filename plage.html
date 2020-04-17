@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Eplage</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto+Condensed&display=swap" rel="stylesheet">
+    <link href="css/materialize.min.css" media="screen,projection" rel="stylesheet" type="text/css"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="css/plage.css" rel="stylesheet" type="text/css">
+    <script defer src="javascript/ajax.js" type="text/javascript"></script>
+    <script defer src="javascript/scripts.js" type="text/javascript"></script>
+    <script defer src="javascript/plage.js" type="text/javascript"></script>
+    <script defer src="javascript/materialize.min.js" type="text/javascript"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzqu5VNAByC_yLpfTv1kpcWqrkzhugXJA&callback=initMap"></script>
+</head>
+<body>
+<header>
+
+    <div class="header">
+        <nav class="sea">
+            <a href="./" class="logo left hide-on-small-and-down"><img class="logo-img" src="img/logo/Logo_blanc.png" alt="logo eplage"></a>
+            <ul>
+                <li id="search">
+                    <input id="search-input" placeholder="Recherche ( Etabissement, ville, département, ...)"
+                           type="text">
+                    <a class="btn waves-light waves-effect sand" id="search-btn"><i
+                            class="material-icons">search</i></a>
+                </li>
+                <li id="search-advance">
+                    <a class="btn waves-effect waves-light sand uti-btn" id="geo-btn"><i class="material-icons">explore</i></a>
+                    <a class="btn waves-effect waves-light sand uti-btn" id="filter-btn"><i class="material-icons">list</i></a>
+                </li>
+            </ul>
+        </nav>
+        <div id="warning"></div>
+        <div class="separator"></div>
+        <div class="row hidden" id="list-filter">
+
+        </div>
+    </div>
+    <div id="autocomplet-div">
+        <div id="auto-list">
+            <div id="zone-geo">
+                <h1 class="name-auto">Zone Géographiques <span class="count-auto" id="res-geo"></span></h1>
+                <div class="liste-search" id="liste-zone-geo"></div>
+            </div>
+            <div id="local">
+                <p class="name-auto">Localité <span class="count-auto" id="res-local"> </span></p>
+                <div class="liste-search" id="liste-zone-local"></div>
+            </div>
+            <div id="etabli">
+                <p class="name-auto">Etablissements <span class="count-auto" id="res-etabli"> 2 résultat(s)</span></p>
+                <div class="liste-search" id="liste-zone-etabli"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div>
+        <h1 id="name"> La plage 3.14</h1>
+        <h2 id="count-place"> </h2>
+    </div>
+
+</main>
+
+</body>
+</html>

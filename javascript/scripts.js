@@ -1,8 +1,6 @@
-
 let sea = "#3ccebf";
 let sand = "#ffd59b";
 let geo = false;
-let charge = true;
 let filter = false;
 let listFilter = [];
 
@@ -10,7 +8,7 @@ let latitude = 0;
 let longitude = 0;
 
 document.getElementById("search-input").addEventListener('keyup', function () {
-    if (this.value.length > 0 && charge) {
+    if (this.value.length > 2) {
         if (event.keyCode === 13) {
             document.getElementById("autocomplet-div").style.display = "none";
             startSearch()
@@ -26,18 +24,15 @@ document.getElementById("search-input").addEventListener('click', function () {
     document.getElementById("autocomplet-div").style.display = "inline";
 });
 
-function startSearch () {
+function startSearch() {
     document.getElementById("autocomplet-div").style.display = "none";
     let val = document.getElementById("search-input").value;
-    if (charge) {
-        charge = false;
-        if (listFilter.length > 0) {
-            if (geo) getPlageProxi(val, longitude, latitude, listFilter);
-            else selectWithFilter(val, listFilter);
-        } else {
-            if (geo) getPlageProxi(val, longitude, latitude, '');
-            else selectPlage(val);
-        }
+    if (listFilter.length > 0) {
+        if (geo) getPlageProxi(val, longitude, latitude, listFilter);
+        else selectWithFilter(val, listFilter);
+    } else {
+        if (geo) getPlageProxi(val, longitude, latitude, '');
+        else selectPlage(val);
     }
 }
 
@@ -56,7 +51,7 @@ function createCard(tab) {
             let HTML = "<div class='card'>\n" +
                 "                <div class='card-image'>\n" +
                 "                    <img src='./img/plage/" + tab[i].src + "' alt='" + tab[i].NAME + "'/>\n" +
-                "                    <a class='btn-floating halfway-fab waves-effect waves-light sea'><i class='material-icons'>chevron_right</i></a>\n" +
+                "                    <a id='btn-id-" + tab[i].ID + "' class='btn-floating halfway-fab waves-effect waves-light sea'><i class='material-icons'>chevron_right</i></a>\n" +
                 "                </div>\n" +
                 "                <div class='card-content'>\n" +
                 "                    <span class='card-title'> " + tab[i].NAME + "</span>\n" +
@@ -76,9 +71,11 @@ function createCard(tab) {
             card.id = "Plage-" + tab[i].ID;
             card.className = "col S12 m6 l3";
             list.appendChild(card);
+            document.getElementById("btn-id-" + tab[i].ID).addEventListener("click", function () {
+                displayBeach(tab[i].ID);
+            });
         }
     }
-    charge = true;
 }
 
 document.getElementById("filter-btn").addEventListener("click", function () {
@@ -124,6 +121,7 @@ function displayTransatDispo(tab) {
     div.style.color = tab['color'];
     div.lastChild.innerHTML = tab['nbr'];
 }
+
 getFilter();
 
 
@@ -141,13 +139,10 @@ function displayGeoAutocopleted(tab) {
             p.id = "zone-geo-" + tab[i][0].IDdepa;
             p.innerHTML = "Plages privée, " + tab[i][0].depa + " <span class='count-eta'>" + tab[i][0].NBID + " etablisemment(s)</span>";
             p.addEventListener("click", function () {
-                if (charge) {
-                    charge = false;
-                    if (listFilter.length > 0) {
-                        selectWithFilter(tab[i][0].depa.split('-')[1].substring(1), listFilter);
-                    } else {
-                        selectPlage(tab[i][0].depa.split('-')[1].substring(1));
-                    }
+                if (listFilter.length > 0) {
+                    selectWithFilter(tab[i][0].depa.split('-')[1].substring(1), listFilter);
+                } else {
+                    selectPlage(tab[i][0].depa.split('-')[1].substring(1));
                 }
             });
             list.appendChild(p);
@@ -171,15 +166,12 @@ function displayLocalAutocopleted(tab) {
             p.id = "zone-local-" + tab[i][0].ZIPCODE;
             p.innerHTML = "Plages privée, " + tab[i][0].ZIPCODE.substring(0, 2) + " - " + tab[i][0].CITY + " <span class='count-eta'>" + tab[i][0].NBID + " etablisemment(s)</span>";
             p.addEventListener("click", function () {
-                if (charge) {
-                    charge = false;
-                    if (listFilter.length > 0) {
-                        selectWithFilter(tab[i][0].CITY, listFilter)
-                    } else {
-                        selectPlage(tab[i][0].CITY)
-                    }
-                    document.getElementById("autocomplet-div").style.display = "none";
+                if (listFilter.length > 0) {
+                    selectWithFilter(tab[i][0].CITY, listFilter)
+                } else {
+                    selectPlage(tab[i][0].CITY)
                 }
+                document.getElementById("autocomplet-div").style.display = "none";
             });
             list.appendChild(p);
         }
@@ -203,7 +195,7 @@ function displayEtabliAutocopleted(tab) {
             p.id = "etabli-" + tab[i].ID;
             p.innerHTML = tab[i].NAME + "<span class='count-eta'> " + tab[i].CITY + "</span>";
             p.addEventListener("click", function () {
-                console.log(this);
+                displayBeach(tab[i].ID)
             });
             list.appendChild(p);
         }
@@ -212,10 +204,6 @@ function displayEtabliAutocopleted(tab) {
     }
 }
 
-
-function setCharge() {
-    charge = true;
-}
 
 document.body.addEventListener("click", function () {
     document.getElementById("autocomplet-div").style.display = "none";
@@ -239,8 +227,6 @@ document.getElementById('geo-btn').addEventListener("click", function () {
     }
 });
 
-
-
-
-
-
+function displayBeach(BID) {
+    document.location.href = "./plage.html?BID=" + BID;
+}
