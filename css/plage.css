@@ -2,4 +2,71 @@
 
 #name {
     text-align: center;
+    margin: 0px;
+}
+
+#warning {
+    text-align: left;
+    margin-top: 40px;
+    margin-left: 3%;
+    font-size: 130%;
+}
+
+#count-place {
+    font-size: 130%;
+    margin-top: 5px;
+    text-align: center;
+    color: red;
+    line-height: 4px;
+}
+
+.img-beach {
+    width: 90%;
+    border-radius: 10px;
+    margin-left: 2%;
+}
+
+.info-beach {
+
+}
+
+#adresse-beach {
+    text-align: center;
+}
+
+#desc-beach {
+    margin-top: 40px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+#call-beach {
+    margin-top: 15px;
+    padding: 3px 5px;
+    width: 50%;
+    min-width: 200px;
+    max-width: 230px;
+    margin-left: 25%;
+}
+
+.row {
+    padding: 3% 0px;
+    width: 98%;
+    margin-top: 40px;
+}
+
+.hidden-img {
+    display: none;
+}
+
+.visiblie-img {
+    display: initial;
+}
+
+
+table {
+    margin-top: 50px;
+}
+td {
+    text-align: center !important;
 }

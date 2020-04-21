@@ -41,12 +41,4 @@ class Controller {
         echo json_encode(Model::selectAllPicture($_GET['displayImg']));
     }
 
-
-
-    public static function SQL (){
-        Model::SQL($_GET['sql']);
-    }
-
-
-
 }

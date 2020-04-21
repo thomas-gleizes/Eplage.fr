@@ -148,6 +148,7 @@ nav {
     margin: 0px;
     right: 45px;
     top: -4px;
+    padding: 0px 0px !important;
 }
 
 
@@ -159,6 +160,10 @@ nav {
 #search-advance > .btn  {
     height: 40px;
     width: 40px;
+    line-height: 40px;
+    border-radius: 4px;
+    padding: 0px 0px !important;
+    font-size: 100% !important;
 }
 
 
@@ -186,19 +191,6 @@ nav {
 }
 
 
-
-.btn {
-    border-radius: 4px;
-    padding: 0px 0px !important;
-    font-size: 100% !important;
-}
-
-
-
-
-
-
-
 .count {
     right: 10px;
     font-size: 25px;
@@ -210,10 +202,6 @@ nav {
 }
 
 
-#warning {
-    text-align: center;
-    font-size: large;
-}
 
 .separator {
     border-bottom: solid 1.5px #d2d2d2;
@@ -226,10 +214,6 @@ nav {
 
 .material-icons {
     height: 120%;
-}
-
-.uti-btn {
-    line-height: 40px;
 }
 
 

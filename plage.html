@@ -29,12 +29,12 @@
                             class="material-icons">search</i></a>
                 </li>
                 <li id="search-advance">
-                    <a class="btn waves-effect waves-light sand uti-btn" id="geo-btn"><i class="material-icons">explore</i></a>
-                    <a class="btn waves-effect waves-light sand uti-btn" id="filter-btn"><i class="material-icons">list</i></a>
+                    <a class="btn waves-effect waves-light sand" id="geo-btn"><i class="material-icons">explore</i></a>
+                    <a class="btn waves-effect waves-light sand" id="filter-btn"><i class="material-icons">list</i></a>
                 </li>
             </ul>
         </nav>
-        <div id="warning"></div>
+        <div id="warning"> Département > Ville > Plage</div>
         <div class="separator"></div>
         <div class="row hidden" id="list-filter"></div>
     </div>
@@ -49,7 +49,7 @@
                 <div class="liste-search" id="liste-zone-local"></div>
             </div>
             <div id="etabli">
-                <p class="name-auto">Etablissements <span class="count-auto" id="res-etabli"> 2 résultat(s)</span></p>
+                <p class="name-auto">Etablissements <span class="count-auto" id="res-etabli"></span></p>
                 <div class="liste-search" id="liste-zone-etabli"></div>
             </div>
         </div>
@@ -58,8 +58,36 @@
 
 <main>
     <div>
-        <h1 id="name"> La plage 3.14</h1>
-        <h2 id="count-place"> </h2>
+        <h1 id="name"></h1>
+        <h2 id="count-place"></h2>
+    </div>
+    <div class="row">
+        <div class="col l6 m6 s12" id="img-beach">
+        </div>
+        <div class="col l6 m6 s12">
+            <h5 id="adresse-beach"></h5>
+            <table>
+                <tr>
+                    <td> </td>
+                    <td> Demu-journée</td>
+                    <td> Journée </td>
+                </tr>
+                <tr>
+                    <td> Transat </td>
+                    <td> 20€ </td>
+                    <td> 35€ </td>
+                </tr>
+                <tr>
+                    <td> Bed </td>
+                    <td> 40€ </td>
+                    <td> 50€ </td>
+                </tr>
+            </table>
+            <div>
+                <a id="call-beach" class="btn waves-effect waves-light sea"> <i class="material-icons left">phone</i> Appeller la plage</a>
+            </div>
+        </div>
+        <p class="col l12 s12" id="desc-beach"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.</p>
     </div>
 
 </main>

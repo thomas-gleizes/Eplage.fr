@@ -108,7 +108,4 @@ function getInfoBeach(BID) {
     requestImg.send(null);
 }
 
-function f() {
-    
-}
 

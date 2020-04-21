@@ -29,7 +29,7 @@ class Model{
         $req_prep->execute($values);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
         $tab = $req_prep->fetchAll();
-
+        if (empty($tab)) return [];
         $i = 0;
         foreach ($tab as $item) {
             $sql = "SELECT src FROM tbl_pictures WHERE BID = :ID LIMIT 1";
@@ -121,7 +121,7 @@ class Model{
 
 
     public static function selectGeographie ($val){
-        $sql = "SELECT d.ID FROM tbl_businesses b JOIN departement d ON SUBSTR(ZIPCODE, 1, 2) = d.id_departement WHERE departement LIKE :val GROUP BY (d.ID);";
+        $sql = "SELECT d.ID FROM tbl_businesses b JOIN departement d ON SUBSTR(ZIPCODE, 1, 2) = d.id_departement WHERE COUNTY LIKE :val GROUP BY (d.ID);";
         $value['val'] = "%" . $val . "%";
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($value);
@@ -144,8 +144,9 @@ class Model{
     }
 
     public static function selectLocal($val){
-        $sql = "SELECT CP FROM tbl_businesses b JOIN cp_autocomplete a ON a.CP = ZIPCODE WHERE VILLE LIKE :val OR CP LIkE :val GROUP BY (ZIPCODE)";
-        $value['val'] = "%" . $val . "%";
+        $sql = "SELECT ZIPCODE FROM tbl_businesses b WHERE ZIPCODE like :CP OR CITY like :city GROUP BY (ZIPCODE)";
+        $value['city'] = "%" . $val . "%";
+        $value['CP'] = $val . "%";
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($value);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
@@ -153,8 +154,8 @@ class Model{
         if(empty($tab)) return [];
         $i = 0;
         foreach ($tab as $item){
-            $sql = "SELECT COUNT(b.ID) AS NBID, CITY, ZIPCODE FROM tbl_businesses b WHERE ZIPCODE = :CP GROUP BY (ZIPCODE);";
-            $values['CP'] = $item['CP'];
+            $sql = "SELECT COUNT(b.ID) AS NBID, CITY, ZIPCODE FROM tbl_businesses b WHERE ZIPCODE = :ZIPCODE GROUP BY (ZIPCODE);";
+            $values['ZIPCODE'] = $item['ZIPCODE'];
             $req_prep = self::$pdo->prepare($sql);
             $req_prep->execute($values);
             $req_prep->setFetchMode(PDO::FETCH_ASSOC);
@@ -172,10 +173,6 @@ class Model{
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
         $tab = $req_prep->fetchAll();
         return $tab;
-    }
-
-    public static function selectPlageProxi($lONG, $LAT){
-
     }
 
 
@@ -239,8 +236,14 @@ class Model{
     }
 
     public static function selectBeach ($ID){
-        $sql = "SELECT * FROM tbl_businesses WHERE ID = :ID;";
+        $sql = "SELECT * FROM tbl_businesses b JOIN departement d ON id_departement = SUBSTR(ZIPCODE, 1, 2) WHERE b.ID = :ID;";
         $value['ID'] = $ID;
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute($value);
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        $tab = $req_prep->fetchAll();
+        if (!empty($tab)) return $tab;
+        $sql = "SELECT * FROM tbl_businesses WHERE ID = :ID;";
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($value);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
@@ -254,26 +257,6 @@ class Model{
         $req_prep->execute($value);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
         return $req_prep->fetchAll();
-    }
-
-
-
-
-
-
-
-
-
-    public static function SQL ($sql) {
-        echo $sql . "<br><br>";
-        $req_prep = self::$pdo->prepare($sql);
-        $req_prep->execute();
-        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
-        $tab = $req_prep->fetchAll();
-        foreach ($tab as $item) {
-            echo "<br><br>";
-            var_dump($item);
-        }
     }
 
 }

@@ -7,6 +7,17 @@ let listFilter = [];
 let latitude = 0;
 let longitude = 0;
 
+if (window.location.search !== ""){
+    let url = window.location.search.split('?')[1];
+    if (url.split('=')[0] ===  "search"){
+        document.getElementById("search-input").value = url.split("=")[1];
+        startSearch();
+    }
+}
+
+
+
+//TODO ne pas faire de recheche quand BID existe !!!
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 2) {
         if (event.keyCode === 13) {
@@ -228,3 +239,6 @@ document.getElementById('geo-btn').addEventListener("click", function () {
 function displayBeach(BID) {
     document.location.href = "./plage.html?BID=" + BID;
 }
+
+
+

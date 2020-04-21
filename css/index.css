@@ -25,6 +25,10 @@
     margin-top: 3px;
 }
 
+#warning {
+    text-align: center;
+    font-size: large;
+}
 
 .load-gif {
     width: 30px;
