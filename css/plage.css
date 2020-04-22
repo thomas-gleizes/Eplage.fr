@@ -38,6 +38,7 @@
     margin-top: 40px;
     width: 90%;
     margin-left: 5%;
+    text-align: justify;
 }
 
 #call-beach {
@@ -67,6 +68,11 @@
 table {
     margin-top: 50px;
 }
+
 td {
     text-align: center !important;
+}
+
+.lk {
+    cursor: pointer;
 }

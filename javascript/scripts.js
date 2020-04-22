@@ -7,22 +7,43 @@ let listFilter = [];
 let latitude = 0;
 let longitude = 0;
 
-if (window.location.search !== ""){
-    let url = window.location.search.split('?')[1];
-    if (url.split('=')[0] ===  "search"){
-        document.getElementById("search-input").value = url.split("=")[1];
-        startSearch();
+
+if (window.location.search !== "") {
+    let url = window.location.search.split('?')[1].split("&");
+    console.log(url);
+    for (let i = 0; i < url.length; i++){
+        let get = url[i].split("=")
+        if (get[0] === "search"){
+            document.getElementById("search-input").value = get[1];
+        } else if (get[0] === "geo"){
+            getCord();
+        } else if (get[0] === "filter"){
+            listFilter = get[1].split(',');
+        }
     }
 }
 
+function testUrl() {
+    if (window.location.search !== "") return window.location.search.split("?")[1].split('=')[0] === "BID";
+    else return false;
+}
 
+function buildUrl (search){
+    let url = "./?search=" + search;
+    if (listFilter.length > 0) url += "&filter=" + listFilter;
+    if (geo) url += "&geo=true"
+    return url;
+}
 
-//TODO ne pas faire de recheche quand BID existe !!!
 document.getElementById("search-input").addEventListener('keyup', function () {
     if (this.value.length > 2) {
         if (event.keyCode === 13) {
-            document.getElementById("autocomplet-div").style.display = "none";
-            startSearch()
+            if (testUrl()) {
+                window.location.href = buildUrl(this.value);
+            } else {
+                document.getElementById("autocomplet-div").style.display = "none";
+                startSearch()
+            }
         } else {
             getGeo(this.value);
             getLocal(this.value);
@@ -30,6 +51,9 @@ document.getElementById("search-input").addEventListener('keyup', function () {
         }
     }
 });
+
+document.getElementById("search-btn").addEventListener("click", startSearch);
+
 
 document.getElementById("search-input").addEventListener('click', function () {
     document.getElementById("autocomplet-div").style.display = "inline";
@@ -47,7 +71,6 @@ function startSearch() {
     }
 }
 
-document.getElementById("search-btn").addEventListener("click", startSearch);
 
 function createCard(tab) {
     console.log(tab);
@@ -148,10 +171,14 @@ function displayGeoAutocopleted(tab) {
             p.id = "zone-geo-" + tab[i][0].IDdepa;
             p.innerHTML = "Plages privée, " + tab[i][0].depa + " <span class='count-eta'>" + tab[i][0].NBID + " etablisemment(s)</span>";
             p.addEventListener("click", function () {
-                if (listFilter.length > 0) {
-                    selectWithFilter(tab[i][0].depa.split('-')[1].substring(1), listFilter);
+                if (testUrl()){
+                    window.location.href = (buildUrl(tab[i][0].depa.split('-')[1].substring((1))));
                 } else {
-                    selectPlage(tab[i][0].depa.split('-')[1].substring(1));
+                    if (listFilter.length > 0) {
+                        selectWithFilter(tab[i][0].depa.split('-')[1].substring(1), listFilter);
+                    } else {
+                        selectPlage(tab[i][0].depa.split('-')[1].substring(1));
+                    }
                 }
             });
             list.appendChild(p);
@@ -175,12 +202,16 @@ function displayLocalAutocopleted(tab) {
             p.id = "zone-local-" + tab[i][0].ZIPCODE;
             p.innerHTML = "Plages privée, " + tab[i][0].ZIPCODE.substring(0, 2) + " - " + tab[i][0].CITY + " <span class='count-eta'>" + tab[i][0].NBID + " etablisemment(s)</span>";
             p.addEventListener("click", function () {
-                if (listFilter.length > 0) {
-                    selectWithFilter(tab[i][0].CITY, listFilter)
+                if (testUrl()) {
+                    window.location.href = buildUrl(tab[i][0].CITY);
                 } else {
-                    selectPlage(tab[i][0].CITY)
+                    if (listFilter.length > 0) {
+                        selectWithFilter(tab[i][0].CITY, listFilter)
+                    } else {
+                        selectPlage(tab[i][0].CITY)
+                    }
+                    document.getElementById("autocomplet-div").style.display = "none";
                 }
-                document.getElementById("autocomplet-div").style.display = "none";
             });
             list.appendChild(p);
         }
@@ -219,7 +250,10 @@ document.body.addEventListener("click", function () {
 });
 
 
-document.getElementById('geo-btn').addEventListener("click", function () {
+
+document.getElementById("geo-btn").addEventListener("click", getCord);
+
+function getCord() {
     if (!geo) {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -232,13 +266,16 @@ document.getElementById('geo-btn').addEventListener("click", function () {
         }
     } else {
         geo = false;
-        this.style.backgroundColor = sand;
+        document.getElementById("geo-btn").style.backgroundColor = sand;
     }
-});
+}
+
+
 
 function displayBeach(BID) {
     document.location.href = "./plage.html?BID=" + BID;
 }
+
 
 
 
