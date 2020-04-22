@@ -16,10 +16,10 @@ function displayInfo(tab) {
     document.getElementById("adresse-beach").innerHTML = tabBeach['ADRESS'] + " - "  + tabBeach['ZIPCODE'] + " " + tabBeach['CITY'];
     document.getElementById("warning").innerHTML = "<span class='lk' id='link-depa'>" + tabBeach['COUNTY'] + "</span> > <span class='lk' id='link-city'>" + tabBeach['CITY'] + "</span> > " + tabBeach['NAME'];
     document.getElementById("link-depa").addEventListener("click", function () {
-        document.location.href = "./" + tabBeach['COUNTY'];
+        document.location.href = "./?search=" + tabBeach['COUNTY'].deleteAccent();
     });
     document.getElementById("link-city").addEventListener("click", function () {
-        document.location.href = "./?search=" + tabBeach['CITY'];
+        document.location.href = "./?search=" + tabBeach['CITY'].deleteAccent();
     });
     if (tabBeach['FLEACHID'] !== "0"){
         getTransat(tabBeach['FLEACHID'], displayTransat);
