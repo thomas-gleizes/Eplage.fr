@@ -9,17 +9,20 @@ let longitude = 0;
 
 
 if (window.location.search !== "") {
-    let url = window.location.search.split('?')[1].split("&");
-    console.log(url);
-    for (let i = 0; i < url.length; i++){
-        let get = url[i].split("=")
-        if (get[0] === "search"){
-            document.getElementById("search-input").value = get[1];
-        } else if (get[0] === "geo"){
-            getCord();
-        } else if (get[0] === "filter"){
-            listFilter = get[1].split(',');
+    if (window.location.search.split('?')[1].split("=")[0] === "search"){
+        let url = window.location.search.split('?')[1].split("&");
+        console.log(url);
+        for (let i = 0; i < url.length; i++){
+            let get = url[i].split("=")
+            if (get[0] === "search"){
+                document.getElementById("search-input").value = get[1];
+            } else if (get[0] === "geo"){
+                getCord();
+            } else if (get[0] === "filter"){
+                listFilter = get[1].split(',');
+            }
         }
+        startSearch();
     }
 }
 
@@ -52,7 +55,14 @@ document.getElementById("search-input").addEventListener('keyup', function () {
     }
 });
 
-document.getElementById("search-btn").addEventListener("click", startSearch);
+document.getElementById("search-btn").addEventListener("click", function () {
+    if (testUrl()) {
+        let input = document.getElementById("search-input");
+        if (input.value.length > 0) window.location.href = buildUrl(input.value);
+    } else {
+        startSearch();
+    }
+});
 
 
 document.getElementById("search-input").addEventListener('click', function () {
@@ -276,6 +286,10 @@ function displayBeach(BID) {
     document.location.href = "./plage.html?BID=" + BID;
 }
 
+
+if (window.location.search === ""){
+    selectRandBeach();
+}
 
 
 

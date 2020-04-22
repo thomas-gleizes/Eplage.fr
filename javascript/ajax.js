@@ -99,6 +99,7 @@ function getInfoBeach(BID) {
         displayInfo(JSON.parse(request.responseText));
     });
     request.send(null);
+
     url = "./php/controller/router.php?displayImg=" + BID;
     let requestImg = new XMLHttpRequest();
     requestImg.open("GET", url, true);
@@ -106,6 +107,16 @@ function getInfoBeach(BID) {
         displayImg(JSON.parse(requestImg.responseText));
     });
     requestImg.send(null);
+}
+
+function selectRandBeach() {
+    let url = "./php/controller/router.php?getRand=true"
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        createCard(JSON.parse(request.responseText));
+    });
+    request.send(null);
 }
 
 

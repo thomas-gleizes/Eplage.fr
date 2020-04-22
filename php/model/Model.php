@@ -259,5 +259,28 @@ class Model{
         return $req_prep->fetchAll();
     }
 
+    public static function selectRandom (){
+        $sql = "SELECT ID, NAME, CITY, ZIPCODE, CITY, FLEACHID FROM tbl_businesses ORDER BY RAND() LIMIT 8";
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute();
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        $tab = $req_prep->fetchAll();
+        if (empty($tab)) return [];
+        $i = 0;
+        foreach ($tab as $item) {
+            $sql = "SELECT src FROM tbl_pictures WHERE BID = :ID LIMIT 1";
+            $value['ID'] = $item['ID'];
+            $req_prep = self::$pdo->prepare($sql);
+            $req_prep->execute($value);
+            $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+            $src = $req_prep->fetchAll();
+            if (empty($src)) $item['src'] = "plage0.jpg";
+            else $item['src'] = $src[0]['src'];
+            $res[$i] = $item;
+            $i++;
+        }
+        return $res;
+    }
+
 }
 Model::Init();
