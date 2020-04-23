@@ -204,6 +204,7 @@ function displayGeoAutocopleted(tab) {
             p.innerHTML = "Plages privée, " + tab[i][0].depa + " <span class='count-eta'>" + tab[i][0].NBID + " etablisemment(s)</span>";
             p.addEventListener("click", function () {
                 if (testUrl()) {
+                    console.log(this);
                     window.location.href = (buildUrl(tab[i][0].depa.split('-')[1].substring((1))));
                 } else {
                     if (listFilter.length > 0) {

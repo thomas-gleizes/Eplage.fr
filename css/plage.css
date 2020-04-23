@@ -81,3 +81,7 @@ td {
 .lk {
     cursor: pointer;
 }
+
+#more-btn {
+    display: none;
+}
