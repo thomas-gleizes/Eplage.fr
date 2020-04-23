@@ -22,9 +22,15 @@ class Model{
         }
     }
 
-    public static function selectPlages ($val){
-        $sql = "SELECT ID, NAME, CITY, ZIPCODE, CITY, FLEACHID FROM tbl_businesses WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val";
+    public static function selectPlages ($val, $index){
+
+        $sql = "SELECT ID, NAME, CITY, ZIPCODE, CITY, FLEACHID FROM tbl_businesses WHERE (NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val)";
         $values['val'] = '%' . $val . '%';
+        if  ($index != 0){
+            $sql = $sql . " AND ID > :index";
+            $values['index'] = $index;
+        }
+        $sql = $sql . " ORDER BY (ID) LIMIT 8";
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($values);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
@@ -280,6 +286,16 @@ class Model{
             $i++;
         }
         return $res;
+    }
+
+    public static function countSearch($val){
+        $sql = "SELECT COUNT(ID) AS NB FROM tbl_businesses WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val";
+        $value['val'] = "%" . $val . "%";
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute($value);
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        $tab = $req_prep->fetchAll();
+        return $tab[0]['NB'];
     }
 
 }

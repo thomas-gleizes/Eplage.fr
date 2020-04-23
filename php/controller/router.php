@@ -13,4 +13,6 @@ if (!$_GET == null){
     else if (isset($_GET['displayBeach'])) Controller::displayBeach();
     else if (isset($_GET['displayImg'])) Controller::displayImg();
     else if (isset($_GET['getRand'])) Controller::getRand();
+
+    else if (isset($_GET['searchCount'])) Controller::Countsearch();
 }

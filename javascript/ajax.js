@@ -1,18 +1,36 @@
 
 
 function selectPlage(val) {
-    let url = "./php/controller/router.php?search=" + val;
+    let url = "./php/controller/router.php?search=" + val + "&index=0";
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
          createCard(JSON.parse(request.responseText));
     });
     request.send(null);
+
+    url = "./php/controller/router.php?searchCount=" + val;
+    let requestCount = new XMLHttpRequest();
+    requestCount.open("GET", url, true);
+    requestCount.addEventListener("load", function () {
+        displayCount(JSON.parse(requestCount.responseText));
+    });
+    requestCount.send(null);
 }
+
+function selectMorePlage(val, index) {
+    let url = "./php/controller/router.php?search=" + val + "&index=" + index;
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        createCard(JSON.parse(request.responseText));
+    });
+    request.send(null);
+}
+
 
 function selectWithFilter(val, filter) {
     let url = "./php/controller/router.php?search=" + val + "&filter=" + filter;
-    console.log(url)
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {

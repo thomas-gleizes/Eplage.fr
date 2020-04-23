@@ -1,4 +1,9 @@
-
+body {
+    background-color: #eeeeee;
+    font-family: 'Roboto';
+    padding-top: 150px;
+    padding-bottom: 30px;
+}
 
 #name {
     text-align: center;

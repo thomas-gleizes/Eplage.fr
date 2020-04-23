@@ -3,22 +3,28 @@ let sand = "#ffd59b";
 let geo = false;
 let filter = false;
 let listFilter = [];
+let index = 0;
 
 let latitude = 0;
 let longitude = 0;
 
+let oldfilter = [];
+let oldSearch = "";
+let oldGeo = geo;
+
+
 
 if (window.location.search !== "") {
-    if (window.location.search.split('?')[1].split("=")[0] === "search"){
+    if (window.location.search.split('?')[1].split("=")[0] === "search") {
         let url = window.location.search.split('?')[1].split("&");
         console.log(url);
-        for (let i = 0; i < url.length; i++){
+        for (let i = 0; i < url.length; i++) {
             let get = url[i].split("=")
-            if (get[0] === "search"){
-                document.getElementById("search-input").value = get[1];
-            } else if (get[0] === "geo"){
+            if (get[0] === "search") {
+                document.getElementById("search-input").value = get[1].replace('%20', ' ');
+            } else if (get[0] === "geo") {
                 getCord();
-            } else if (get[0] === "filter"){
+            } else if (get[0] === "filter") {
                 listFilter = get[1].split(',');
             }
         }
@@ -26,15 +32,20 @@ if (window.location.search !== "") {
     }
 }
 
+
+document.getElementById("more-btn").addEventListener("click", function () {
+    selectMorePlage(oldSearch, index);
+});
+
 function testUrl() {
     if (window.location.search !== "") return window.location.search.split("?")[1].split('=')[0] === "BID";
     else return false;
 }
 
-function buildUrl (search){
+function buildUrl(search) {
     let url = "./?search=" + search.deleteAccent();
     if (listFilter.length > 0) url += "&filter=" + listFilter;
-    if (geo) url += "&geo=true"
+    if (geo) url += "&geo=true";
     return url;
 }
 
@@ -55,6 +66,17 @@ document.getElementById("search-input").addEventListener('keyup', function () {
     }
 });
 
+
+document.getElementById("more-btn").addEventListener("click", function () {
+    if (oldfilter.length > 0){
+        if (oldGeo) console.log(oldSearch, longitude, latitude, listFilter, index);
+        else console.log(oldSearch, listFilter, index);
+    } else {
+        if (oldGeo) console.log(oldSearch, longitude, latitude, '', index);
+        else selectMorePlage(oldSearch, index)
+    }
+});
+
 document.getElementById("search-btn").addEventListener("click", function () {
     if (testUrl()) {
         let input = document.getElementById("search-input");
@@ -70,8 +92,13 @@ document.getElementById("search-input").addEventListener('click', function () {
 });
 
 function startSearch() {
-    document.getElementById("autocomplet-div").style.display = "none";
     let val = document.getElementById("search-input").value;
+    oldfilter = listFilter;
+    oldSearch = val;
+    oldGeo = geo;
+    document.getElementById("nb-filter").innerHTML = " - " + listFilter.length + " filtre(s) utilié(s)";
+    index = 0;
+    document.getElementById("autocomplet-div").style.display = "none";
     if (listFilter.length > 0) {
         if (geo) getPlageProxi(val, longitude, latitude, listFilter);
         else selectWithFilter(val, listFilter);
@@ -79,47 +106,47 @@ function startSearch() {
         if (geo) getPlageProxi(val, longitude, latitude, '');
         else selectPlage(val);
     }
+    window.location.href += "#main"
 }
 
 
 function createCard(tab) {
     console.log(tab);
-    document.getElementById("list").innerHTML = "";
-    let list = document.getElementById("list");
-    if (tab.length === 0) {
-        document.getElementById("warning").innerHTML = "Aucun résultat - <span id='nb-filter'>" + listFilter.length + " fitre utilisée(s) </span>";
-    } else {
-        document.getElementById("warning").innerHTML = tab.length + " résultat(s) trouvées - <span id='nb-filter'>" + listFilter.length + " filtre utilisée(s) </span>";
-        for (let i = 0; i < tab.length; i++) {
-            let card = document.createElement("div");
-            let HTML = "<div class='card'>\n" +
-                "                <div class='card-image'>\n" +
-                "                    <img src='./img/plage/" + tab[i].src + "' alt='" + tab[i].NAME + "'/>\n" +
-                "                    <a id='btn-id-" + tab[i].ID + "' class='btn-floating halfway-fab waves-effect waves-light sea'><i class='material-icons'>chevron_right</i></a>\n" +
-                "                </div>\n" +
-                "                <div class='card-content'>\n" +
-                "                    <span class='card-title'> " + tab[i].NAME + "</span>\n" +
-                "                    <p>La plage 1 est ouvert de 9h à 18h</p>\n" +
-                "                </div>\n" +
-                "                <div class='card-action'>\n" +
-                "                    <i class='material-icons small'>map</i> <div>" + tab[i].CITY + " (" + tab[i].ZIPCODE.substring(0, 2) + ") </div>\n";
-            if (tab[i].FLEACHID !== '0') {
-                HTML += "<div id='TranDispo-" + tab[i].FLEACHID + "' class='count'><img class='load-gif' src='./img/logo/loading.gif'></div>\n ";
-                getTransat(tab[i].FLEACHID, displayTransatDispo)
-            } else {
-                HTML += "<div class='count'><i class='count-icons material-icons small left'>error_outline</i></div>\n ";
-            }
-            HTML += "            </div>\n" +
-                "            </div>";
-            card.innerHTML = HTML;
-            card.id = "Plage-" + tab[i].ID;
-            card.className = "col S12 m6 l3";
-            list.appendChild(card);
-            document.getElementById("btn-id-" + tab[i].ID).addEventListener("click", function () {
-                displayBeach(tab[i].ID);
-            });
+    let list = document.getElementById("list")
+    if (index === 0) list.innerHTML = "";
+    for (let i = 0; i < tab.length; i++) {
+        let card = document.createElement("div");
+        let HTML = "<div class='card'>\n" +
+            "                <div class='card-image'>\n" +
+            "                    <img src='./img/plage/" + tab[i].src + "' alt='" + tab[i].NAME + "'/>\n" +
+            "                    <a id='btn-id-" + tab[i].ID + "' class='btn-floating halfway-fab waves-effect waves-light sea'><i class='material-icons'>chevron_right</i></a>\n" +
+            "                </div>\n" +
+            "                <div class='card-content'>\n" +
+            "                    <span class='card-title'> " + tab[i].NAME + "</span>\n" +
+            "                    <p>La plage 1 est ouvert de 9h à 18h</p>\n" +
+            "                </div>\n" +
+            "                <div class='card-action'>\n" +
+            "                    <i class='material-icons small'>map</i> <div>" + tab[i].CITY + " (" + tab[i].ZIPCODE.substring(0, 2) + ") </div>\n";
+        if (tab[i].FLEACHID !== '0') {
+            HTML += "<div id='TranDispo-" + tab[i].FLEACHID + "' class='count'><img class='load-gif' src='./img/logo/loading.gif'></div>\n ";
+            getTransat(tab[i].FLEACHID, displayTransatDispo)
+        } else {
+            HTML += "<div class='count'><i class='count-icons material-icons small left'>error_outline</i></div>\n ";
         }
+        HTML += "            </div>\n" +
+            "            </div>";
+        card.innerHTML = HTML;
+        card.id = "Plage-" + tab[i].ID;
+        card.className = "col S12 m6 l3";
+        list.appendChild(card);
+        document.getElementById("btn-id-" + tab[i].ID).addEventListener("click", function () {
+            displayBeach(tab[i].ID);
+        });
+        index = tab[i].ID;
     }
+
+    if (tab.length === 8) document.getElementById("more-btn").style.display = "inline-block";
+    else document.getElementById("more-btn").style.display = "none";
 }
 
 function displayTransatDispo(tab) {
@@ -142,7 +169,6 @@ document.getElementById("filter-btn").addEventListener("click", function () {
         filter = true;
     }
 });
-
 
 function generatefilter(tab) {
     let div = document.getElementById("list-filter");
@@ -181,7 +207,7 @@ function displayGeoAutocopleted(tab) {
             p.id = "zone-geo-" + tab[i][0].IDdepa;
             p.innerHTML = "Plages privée, " + tab[i][0].depa + " <span class='count-eta'>" + tab[i][0].NBID + " etablisemment(s)</span>";
             p.addEventListener("click", function () {
-                if (testUrl()){
+                if (testUrl()) {
                     window.location.href = (buildUrl(tab[i][0].depa.split('-')[1].substring((1))));
                 } else {
                     if (listFilter.length > 0) {
@@ -259,8 +285,6 @@ document.body.addEventListener("click", function () {
     document.getElementById("autocomplet-div").style.display = "none";
 });
 
-
-
 document.getElementById("geo-btn").addEventListener("click", getCord);
 
 function getCord() {
@@ -280,6 +304,15 @@ function getCord() {
     }
 }
 
+function displayCount(nb) {
+    document.getElementById("count-res").innerHTML = nb + " résultat(s) trouvé(s)";
+}
+
+
+
+
+
+
 
 
 function displayBeach(BID) {
@@ -287,14 +320,13 @@ function displayBeach(BID) {
 }
 
 
-if (window.location.search === ""){
+if (window.location.search === "") {
     selectRandBeach();
 }
 
 
 
-
-String.prototype.deleteAccent = function(){
+String.prototype.deleteAccent = function () {
     var accent = [
         /[\300-\306]/g, /[\340-\346]/g, // A, a
         /[\310-\313]/g, /[\350-\353]/g, // E, e
@@ -304,10 +336,10 @@ String.prototype.deleteAccent = function(){
         /[\321]/g, /[\361]/g, // N, n
         /[\307]/g, /[\347]/g, // C, c
     ];
-    var noaccent = ['A','a','E','e','I','i','O','o','U','u','N','n','C','c'];
+    var noaccent = ['A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u', 'N', 'n', 'C', 'c'];
 
     var str = this;
-    for(var i = 0; i < accent.length; i++){
+    for (var i = 0; i < accent.length; i++) {
         str = str.replace(accent[i], noaccent[i]);
     }
 

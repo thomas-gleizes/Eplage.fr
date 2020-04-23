@@ -8,7 +8,7 @@ class Controller {
         if (isset($_GET['search'])){
             if (isset($_GET['filter'])){
                 echo json_encode(Model::selectPlageWithFilter($_GET['search'], $_GET['filter']));
-            } else echo json_encode(Model::selectPlages($_GET['search']));
+            } else echo json_encode(Model::selectPlages($_GET['search'], $_GET['index']));
         } else echo json_encode("error");
     }
 
@@ -43,5 +43,10 @@ class Controller {
 
     public static function getRand (){
         echo json_encode(Model::selectRandom());
+    }
+
+
+    public static function countSearch (){
+        echo json_encode(Model::countSearch($_GET['searchCount']));
     }
 }
