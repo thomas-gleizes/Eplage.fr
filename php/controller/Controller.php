@@ -29,7 +29,7 @@ class Controller {
     }
 
     public static function getProxi (){
-        echo json_encode(Model::selectWithLocalisation($_GET['searchProxi'], $_GET['long'], $_GET['lat'], $_GET['filter']));
+        echo json_encode(Model::selectWithLocalisation($_GET['searchProxi'], $_GET['long'], $_GET['lat'], $_GET['filter'], $_GET['index']));
     }
 
 
@@ -48,5 +48,13 @@ class Controller {
 
     public static function countSearch (){
         echo json_encode(Model::countSearch($_GET['searchCount']));
+    }
+
+    public static function countSearchWIthFilter(){
+        echo json_encode(Model::countSearchWithFilter($_GET['countFilter'], $_GET['listfilter']));
+    }
+
+    public static function countSearchWithLocalisation (){
+        echo json_encode(Model::countSearchWithLocalisation($_GET['countLoca'], $_GET['long'], $_GET['lat'], $_GET['listfilter']));
     }
 }

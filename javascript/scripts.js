@@ -66,10 +66,10 @@ document.getElementById("search-input").addEventListener('keyup', function () {
 document.getElementById("more-btn").addEventListener("click", function () {
     console.log(this);
     if (oldfilter.length > 0){
-        if (oldGeo) console.log(oldSearch, longitude, latitude, listFilter, index);
+        if (oldGeo) getMorePlageProxi(oldSearch, longitude, latitude, listFilter, index);
         else selectMoreWithFilter(oldSearch, listFilter, index);
     } else {
-        if (oldGeo) console.log(oldSearch, longitude, latitude, '', index);
+        if (oldGeo) getMorePlageProxi(oldSearch, longitude, latitude, '', index);
         else selectMorePlage(oldSearch, index)
     }
 });
@@ -141,7 +141,6 @@ function createCard(tab) {
         });
         index = tab[i].ID;
     }
-
     if (tab.length === 8) document.getElementById("more-btn").style.display = "inline-block";
     else document.getElementById("more-btn").style.display = "none";
 }

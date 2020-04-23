@@ -111,6 +111,7 @@ class Model{
                     $tab = $req_prep->fetchAll();
                     $i = 0;
                     $value = [];
+                    $finalRes = [];
                     foreach ($tab as $item) {
                         $sql = "SELECT src FROM tbl_pictures WHERE BID = :ID LIMIT 1";
                         $value['ID'] = $item['ID'];
@@ -197,7 +198,7 @@ class Model{
     }
 
 
-    public static function selectWithLocalisation ($val, $long, $lat, $listfilter){
+    public static function selectWithLocalisation ($val, $long, $lat, $listfilter, $index){
         $sql = "SELECT ID FROM tbl_businesses WHERE LONGI BETWEEN :long - :precilong AND :long + :precilong AND LAT BETWEEN :lat - :precilat AND :lat + :precilat";
         $values['long'] = $long;
         $values['lat'] = $lat;
@@ -243,17 +244,39 @@ class Model{
         if (empty($res)) return [];
 
         $value = [];
-        $sql = "SELECT b.ID, NAME, CITY, ZIPCODE, CITY, FLEACHID, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE";
+        $sql = "SELECT ID, NAME, CITY, ZIPCODE, CITY, FLEACHID FROM tbl_businesses WHERE (";
         for ($i = 0; $i < sizeof($res); $i++){
-            $sql = $sql . " b.ID = :ID" . $i;
+            $sql = $sql . " ID = :ID" . $i;
             $value['ID' . $i] = $res[$i];
             if ($i + 1 < sizeof($res)) $sql = $sql . " OR";
-            else $sql = $sql . " GROUP BY (b.ID)";
+            else $sql .= ")";
         }
+        if ($index != 0){
+            $value['index'] = $index;
+            $sql .= " AND ID > :index";
+        }
+        $sql .= " ORDER BY (ID) LIMIT 8";
         $req_prep = self::$pdo->prepare($sql);
         $req_prep->execute($value);
         $req_prep->setFetchMode(PDO::FETCH_ASSOC);
-        return $req_prep->fetchAll();
+        $tab = $req_prep->fetchAll();
+
+        $i = 0;
+        $tabFinal = [];
+        $value = [];
+        foreach ($tab as $item) {
+            $sql = "SELECT src FROM tbl_pictures WHERE BID = :ID LIMIT 1";
+            $value['ID'] = $item['ID'];
+            $req_prep = self::$pdo->prepare($sql);
+            $req_prep->execute($value);
+            $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+            $src = $req_prep->fetchAll();
+            if (empty($src)) $item['src'] = "plage0.jpg";
+            else $item['src'] = $src[0]['src'];
+            $tabFinal[$i] = $item;
+            $i++;
+        }
+        return $tabFinal;
     }
 
     public static function selectBeach ($ID){
@@ -312,6 +335,98 @@ class Model{
         $tab = $req_prep->fetchAll();
         return $tab[0]['NB'];
     }
+
+    public static function countSearchWithFilter($val, $listFilter){
+        $listFilter = explode(',', $listFilter);
+        $tab = [];
+
+        foreach ($listFilter as $filter){
+            $sql = "SELECT BID FROM tbl_service_buisnesse WHERE SID = :filter";
+            $value['filter'] = $filter;
+            $req_prep = self::$pdo->prepare($sql);
+            $req_prep->execute($value);
+            $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+            $tab[$filter] = $req_prep->fetchAll();
+        }
+
+        if (empty($tab)) return 0;
+
+        $res = [];
+        for ($i = 0; $i < sizeof($tab[$listFilter[0]]); $i++){
+            $res[$i] = $tab[$listFilter[0]][$i]['BID'];
+        }
+
+        $first = true;
+        foreach ($tab as $item){
+            if ($first) {
+                $first = false;
+            } else {
+                $res = utils::reduce($res, utils::parse($item, 'BID'));
+            }
+        }
+
+        if (!empty($res)){
+            $sql = "SELECT ID FROM tbl_businesses WHERE (NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val)";
+            $values['val'] = '%' . $val . '%';
+            $sql .= " GROUP BY (ID) ORDER BY (ID)";
+            $req_prep = self::$pdo->prepare($sql);
+            $req_prep->execute($values);
+            $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+            $tabID = $req_prep->fetchAll();
+            if (!empty($tabID)){
+                $res = utils::reduce($res, utils::parse($tabID, 'ID'));
+                return sizeof($res);
+            } else return 0;
+        } else return 0;
+        //echo "<br><br> --------- END ------------";
+        return 0;
+    }
+
+    public static function countSearchWithLocalisation ($val, $long, $lat, $filter){
+        $sql = "SELECT ID FROM tbl_businesses WHERE LONGI BETWEEN :long - :precilong AND :long + :precilong AND LAT BETWEEN :lat - :precilat AND :lat + :precilat";
+        $values['long'] = $long;
+        $values['lat'] = $lat;
+        $values['precilong'] = 0.9; // environ 100 km
+        $values['precilat'] = 0.45; // environ 100 km
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute($values);
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        $tabProxi = $req_prep->fetchAll();
+        if (empty($tabProxi)) return [];
+
+        $res = utils::parse($tabProxi, 'ID');
+
+        if (!empty($listfilter)){
+            $value = [];
+            $listfilter = explode(',', $listfilter);
+            foreach ($listfilter as $filter){
+                $sql = "SELECT BID FROM tbl_service_buisnesse WHERE SID = :filter";
+                $value['filter'] = $filter;
+                $req_prep = self::$pdo->prepare($sql);
+                $req_prep->execute($value);
+                $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+                $tabfilter[$filter] = $req_prep->fetchAll();
+            }
+
+            foreach ($tabfilter as $item){
+                $res = utils::reduce($res, utils::parse($item, 'BID'));
+            }
+        }
+        if (!empty($val)){
+            $value = [];
+            $sql = "SELECT ID FROM tbl_businesses WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (ID)";
+            $value['val'] = "%" . $val . "%";
+            $req_prep = self::$pdo->prepare($sql);
+            $req_prep->execute($value);
+            $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+            $tabSearch = $req_prep->fetchAll();
+            $tabSearch = utils::parse($tabSearch, 'ID');
+            $res = utils::reduce($tabSearch, $res);
+        }
+        return sizeof($res);
+    }
+
+
 
 }
 Model::Init();

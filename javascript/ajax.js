@@ -38,7 +38,13 @@ function selectWithFilter(val, filter) {
     });
     request.send(null);
 
-    //TODO
+    url = "./php/controller/router.php?countFilter=" + val + "&listfilter=" + filter;
+    let requestCount = new XMLHttpRequest();
+    requestCount.open("GET", url, true);
+    requestCount.addEventListener("load", function () {
+        displayCount(JSON.parse(requestCount.responseText));
+    });
+    requestCount.send(null);
 }
 
 function selectMoreWithFilter(val, filter, index) {
@@ -50,6 +56,36 @@ function selectMoreWithFilter(val, filter, index) {
     });
     request.send(null);
 }
+
+function getPlageProxi (val, longitude, latitude, filter){
+    let url = "./php/controller/router.php?searchProxi=" + val + "&long=" + longitude + "&lat=" + latitude + "&filter=" + filter + "&index=0";
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        createCard(JSON.parse(request.responseText));
+    });
+    request.send(null);
+
+    url = "./php/controller/router.php?countLoca=" + val + "&long=" + longitude + "&lat=" + latitude +  "&listfilter=" + filter;
+    let requestCount = new XMLHttpRequest();
+    requestCount.open("GET", url, true);
+    requestCount.addEventListener("load", function () {
+        displayCount(JSON.parse(requestCount.responseText));
+    });
+    requestCount.send(null);
+}
+
+function getMorePlageProxi(val, longitude, latitude, filter, index) {
+    let url = "./php/controller/router.php?searchProxi=" + val + "&long=" + longitude + "&lat=" + latitude + "&filter=" + filter + "&index=" + index;
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        createCard(JSON.parse(request.responseText));
+    });
+    request.send(null);
+}
+
+
 
 
 function getFilter() {
@@ -102,15 +138,8 @@ function getEtabli(val) {
     request.send(null);
 }
 
-function getPlageProxi (val, longitude, latitude, filter){
-    let url = "./php/controller/router.php?searchProxi=" + val + "&long=" + longitude + "&lat=" + latitude + "&filter=" + filter;
-    let request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.addEventListener("load", function () {
-        createCard(JSON.parse(request.responseText));
-    });
-    request.send(null);
-}
+
+
 
 function getInfoBeach(BID) {
     let url = "./php/controller/router.php?displayBeach=" + BID;

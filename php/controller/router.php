@@ -13,5 +13,7 @@ if (!$_GET == null){
     else if (isset($_GET['displayImg'])) Controller::displayImg();
     else if (isset($_GET['getRand'])) Controller::getRand();
 
-    else if (isset($_GET['searchCount'])) Controller::Countsearch();
+    else if (isset($_GET['searchCount'])) Controller::countsearch();
+    else if (isset($_GET['countFilter'])) Controller::countSearchWIthFilter();
+    else if (isset($_GET['countLoca'])) Controller::countSearchWithLocalisation();
 }
