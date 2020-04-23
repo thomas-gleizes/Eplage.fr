@@ -52,7 +52,7 @@ class Model{
         return $res;
     }
 
-    public static function selectPlageWithFilter ($val, $listFilter){
+    public static function selectPlageWithFilter ($val, $listFilter, $index){
         $listFilter = explode(',', $listFilter);
         $tab = [];
 
@@ -82,8 +82,9 @@ class Model{
         }
 
         if (!empty($res)){
-            $sql = "SELECT ID FROM tbl_businesses WHERE NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val GROUP BY (ID)";
+            $sql = "SELECT ID FROM tbl_businesses WHERE (NAME like :val OR COUNTRY like :val OR COUNTY like :val OR CITY like :val OR ADRESS like :val OR ZIPCODE like :val)";
             $values['val'] = '%' . $val . '%';
+            $sql .= " GROUP BY (ID) ORDER BY (ID)";
             $req_prep = self::$pdo->prepare($sql);
             $req_prep->execute($values);
             $req_prep->setFetchMode(PDO::FETCH_ASSOC);
@@ -92,28 +93,42 @@ class Model{
                 $res = utils::reduce($res, utils::parse($tabID, 'ID'));
                 if (!empty($res)){
                     $values = [];
-                    $sql = "SELECT b.ID, NAME, CITY, ADRESS, ZIPCODE, FLEACHID, src FROM tbl_businesses b JOIN tbl_pictures p ON b.ID = p.BID WHERE ";
+                    $sql = "SELECT ID, NAME, CITY, ADRESS, ZIPCODE, FLEACHID FROM tbl_businesses WHERE (";
                     for ($i = 0; $i < sizeof($res); $i++) {
                         $values['BID' . $i] = $res[$i];
-                        $sql = $sql . " ID = :BID" . $i;
-                        if ($i + 1 != sizeof($res)){
-                            $sql = $sql . " OR ";
-                        }
+                        $sql = $sql . "ID = :BID" . $i;
+                        if ($i + 1 != sizeof($res)) $sql .= " OR ";
+                        else $sql .= ")";
                     }
-                    $sql = $sql . " GROUP BY (b.ID) LIMIT 8;";
+                    if ($index != 0){
+                        $values['index'] = $index;
+                        $sql .= " AND ID > :index";
+                    }
+                    $sql = $sql . " ORDER BY (ID) LIMIT 8;";
                     $req_prep = self::$pdo->prepare($sql);
                     $req_prep->execute($values);
                     $req_prep->setFetchMode(PDO::FETCH_ASSOC);
                     $tab = $req_prep->fetchAll();
+                    $i = 0;
+                    $value = [];
+                    foreach ($tab as $item) {
+                        $sql = "SELECT src FROM tbl_pictures WHERE BID = :ID LIMIT 1";
+                        $value['ID'] = $item['ID'];
+                        $req_prep = self::$pdo->prepare($sql);
+                        $req_prep->execute($value);
+                        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+                        $src = $req_prep->fetchAll();
+                        if (empty($src)) $item['src'] = "plage0.jpg";
+                        else $item['src'] = $src[0]['src'];
+                        $finalRes[$i] = $item;
+                        $i++;
+                    }
+                    return $finalRes;
                 }
-            } else {
-                return [];
-            }
-        } else {
-            return [];
-        }
+            } else return [];
+        } else return [];
         //echo "<br><br> --------- END ------------";
-        return $tab;
+        return [];
     }
 
     public static function selectAllFilter(){

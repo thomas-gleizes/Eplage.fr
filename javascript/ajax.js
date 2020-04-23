@@ -30,7 +30,19 @@ function selectMorePlage(val, index) {
 
 
 function selectWithFilter(val, filter) {
-    let url = "./php/controller/router.php?search=" + val + "&filter=" + filter;
+    let url = "./php/controller/router.php?search=" + val + "&filter=" + filter + "&index=0";
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        createCard(JSON.parse(request.responseText));
+    });
+    request.send(null);
+
+    //TODO
+}
+
+function selectMoreWithFilter(val, filter, index) {
+    let url = "./php/controller/router.php?search=" + val + "&filter=" + filter + "&index=" + index;
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
@@ -39,15 +51,6 @@ function selectWithFilter(val, filter) {
     request.send(null);
 }
 
-function selectProximity(longitude, lattitude) {
-    let url = "./php/controller/router.php?loca=true&longitude=" + longitude + "&lattitude=" + lattitude;
-    let request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.addEventListener("load", function () {
-        createCard(JSON.parse(request.responseText));
-    });
-    request.send(null);
-}
 
 function getFilter() {
     let url = "./php/controller/router.php?filter=true";

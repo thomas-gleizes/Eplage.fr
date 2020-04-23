@@ -9,7 +9,6 @@ if (!$_GET == null){
     else if (isset($_GET['searchEtabli'])) Controller::getAutoEtabli();
     else if (isset($_GET['searchProxi'])) Controller::getProxi();
     else if (isset($_GET['filter'])) Controller::getfilter();
-    else if (isset($_GET['loca'])) Controller::getProxi();
     else if (isset($_GET['displayBeach'])) Controller::displayBeach();
     else if (isset($_GET['displayImg'])) Controller::displayImg();
     else if (isset($_GET['getRand'])) Controller::getRand();

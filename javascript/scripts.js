@@ -33,10 +33,6 @@ if (window.location.search !== "") {
 }
 
 
-document.getElementById("more-btn").addEventListener("click", function () {
-    selectMorePlage(oldSearch, index);
-});
-
 function testUrl() {
     if (window.location.search !== "") return window.location.search.split("?")[1].split('=')[0] === "BID";
     else return false;
@@ -68,9 +64,10 @@ document.getElementById("search-input").addEventListener('keyup', function () {
 
 
 document.getElementById("more-btn").addEventListener("click", function () {
+    console.log(this);
     if (oldfilter.length > 0){
         if (oldGeo) console.log(oldSearch, longitude, latitude, listFilter, index);
-        else console.log(oldSearch, listFilter, index);
+        else selectMoreWithFilter(oldSearch, listFilter, index);
     } else {
         if (oldGeo) console.log(oldSearch, longitude, latitude, '', index);
         else selectMorePlage(oldSearch, index)
@@ -106,7 +103,7 @@ function startSearch() {
         if (geo) getPlageProxi(val, longitude, latitude, '');
         else selectPlage(val);
     }
-    window.location.href += "#main"
+    window.location.hash = "#top";
 }
 
 
@@ -307,13 +304,6 @@ function getCord() {
 function displayCount(nb) {
     document.getElementById("count-res").innerHTML = nb + " résultat(s) trouvé(s)";
 }
-
-
-
-
-
-
-
 
 function displayBeach(BID) {
     document.location.href = "./plage.html?BID=" + BID;
