@@ -45,6 +45,10 @@ class Controller {
         echo json_encode(Model::selectRandom());
     }
 
+    public static function getDepa (){
+        echo json_encode(Model::selectDepa());
+    }
+
 
     public static function countSearch (){
         echo json_encode(Model::countSearch($_GET['searchCount']));

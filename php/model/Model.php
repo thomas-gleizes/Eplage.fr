@@ -141,6 +141,15 @@ class Model{
         return $tab;
     }
 
+    public static function selectDepa (){
+        $sql = "SELECT d.id_departement, d.departement FROM departement d JOIN tbl_businesses b ON SUBSTR(ZIPCODE, 1, 2) = d.id_departement GROUP BY (d.ID)";
+        $req_prep = self::$pdo->prepare($sql);
+        $req_prep->execute();
+        $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+        $tab = $req_prep->fetchAll();
+        return $tab;
+    }
+
 
     public static function selectGeographie ($val){
         $sql = "SELECT d.ID FROM tbl_businesses b JOIN departement d ON SUBSTR(ZIPCODE, 1, 2) = d.id_departement WHERE COUNTY LIKE :val GROUP BY (d.ID);";

@@ -3,10 +3,11 @@ let sand = "#ffd59b";
 let geo = false;
 let filter = false;
 let listFilter = [];
-let index = 0;
 
 let latitude = 0;
 let longitude = 0;
+
+let index = 0;
 
 let oldfilter = [];
 let oldSearch = "";
@@ -19,9 +20,13 @@ if (window.location.search !== "") {
         let url = window.location.search.split('?')[1].split("&");
         console.log(url);
         for (let i = 0; i < url.length; i++) {
-            let get = url[i].split("=")
+            let get = url[i].split("=");
             if (get[0] === "search") {
-                document.getElementById("search-input").value = get[1].replace('%20', ' ');
+                let str = get[1];
+                while (str.indexOf('%20') !== -1){
+                    str = str.replace('%20', ' ')
+                }
+                document.getElementById("search-input").value = str;
             } else if (get[0] === "geo") {
                 getCord();
             } else if (get[0] === "filter") {
@@ -103,7 +108,6 @@ function startSearch() {
         if (geo) getPlageProxi(val, longitude, latitude, '');
         else selectPlage(val);
     }
-    window.location.hash = "#top";
 }
 
 
@@ -302,6 +306,8 @@ function getCord() {
 }
 
 function displayCount(nb) {
+    console.log("type of nb : ", typeof nb);
+    if (typeof nb == "object") nb = "0";
     document.getElementById("count-res").innerHTML = nb + " résultat(s) trouvé(s)";
 }
 
