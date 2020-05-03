@@ -14,6 +14,7 @@ function displayInfo(tab) {
     console.log("Beach : ", tabBeach);
     document.getElementById("name").innerHTML = tabBeach['NAME'];
     document.getElementById("adresse-beach").innerHTML = tabBeach['ADRESS'] + " - "  + tabBeach['ZIPCODE'] + " " + tabBeach['CITY'];
+    document.getElementById("call-beach").href = "tel:" + tabBeach['PHONE']
     document.getElementById("warning").innerHTML = "<span class='lk' id='link-depa'>" + tabBeach['COUNTY'] + "</span> > <span class='lk' id='link-city'>" + tabBeach['CITY'] + "</span> > " + tabBeach['NAME'];
     document.getElementById("link-depa").addEventListener("click", function () {
         document.location.href = "./?search=" + tabBeach['COUNTY'].deleteAccent();
