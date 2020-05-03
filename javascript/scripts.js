@@ -94,12 +94,14 @@ document.getElementById("search-input").addEventListener('click', function () {
 });
 
 function startSearch() {
+    console.log(index);
     let val = document.getElementById("search-input").value;
     oldfilter = listFilter;
     oldSearch = val;
     oldGeo = geo;
     document.getElementById("nb-filter").innerHTML = " - " + listFilter.length + " filtre(s) utilié(s)";
     index = 0;
+    console.log(index)
     document.getElementById("autocomplet-div").style.display = "none";
     if (listFilter.length > 0) {
         if (geo) getPlageProxi(val, longitude, latitude, listFilter);
@@ -113,6 +115,7 @@ function startSearch() {
 
 function createCard(tab) {
     console.log(tab);
+    console.log(index)
     let list = document.getElementById("list")
     if (index === 0) list.innerHTML = "";
     for (let i = 0; i < tab.length; i++) {
@@ -211,11 +214,9 @@ function displayGeoAutocopleted(tab) {
                     console.log(this);
                     window.location.href = (buildUrl(tab[i][0].depa.split('-')[1].substring((1))));
                 } else {
-                    if (listFilter.length > 0) {
-                        selectWithFilter(tab[i][0].depa.split('-')[1].substring(1), listFilter);
-                    } else {
-                        selectPlage(tab[i][0].depa.split('-')[1].substring(1));
-                    }
+                    document.getElementById("search-input").value = tab[i][0].depa.split('-')[1].substring(1)
+                    startSearch();
+                    document.getElementById("autocomplet-div").style.display = "none";
                 }
             });
             list.appendChild(p);
@@ -242,11 +243,8 @@ function displayLocalAutocopleted(tab) {
                 if (testUrl()) {
                     window.location.href = buildUrl(tab[i][0].CITY);
                 } else {
-                    if (listFilter.length > 0) {
-                        selectWithFilter(tab[i][0].CITY, listFilter)
-                    } else {
-                        selectPlage(tab[i][0].CITY)
-                    }
+                    document.getElementById("search-input").value = tab[i][0].CITY;
+                    startSearch();
                     document.getElementById("autocomplet-div").style.display = "none";
                 }
             });
