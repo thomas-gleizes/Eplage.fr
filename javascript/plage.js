@@ -7,7 +7,6 @@ getInfoBeach(BID);
 
 let tabImg = [];
 let tabBeach = [];
-let img = 0;
 
 function displayInfo(tab) {
     tabBeach = tab[0];
@@ -31,8 +30,25 @@ function displayImg(tab) {
     tabImg = tab;
     console.log("IMG : ", tabImg);
     if (tabImg.length > 0){
-        let imag = document.getElementById("img-beach");
-        imag.src = "./img/plage/" + tabImg[img].src;
+        for (let i = 0; i < tabImg.length; i++){
+            let div = document.createElement("div");
+            div.className = "img-beach"
+            div.style.backgroundImage = "url('img/plage/" + tabImg[i].src + "')";
+            document.getElementById("wrapper-img").appendChild(div);
+        }
+        $('#wrapper-img').slick({
+            arrows: false,
+            fade: true,
+            infinite: true,
+            centerMode: true,
+            autoplay: true,
+            autoplaySpeed: 6000,
+        })
+    } else {
+        let img = document.createElement("img");
+        img.src = "img/plage/plage0.jpg";
+        img.alt = "default plage img";
+        document.getElementById("wrapper-img").appendChild(img);
     }
 }
 

@@ -26,9 +26,11 @@ body {
 }
 
 .img-beach {
-    width: 90%;
-    border-radius: 10px;
-    margin-left: 2%;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .info-beach {
