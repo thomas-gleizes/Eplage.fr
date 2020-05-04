@@ -36,14 +36,13 @@ function displayImg(tab) {
             div.style.backgroundImage = "url('img/plage/" + tabImg[i].src + "')"
             document.getElementById("wrapper-img").appendChild(div);
         }
-
-
         $('#wrapper-img').slick({
             arrows: false,
             fade: true,
             infinite: true,
             centerMode: true,
             autoplay: true,
+            dots: true,
             autoplaySpeed: 6000,
         })
     } else {
