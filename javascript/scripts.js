@@ -111,6 +111,7 @@ function startSearch() {
 }
 
 function createCard(tab) {
+    console.log("TAB : ", tab);
     let list = document.getElementById("list")
     if (index === 0) list.innerHTML = "";
     document.getElementById("count-res").innerHTML = `${tab['count']} Résultat(s)`;
@@ -129,7 +130,7 @@ function createCard(tab) {
                             <i class='material-icons small'>map</i><div>${tab['card'][i]['CITY']} (${tab['card'][i]['ZIPCODE'].substring(0, 2)}) </div>`;
         if (tab['card'][i]['FLEACHID'] !== '0') {
             HTML += `<div id='TranDispo-${tab['card'][i]['FLEACHID']}' class='count'><img class='load-gif' src='./img/logo/loading.gif'></div>`;
-            getTransat(card[i].FLEACHID, displayTransatDispo)
+            getTransat(tab['card'][i]['FLEACHID'], displayTransatDispo)
         } else {
             HTML += "<div class='count'><i class='count-icons material-icons small left'>error_outline</i></div>\n ";
         }

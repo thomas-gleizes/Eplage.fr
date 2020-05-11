@@ -62,7 +62,6 @@ class Model{
             $sql .= "(NAME like :search OR COUNTRY like :search OR COUNTY like :search OR CITY like :search OR ZIPCODE like :search)";
             $values['search'] = '%' . $search . '%';
         }
-
         $res = self::sendRequest($sql, $values);
         if (empty($res)) return ['0', []];
         $res = utils::parse($res, 'ID');
@@ -72,9 +71,8 @@ class Model{
         for ($i = 0; $i < sizeof($res); $i++){
             $sql = $sql . " ID = :ID" . $i;
             $value['ID' . $i] = $res[$i];
-            if ($i + 1 < sizeof($res) && $i < 7) $sql = $sql . " OR";
+            if ($i + 1 < sizeof($res)) $sql = $sql . " OR";
             else $sql .= ")";
-            if ($i == 7) break;
         }
         if ($index != 0){
             $value['index'] = $index;
