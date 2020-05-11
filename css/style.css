@@ -1,6 +1,4 @@
 
-
-
 .sea {
     background-color: #3ccebf;
 }
@@ -62,15 +60,15 @@ nav {
     width: 66%;
 }
 
-#zone-geo  {
+#zone-geo {
     background-color: #fcfcfc;
-    border-bottom:solid 1px silver;
+    border-bottom: solid 1px silver;
     display: none;
 }
 
 #local {
     background-color: #fcfcfc;
-    border-bottom:solid 1px silver;
+    border-bottom: solid 1px silver;
     padding: 10px 5px;
     display: none;
 }
@@ -94,7 +92,7 @@ nav {
 
 .count-auto {
     font-size: 70%;
-    color:#686565;
+    color: #686565;
 }
 
 .count-eta {
@@ -114,12 +112,6 @@ nav {
 }
 
 
-
-
-
-
-
-
 #search {
     left: 22%;
     position: fixed;
@@ -128,7 +120,7 @@ nav {
     line-height: 70px;
 }
 
-#search-input{
+#search-input {
     border-radius: 4px;
     background-color: white;
     padding: 0px 13% 0px 3%;
@@ -152,7 +144,7 @@ nav {
     left: 70%;
 }
 
-#search-advance > .btn  {
+#search-advance > .btn {
     height: 40px;
     width: 40px;
     line-height: 40px;
@@ -175,7 +167,8 @@ nav {
     height: 20px;
     padding: 5px;
     margin-bottom: 5px !important;
-    margin-top: 5px; !important;
+    margin-top: 5px;
+!important;
     font-size: 120% !important;
 }
 
@@ -193,9 +186,8 @@ nav {
 
 .count-icons {
     right: 5px !important;
-    margin: 0px !important ;
+    margin: 0px !important;
 }
-
 
 
 .separator {
@@ -249,7 +241,7 @@ nav {
     }
 }
 
-[type="checkbox"].filled-in:checked+span:not(.lever):after {
+[type="checkbox"].filled-in:checked + span:not(.lever):after {
     background-color: #3ccebf !important;
     border-color: #3ccebf !important;
 }

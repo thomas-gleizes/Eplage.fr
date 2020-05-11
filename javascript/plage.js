@@ -1,6 +1,6 @@
 let BID = window.location.search.split("=")[1];
 
-if (typeof BID === "undefined"){
+if (typeof BID === "undefined") {
     document.location.href = "./";
 }
 getInfoBeach(BID);
@@ -12,7 +12,7 @@ function displayInfo(tab) {
     tabBeach = tab[0];
     console.log("Beach : ", tabBeach);
     document.getElementById("name").innerHTML = tabBeach['NAME'];
-    document.getElementById("adresse-beach").innerHTML = tabBeach['ADRESS'] + " - "  + tabBeach['ZIPCODE'] + " " + tabBeach['CITY'];
+    document.getElementById("adresse-beach").innerHTML = tabBeach['ADRESS'] + " - " + tabBeach['ZIPCODE'] + " " + tabBeach['CITY'];
     document.getElementById("call-beach").href = "tel:" + tabBeach['PHONE']
     document.getElementById("warning").innerHTML = "<span class='lk' id='link-depa'>" + tabBeach['COUNTY'] + "</span> > <span class='lk' id='link-city'>" + tabBeach['CITY'] + "</span> > " + tabBeach['NAME'];
     document.getElementById("link-depa").addEventListener("click", function () {
@@ -21,7 +21,7 @@ function displayInfo(tab) {
     document.getElementById("link-city").addEventListener("click", function () {
         document.location.href = "./?search=" + tabBeach['CITY'].deleteAccent();
     });
-    if (tabBeach['FLEACHID'] !== "0"){
+    if (tabBeach['FLEACHID'] !== "0") {
         getTransat(tabBeach['FLEACHID'], displayTransat);
     }
 }
@@ -29,11 +29,11 @@ function displayInfo(tab) {
 function displayImg(tab) {
     tabImg = tab;
     console.log("IMG : ", tabImg);
-    if (tabImg.length > 0){
-        for (let i = 0; i < tabImg.length; i++){
+    if (tabImg.length > 0) {
+        for (let i = 0; i < tabImg.length; i++) {
             let div = document.createElement("div");
-            div.className = "img-beach"
-            div.style.backgroundImage = "url('img/plage/" + tabImg[i].src + "')";
+            div.className = "img-beach";
+            div.style.backgroundImage = "url('img/plage/" + tabImg[i].src + "')"
             document.getElementById("wrapper-img").appendChild(div);
         }
         $('#wrapper-img').slick({
@@ -42,13 +42,14 @@ function displayImg(tab) {
             infinite: true,
             centerMode: true,
             autoplay: true,
+            dots: true,
             autoplaySpeed: 6000,
         })
     } else {
-        let img = document.createElement("img");
-        img.src = "img/plage/plage0.jpg";
-        img.alt = "default plage img";
-        document.getElementById("wrapper-img").appendChild(img);
+        let div = document.createElement("div");
+        div.style.backgroundImage = "url('img/plage/plage0.jpg')";
+        div.className = "img-beach";
+        document.getElementById("wrapper-img").appendChild(div);
     }
 }
 

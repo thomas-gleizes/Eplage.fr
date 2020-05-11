@@ -33,6 +33,15 @@ body {
     background-position: center;
 }
 
+#wrapper-img{
+    width: 95%;
+    height: 320px;
+    margin-left: 2%;
+
+
+}
+
+
 #adresse-beach {
     text-align: center;
 }
