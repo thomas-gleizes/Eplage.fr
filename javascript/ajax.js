@@ -1,25 +1,12 @@
 
-
-function selectPlage(val) {
-    let url = "./php/controller/router.php?search=" + val + "&index=0";
-    let request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.addEventListener("load", function () {
-         createCard(JSON.parse(request.responseText));
-    });
-    request.send(null);
-
-    url = "./php/controller/router.php?searchCount=" + val;
-    let requestCount = new XMLHttpRequest();
-    requestCount.open("GET", url, true);
-    requestCount.addEventListener("load", function () {
-        displayCount(JSON.parse(requestCount.responseText));
-    });
-    requestCount.send(null);
-}
-
-function selectMorePlage(val, index) {
-    let url = "./php/controller/router.php?search=" + val + "&index=" + index;
+/** search */
+function searchAdvance(val, long, lat, filter, index) {
+    let url = "./php/controller/router.php?searchAdvance=";
+    if (typeof  val !== "undefined") url += val;
+    if (typeof long !== "undefined") url += `&long=${long}`;
+    if (typeof lat !== "undefined") url += `&lat=${lat}`;
+    if (typeof filter !== "undefined") url += `&listfilter=${filter}`;
+    if (typeof index !== "undefined") url += `&index=${index}`;
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
@@ -28,68 +15,9 @@ function selectMorePlage(val, index) {
     request.send(null);
 }
 
-
-function selectWithFilter(val, filter) {
-    let url = "./php/controller/router.php?search=" + val + "&filter=" + filter + "&index=0";
-    let request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.addEventListener("load", function () {
-        createCard(JSON.parse(request.responseText));
-    });
-    request.send(null);
-
-    url = "./php/controller/router.php?countFilter=" + val + "&listfilter=" + filter;
-    let requestCount = new XMLHttpRequest();
-    requestCount.open("GET", url, true);
-    requestCount.addEventListener("load", function () {
-        displayCount(JSON.parse(requestCount.responseText));
-    });
-    requestCount.send(null);
-}
-
-function selectMoreWithFilter(val, filter, index) {
-    let url = "./php/controller/router.php?search=" + val + "&filter=" + filter + "&index=" + index;
-    let request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.addEventListener("load", function () {
-        createCard(JSON.parse(request.responseText));
-    });
-    request.send(null);
-}
-
-function getPlageProxi (val, longitude, latitude, filter){
-    let url = "./php/controller/router.php?searchProxi=" + val + "&long=" + longitude + "&lat=" + latitude + "&filter=" + filter + "&index=0";
-    let request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.addEventListener("load", function () {
-        createCard(JSON.parse(request.responseText));
-    });
-    request.send(null);
-
-    url = "./php/controller/router.php?countLoca=" + val + "&long=" + longitude + "&lat=" + latitude +  "&listfilter=" + filter;
-    let requestCount = new XMLHttpRequest();
-    requestCount.open("GET", url, true);
-    requestCount.addEventListener("load", function () {
-        displayCount(JSON.parse(requestCount.responseText));
-    });
-    requestCount.send(null);
-}
-
-function getMorePlageProxi(val, longitude, latitude, filter, index) {
-    let url = "./php/controller/router.php?searchProxi=" + val + "&long=" + longitude + "&lat=" + latitude + "&filter=" + filter + "&index=" + index;
-    let request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.addEventListener("load", function () {
-        createCard(JSON.parse(request.responseText));
-    });
-    request.send(null);
-}
-
-
-
-
+/** filter */
 function getFilter() {
-    let url = "./php/controller/router.php?filter=true";
+    let url = "./php/controller/router.php?getfilter=true";
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
@@ -98,18 +26,10 @@ function getFilter() {
     request.send(null);
 }
 
-function getTransat(fleachID, callback) {
-    let url = "https://www.fleach.com/api/eplage.php?id=" + fleachID;
-    let request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.addEventListener("load", function () {
-        callback(JSON.parse(request.responseText));
-    });
-    request.send(null);
-}
 
-function getGeo(val) {
-    let url = "./php/controller/router.php?searchGeo=" + val;
+/** auto-complete */
+function getAutoDepa(val) {
+    let url = "./php/controller/router.php?searchAutoDepa=" + val;
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
@@ -118,8 +38,8 @@ function getGeo(val) {
     request.send(null);
 }
 
-function getLocal(val) {
-    let url = "./php/controller/router.php?searchLocal=" + val;
+function getAutoCity(val) {
+    let url = "./php/controller/router.php?searchAutoCity=" + val;
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
@@ -128,8 +48,8 @@ function getLocal(val) {
     request.send(null);
 }
 
-function getEtabli(val) {
-    let url = "./php/controller/router.php?searchEtabli=" + val;
+function getAutoBeach(val) {
+    let url = "./php/controller/router.php?searchAutoBeach=" + val;
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
@@ -139,8 +59,7 @@ function getEtabli(val) {
 }
 
 
-
-
+/** info Beach */
 function getInfoBeach(BID) {
     let url = "./php/controller/router.php?displayBeach=" + BID;
     let request = new XMLHttpRequest();
@@ -159,8 +78,9 @@ function getInfoBeach(BID) {
     requestImg.send(null);
 }
 
+/** random Beach */
 function selectRandBeach() {
-    let url = "./php/controller/router.php?getRand=true"
+    let url = "./php/controller/router.php?getRand=true";
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
@@ -170,3 +90,13 @@ function selectRandBeach() {
 }
 
 
+/** API */
+function getTransat(fleachID, callback) {
+    let url = "https://www.fleach.com/api/eplage.php?id=" + fleachID;
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        callback(JSON.parse(request.responseText));
+    });
+    request.send(null);
+}

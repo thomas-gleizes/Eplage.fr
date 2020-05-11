@@ -4,35 +4,41 @@ require_once ('../model/Model.php');
 
 class Controller {
 
-    public static function getPlage (){
-        if (isset($_GET['search'])){
-            if (isset($_GET['filter'])){
-                echo json_encode(Model::selectPlageWithFilter($_GET['search'], $_GET['filter'], $_GET['index']));
-            } else echo json_encode(Model::selectPlages($_GET['search'], $_GET['index']));
-        } else echo json_encode("error");
+    /** search */
+    public static function search(){
+        isset($_GET['index']) ? $index = $_GET['index'] : $index = 0;
+        echo json_encode(Model::search($_GET['search'], $index));
     }
 
+    public static function searchAdvance(){
+        isset($_GET['long']) ? $long = $_GET['long'] : $long = '';
+        isset($_GET['lat']) ? $lat = $_GET['lat'] : $lat = '';
+        isset($_GET['filter']) ? $filter = $_GET['filter'] : $filter = '';
+        isset($_GET['index']) ? $index = $_GET['index'] : $index = 0;
+        echo json_encode(Model::searchAdvance($_GET['searchAdvance'], $long, $lat, $filter, $index));
+    }
+
+    /** filter */
     public static function getFilter(){
         echo json_encode(Model::selectAllFilter());
     }
 
-    public static function getAutoGeo(){
-        echo json_encode(Model::selectGeographie($_GET['searchGeo']));
+
+    /** auto-complete */
+    public static function getAutoDepa(){
+        echo json_encode(Model::selectAutoDepa($_GET['searchAutoDepa']));
     }
 
-    public static function getAutoLocal (){
-        echo json_encode(Model::selectLocal($_GET['searchLocal']));
+    public static function getAutoCity(){
+        echo json_encode(Model::selectAutoCity($_GET['searchAutoCity']));
     }
 
-    public static function getAutoEtabli (){
-        echo json_encode(Model::selectEtablissements($_GET['searchEtabli']));
-    }
-
-    public static function getProxi (){
-        echo json_encode(Model::selectWithLocalisation($_GET['searchProxi'], $_GET['long'], $_GET['lat'], $_GET['filter'], $_GET['index']));
+    public static function getAutoBeach(){
+        echo json_encode(Model::selectAutoBeach($_GET['searchAutoBeach']));
     }
 
 
+    /** info beach */
     public static function displayBeach (){
         echo json_encode(Model::selectBeach($_GET['displayBeach']));
     }
@@ -41,24 +47,24 @@ class Controller {
         echo json_encode(Model::selectAllPicture($_GET['displayImg']));
     }
 
+
+    /** random */
     public static function getRand (){
         echo json_encode(Model::selectRandom());
     }
 
+
+    /** carouselle */
     public static function getDepa (){
-        echo json_encode(Model::selectDepa());
+        echo json_encode(Model::selectDepa($_GET['listfilter']));
     }
 
-
-    public static function countSearch (){
-        echo json_encode(Model::countSearch($_GET['searchCount']));
+    public static function getCity (){
+        echo json_encode(Model::selectCity($_GET['getCity'], $_GET['filter']));
     }
 
-    public static function countSearchWIthFilter(){
-        echo json_encode(Model::countSearchWithFilter($_GET['countFilter'], $_GET['listfilter']));
+    public static function getBeach(){
+        echo json_encode(Model::getBeach($_GET['getBeach'], $_GET['filter']));
     }
 
-    public static function countSearchWithLocalisation (){
-        echo json_encode(Model::countSearchWithLocalisation($_GET['countLoca'], $_GET['long'], $_GET['lat'], $_GET['listfilter']));
-    }
 }

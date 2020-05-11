@@ -48,6 +48,31 @@ class utils {
         return $rab;
     }
 
+    public static function buildSQLfilter($filter){
+        $sql = "";
+        $filter = explode(',', $filter);
+        $sql .= "ID IN ";
+        for ($i = 0; $i < sizeof($filter); $i++){
+            $sql .= "(SELECT BID FROM tbl_service_buisnesse WHERE SID = :filter" . $i;
+            if ($i+1 != sizeof($filter)) $sql .= " AND BID IN ";
+            else {
+                for ($j = 0; $j < sizeof($filter); $j++){
+                    $sql .= ")";
+                }
+            }
+        }
+        return $sql;
+    }
+
+    public static function buildTABfilter ($filter){
+        $filter = explode(',', $filter);
+        $values = [];
+        for ($i = 0; $i < sizeof($filter); $i++){
+            $values['filter' . $i] = $filter[$i];
+        }
+        return $values;
+    }
+
 
 
 }
