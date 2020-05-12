@@ -5,8 +5,18 @@ function searchAdvance(val, long, lat, filter, index) {
     if (typeof  val !== "undefined") url += val;
     if (typeof long !== "undefined") url += `&long=${long}`;
     if (typeof lat !== "undefined") url += `&lat=${lat}`;
-    if (typeof filter !== "undefined") url += `&listfilter=${filter}`;
+    if (typeof filter !== "undefined") url += `&filter=${filter}`;
     if (typeof index !== "undefined") url += `&index=${index}`;
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.addEventListener("load", function () {
+        createCard(JSON.parse(request.responseText));
+    });
+    request.send(null);
+}
+
+function selectRandBeach() {
+    let url = "./php/controller/router.php?getRand=true";
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
@@ -76,17 +86,6 @@ function getInfoBeach(BID) {
         displayImg(JSON.parse(requestImg.responseText));
     });
     requestImg.send(null);
-}
-
-/** random Beach */
-function selectRandBeach() {
-    let url = "./php/controller/router.php?getRand=true";
-    let request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.addEventListener("load", function () {
-        createCard(JSON.parse(request.responseText));
-    });
-    request.send(null);
 }
 
 

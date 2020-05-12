@@ -112,12 +112,14 @@ function startSearch() {
 
 function createCard(tab) {
     console.log("TAB : ", tab);
-    let list = document.getElementById("list")
+    let list = document.getElementById("list");
     if (index === 0) list.innerHTML = "";
-    document.getElementById("count-res").innerHTML = `${tab['count']} Résultat(s)`;
-    for (let i = 0; i < tab['card'].length; i++) {
-        let card = document.createElement("div");
-        let HTML = `<div class='card'>
+
+    if (typeof tab['count'] !== "undefined"){
+        document.getElementById("count-res").innerHTML = `${tab['count']} Résultat(s)`;
+        for (let i = 0; i < tab['card'].length; i++) {
+            let card = document.createElement("div");
+            let HTML = `<div class='card'>
                         <div class='card-image'>
                             <img src='./img/plage/${tab['card'][i]['src']}' alt='${tab['card'][i]['NAME']}'/>
                             <a id='btn-id-${tab['card'][i]['ID']}' class='btn-floating halfway-fab waves-effect waves-light sea'><i class='material-icons'>chevron_right</i></a>
@@ -128,25 +130,29 @@ function createCard(tab) {
                         </div>
                         <div class='card-action'>
                             <i class='material-icons small'>map</i><div>${tab['card'][i]['CITY']} (${tab['card'][i]['ZIPCODE'].substring(0, 2)}) </div>`;
-        if (tab['card'][i]['FLEACHID'] !== '0') {
-            HTML += `<div id='TranDispo-${tab['card'][i]['FLEACHID']}' class='count'><img class='load-gif' src='./img/logo/loading.gif'></div>`;
-            getTransat(tab['card'][i]['FLEACHID'], displayTransatDispo)
-        } else {
-            HTML += "<div class='count'><i class='count-icons material-icons small left'>error_outline</i></div>\n ";
+            if (tab['card'][i]['FLEACHID'] !== '0') {
+                HTML += `<div id='TranDispo-${tab['card'][i]['FLEACHID']}' class='count'><img class='load-gif' src='./img/logo/loading.gif'></div>`;
+                getTransat(tab['card'][i]['FLEACHID'], displayTransatDispo)
+            } else {
+                HTML += "<div class='count'><i class='count-icons material-icons small left'>error_outline</i></div>\n ";
+            }
+            HTML += `</div></div>`;
+            card.innerHTML = HTML;
+            card.id = `Plage-${tab['card'][i]['ID']}`;
+            card.className = "col S12 m6 l3";
+            list.appendChild(card);
+            document.getElementById(`btn-id-${tab['card'][i]['ID']}`).addEventListener("click", function () {
+                displayBeach(tab['card'][i]['ID']);
+            });
+            index = tab['card'][i]['ID'];
         }
-        HTML += `</div>
-            </div>`;
-        card.innerHTML = HTML;
-        card.id = `Plage-${tab['card'][i]['ID']}`;
-        card.className = "col S12 m6 l3";
-        list.appendChild(card);
-        document.getElementById(`btn-id-${tab['card'][i]['ID']}`).addEventListener("click", function () {
-            displayBeach(tab['card'][i]['ID']);
-        });
-        index = tab['card'][i]['ID'];
+        if (tab['card'].length === 8) document.getElementById("more-btn").style.display = "inline-block";
+        else document.getElementById("more-btn").style.display = "none";
+    } else {
+        document.querySelector("span#count-res").innerText = "0 Résultat";
+        document.querySelector("a#more-btn").style.display = "none";
     }
-    if (tab['card'].length === 8) document.getElementById("more-btn").style.display = "inline-block";
-    else document.getElementById("more-btn").style.display = "none";
+
 }
 
 function displayTransatDispo(tab) {
