@@ -43,7 +43,7 @@ function getAutoDepa(val) {
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
-        displayGeoAutocopleted(JSON.parse(request.responseText));
+        displayDepaAutocopleted(JSON.parse(request.responseText));
     });
     request.send(null);
 }
@@ -53,7 +53,7 @@ function getAutoCity(val) {
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
-        displayLocalAutocopleted(JSON.parse(request.responseText));
+        displayCityAutocopleted(JSON.parse(request.responseText));
     });
     request.send(null);
 }
@@ -63,7 +63,7 @@ function getAutoBeach(val) {
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.addEventListener("load", function () {
-        displayEtabliAutocopleted(JSON.parse(request.responseText));
+        displayBeachAutocopleted(JSON.parse(request.responseText));
     });
     request.send(null);
 }

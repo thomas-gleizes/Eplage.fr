@@ -51,7 +51,7 @@ class utils {
     public static function buildSQLfilter($filter){
         $sql = "";
         $filter = explode(',', $filter);
-        $sql .= "ID IN ";
+        $sql .= " IN ";
         for ($i = 0; $i < sizeof($filter); $i++){
             $sql .= "(SELECT BID FROM tbl_service_buisnesse WHERE SID = :filter" . $i;
             if ($i+1 != sizeof($filter)) $sql .= " AND BID IN ";

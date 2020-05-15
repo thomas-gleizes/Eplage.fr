@@ -23,18 +23,20 @@ class Controller {
         echo json_encode(Model::selectAllFilter());
     }
 
-
     /** auto-complete */
     public static function getAutoDepa(){
-        echo json_encode(Model::selectAutoDepa($_GET['searchAutoDepa']));
+        isset($_GET['filter']) ? $filter = $_GET['filter'] : $filter = '';
+        echo json_encode(Model::selectAutoDepa($_GET['searchAutoDepa'], $filter));
     }
 
     public static function getAutoCity(){
-        echo json_encode(Model::selectAutoCity($_GET['searchAutoCity']));
+        isset($_GET['filter']) ? $filter = $_GET['filter'] : $filter = '';
+        echo json_encode(Model::selectAutoCity($_GET['searchAutoCity'], $filter));
     }
 
     public static function getAutoBeach(){
-        echo json_encode(Model::selectAutoBeach($_GET['searchAutoBeach']));
+        isset($_GET['filter']) ? $filter = $_GET['filter'] : $filter = '';
+        echo json_encode(Model::selectAutoBeach($_GET['searchAutoBeach'], $filter));
     }
 
 
@@ -56,15 +58,18 @@ class Controller {
 
     /** carouselle */
     public static function getDepa (){
-        echo json_encode(Model::selectDepa($_GET['listfilter']));
+        isset($_GET['filter']) ? $filter = $_GET['filter'] : $filter = '';
+        echo json_encode(Model::selectDepa($filter));
     }
 
     public static function getCity (){
-        echo json_encode(Model::selectCity($_GET['getCity'], $_GET['filter']));
+        isset($_GET['filter']) ? $filter = $_GET['filter'] : $filter = '';
+        echo json_encode(Model::selectCity($_GET['getCity'], $filter));
     }
 
     public static function getBeach(){
-        echo json_encode(Model::getBeach($_GET['getBeach'], $_GET['filter']));
+        isset($_GET['filter']) ? $filter = $_GET['filter'] : $filter = '';
+        echo json_encode(Model::getBeach($_GET['getBeach'], $filter));
     }
 
 }

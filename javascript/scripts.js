@@ -86,11 +86,6 @@ document.getElementById("search-btn").addEventListener("click", function () {
     }
 });
 
-
-document.getElementById("search-input").addEventListener('click', function () {
-    document.getElementById("autocomplet-div").style.display = "inline";
-});
-
 function startSearch() {
     console.log(index);
     let val = document.getElementById("search-input").value;
@@ -115,7 +110,7 @@ function createCard(tab) {
     let list = document.getElementById("list");
     if (index === 0) list.innerHTML = "";
 
-    if (typeof tab['count'] !== "undefined"){
+    if (typeof tab['count'] !== "undefined") {
         document.getElementById("count-res").innerHTML = `${tab['count']} Résultat(s)`;
         for (let i = 0; i < tab['card'].length; i++) {
             let card = document.createElement("div");
@@ -199,25 +194,25 @@ function generatefilter(tab) {
 
 getFilter();
 
-function displayGeoAutocopleted(tab) {
+function displayDepaAutocopleted(tab) {
     let list = document.getElementById("liste-zone-geo");
     list.innerHTML = "";
     if (tab.length > 0) {
-        console.log("GEO", tab);
+        console.log("DEPA", tab);
         document.getElementById("res-geo").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
         document.getElementById("zone-geo").style.display = "block";
         for (let i = 0; i < tab.length; i++) {
             let p = document.createElement('p');
             p.className = "li-auto";
-            p.id = `zone-geo-${tab[i][0].IDdepa}`;
-            p.innerHTML = `Plages privée, ${tab[i][0].depa} <span class='count-eta'>${tab[i][0].NBID} etablisemment(s)</span>`;
+            p.id = `zone-geo-${tab[i].IDdepa}`;
+            p.innerHTML = `Plages privée, ${tab[i].depa} <span class='count-eta'>${tab[i].NBID} etablisemment(s)</span>`;
             p.addEventListener("click", function () {
                 if (testUrl()) {
                     console.log(this);
-                    window.location.href = (buildUrl(tab[i][0].depa.split('-')[1].substring((1))));
+                    window.location.href = (buildUrl(tab[i].depa.split('-')[1].substring((1))));
                 } else {
-                    document.getElementById("search-input").value = tab[i][0].depa.split('-')[1].substring(1)
+                    document.getElementById("search-input").value = tab[i].depa.split('-')[1].substring(1)
                     startSearch();
                     document.getElementById("autocomplet-div").style.display = "none";
                 }
@@ -229,9 +224,9 @@ function displayGeoAutocopleted(tab) {
     }
 }
 
-function displayLocalAutocopleted(tab) {
+function displayCityAutocopleted(tab) {
     if (tab.length > 0) {
-        console.log("Local", tab);
+        console.log("CITY", tab);
         document.getElementById("res-local").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
         document.getElementById("local").style.display = "block";
@@ -240,13 +235,13 @@ function displayLocalAutocopleted(tab) {
         for (let i = 0; i < tab.length; i++) {
             let p = document.createElement('p');
             p.className = "li-auto";
-            p.id = "zone-local-" + tab[i][0].ZIPCODE;
-            p.innerHTML = `Plages privée, ${tab[i][0].ZIPCODE.substring(0, 2)} - ${tab[i][0].CITY} <span class='count-eta'>${tab[i][0].NBID} etablisemment(s)</span>`;
+            p.id = `zone-local-${tab[i].ZIPCODE}`;
+            p.innerHTML = `Plages privée, ${tab[i].ZIPCODE.substring(0, 2)} - ${tab[i].CITY} <span class='count-eta'>${tab[i].NBID} etablisemment(s)</span>`;
             p.addEventListener("click", function () {
                 if (testUrl()) {
-                    window.location.href = buildUrl(tab[i][0].CITY);
+                    window.location.href = buildUrl(tab[i].CITY);
                 } else {
-                    document.getElementById("search-input").value = tab[i][0].CITY;
+                    document.getElementById("search-input").value = tab[i].CITY;
                     startSearch();
                     document.getElementById("autocomplet-div").style.display = "none";
                 }
@@ -258,9 +253,9 @@ function displayLocalAutocopleted(tab) {
     }
 }
 
-function displayEtabliAutocopleted(tab) {
+function displayBeachAutocopleted(tab) {
     if (tab.length > 0) {
-        console.log("Etabli", tab);
+        console.log("BEACH", tab);
         document.getElementById("res-etabli").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
         document.getElementById("etabli").style.display = "block";
@@ -282,8 +277,28 @@ function displayEtabliAutocopleted(tab) {
 }
 
 
-document.body.addEventListener("click", function () {
-    document.getElementById("autocomplet-div").style.display = "none";
+document.body.addEventListener("click", function (event) {
+    console.log(event.target.className)
+    if (typeof event.target.id !== "undefined") {
+        if (event.target.id == "search-input") {
+            document.querySelector("div#autocomplet-div").style.display = "block";
+            return null;
+        }
+    } else if(typeof event.target.className !== "undefined"){
+        if (event.target.className == "li-auto"){
+            document.querySelector("div#autocomplet-div").style.display = "none";
+            return null
+        }
+    }
+    console.log("zeezzezeze")
+    let val = "none";
+    event.path.forEach((element) => {
+        if (typeof element.id !== "undefined") {
+            if (element.id === "autocomplet-div") val = "block";
+        }
+    });
+    document.querySelector("div#autocomplet-div").style.display = val;
+    return null
 });
 
 document.getElementById("geo-btn").addEventListener("click", getCord);
