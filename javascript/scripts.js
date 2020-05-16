@@ -49,7 +49,8 @@ function buildUrl(search) {
     return url;
 }
 
-document.getElementById("search-input").addEventListener('keyup', function () {
+document.getElementById("search-input").addEventListener('keyup', function (event) {
+    console.log(event)
     if (this.value.length > 2) {
         if (event.keyCode === 13) {
             if (testUrl()) {
@@ -67,15 +68,18 @@ document.getElementById("search-input").addEventListener('keyup', function () {
 });
 
 
-document.getElementById("more-btn").addEventListener("click", function () {
-    if (oldfilter.length > 0) {
-        if (oldGeo) searchAdvance(oldSearch, longitude, latitude, oldfilter, index);
-        else searchAdvance(oldSearch, '', '', oldfilter, index);
-    } else {
-        if (oldGeo) searchAdvance(oldSearch, longitude, latitude, '', index);
-        else searchAdvance(oldSearch, '', '', '', index);
-    }
-});
+if (typeof window.location.search.split("=")[1] === "undefined") {
+    document.getElementById("more-btn").addEventListener("click", function () {
+        if (oldfilter.length > 0) {
+            if (oldGeo) searchAdvance(oldSearch, longitude, latitude, oldfilter, index);
+            else searchAdvance(oldSearch, '', '', oldfilter, index);
+        } else {
+            if (oldGeo) searchAdvance(oldSearch, longitude, latitude, '', index);
+            else searchAdvance(oldSearch, '', '', '', index);
+        }
+    });
+}
+
 
 document.getElementById("search-btn").addEventListener("click", function () {
     if (testUrl()) {
@@ -114,27 +118,26 @@ function createCard(tab) {
         document.getElementById("count-res").innerHTML = `${tab['count']} Résultat(s)`;
         for (let i = 0; i < tab['card'].length; i++) {
             let card = document.createElement("div");
-            let HTML = `<div class='card'>
-                        <div class='card-image'>
-                            <img src='./img/plage/${tab['card'][i]['src']}' alt='${tab['card'][i]['NAME']}'/>
-                            <a id='btn-id-${tab['card'][i]['ID']}' class='btn-floating halfway-fab waves-effect waves-light sea'><i class='material-icons'>chevron_right</i></a>
-                        </div>
-                        <div class='card-content'>
-                            <span class='card-title'> ${tab['card'][i]['NAME']}</span>
-                            <p>La plage 1 est ouvert de 9h à 18h</p>
-                        </div>
-                        <div class='card-action'>
-                            <i class='material-icons small'>map</i><div>${tab['card'][i]['CITY']} (${tab['card'][i]['ZIPCODE'].substring(0, 2)}) </div>`;
+            let HTML = `<div class='card-image'>
+                         <img src='./img/plage/${tab['card'][i]['src']}' alt='${tab['card'][i]['NAME']}'/>
+                                <a id='btn-id-${tab['card'][i]['ID']}' class='btn-floating halfway-fab waves-effect waves-light sea'><i class='material-icons'>chevron_right</i></a>
+                            </div>
+                            <div class='card-content'>
+                                <span class='card-title'> ${tab['card'][i]['NAME']}</span>
+                                <p>La plage 1 est ouvert de 9h à 18h</p>
+                            </div>
+                            <div class='card-action'>
+                                <i class='material-icons small'>map</i><div>${tab['card'][i]['CITY']} (${tab['card'][i]['ZIPCODE'].substring(0, 2)}) </div>`;
             if (tab['card'][i]['FLEACHID'] !== '0') {
                 HTML += `<div id='TranDispo-${tab['card'][i]['FLEACHID']}' class='count'><img class='load-gif' src='./img/logo/loading.gif'></div>`;
                 getTransat(tab['card'][i]['FLEACHID'], displayTransatDispo)
             } else {
                 HTML += "<div class='count'><i class='count-icons material-icons small left'>error_outline</i></div>\n ";
             }
-            HTML += `</div></div>`;
+            HTML += `</div>`;
             card.innerHTML = HTML;
             card.id = `Plage-${tab['card'][i]['ID']}`;
-            card.className = "col S12 m6 l3";
+            card.className = "card";
             list.appendChild(card);
             document.getElementById(`btn-id-${tab['card'][i]['ID']}`).addEventListener("click", function () {
                 displayBeach(tab['card'][i]['ID']);
@@ -176,10 +179,10 @@ function generatefilter(tab) {
     for (let i = 0; i < tab.length; i++) {
         let input = document.createElement("div");
         input.innerHTML = `<label>
-                    <input id='check-${tab[i].ID}' type='checkbox' class='filled-in'/>
-                    <span>${tab[i].name}</span>
-                </label>`;
-        input.className = "check col l2 m3 s4";
+                                <input id='check-${tab[i].ID}' type='checkbox' class='filled-in'/>
+                                <span>${tab[i].name}</span>
+                            </label>`;
+        input.className = "col s4 m3 l2";
         div.appendChild(input);
         document.getElementById("check-" + tab[i].ID).addEventListener('click', function () {
             let index = listFilter.indexOf(tab[i].ID);
@@ -195,13 +198,13 @@ function generatefilter(tab) {
 getFilter();
 
 function displayDepaAutocopleted(tab) {
-    let list = document.getElementById("liste-zone-geo");
-    list.innerHTML = "";
     if (tab.length > 0) {
-        console.log("DEPA", tab);
+        //console.log("DEPA", tab);
+        let list = document.getElementById("liste-zone-geo");
+        list.innerHTML = "";
         document.getElementById("res-geo").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
-        document.getElementById("zone-geo").style.display = "block";
+        document.getElementById("auto-depa").style.display = "block";
         for (let i = 0; i < tab.length; i++) {
             let p = document.createElement('p');
             p.className = "li-auto";
@@ -220,16 +223,16 @@ function displayDepaAutocopleted(tab) {
             list.appendChild(p);
         }
     } else {
-        document.getElementById("zone-geo").style.display = "none";
+        document.getElementById("auto-depa").style.display = "none";
     }
 }
 
 function displayCityAutocopleted(tab) {
     if (tab.length > 0) {
-        console.log("CITY", tab);
+        //console.log("CITY", tab);
         document.getElementById("res-local").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
-        document.getElementById("local").style.display = "block";
+        document.getElementById("auto-city").style.display = "block";
         let list = document.getElementById("liste-zone-local");
         list.innerHTML = "";
         for (let i = 0; i < tab.length; i++) {
@@ -249,16 +252,16 @@ function displayCityAutocopleted(tab) {
             list.appendChild(p);
         }
     } else {
-        document.getElementById("local").style.display = "none";
+        document.getElementById("auto-city").style.display = "none";
     }
 }
 
 function displayBeachAutocopleted(tab) {
     if (tab.length > 0) {
-        console.log("BEACH", tab);
+        //console.log("BEACH", tab);
         document.getElementById("res-etabli").innerHTML = tab.length + " resultat(s)";
         document.getElementById("autocomplet-div").style.display = "inline";
-        document.getElementById("etabli").style.display = "block";
+        document.getElementById("auto-beach").style.display = "block";
         let list = document.getElementById("liste-zone-etabli");
         list.innerHTML = "";
         for (let i = 0; i < tab.length; i++) {
@@ -272,33 +275,17 @@ function displayBeachAutocopleted(tab) {
             list.appendChild(p);
         }
     } else {
-        document.getElementById("etabli").style.display = "none";
+        document.getElementById("auto-beach").style.display = "none";
     }
 }
 
 
 document.body.addEventListener("click", function (event) {
-    console.log(event.target.className)
-    if (typeof event.target.id !== "undefined") {
-        if (event.target.id == "search-input") {
-            document.querySelector("div#autocomplet-div").style.display = "block";
-            return null;
-        }
-    } else if(typeof event.target.className !== "undefined"){
-        if (event.target.className == "li-auto"){
-            document.querySelector("div#autocomplet-div").style.display = "none";
-            return null
-        }
-    }
-    console.log("zeezzezeze")
     let val = "none";
-    event.path.forEach((element) => {
-        if (typeof element.id !== "undefined") {
-            if (element.id === "autocomplet-div") val = "block";
-        }
-    });
-    document.querySelector("div#autocomplet-div").style.display = val;
-    return null
+    let bool = false;
+    console.log("ID : ", event.target.id)
+    console.log("Class : ", event.target.className)
+
 });
 
 document.getElementById("geo-btn").addEventListener("click", getCord);
